@@ -1,0 +1,172 @@
+"use client";
+
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { CheckCircle } from "lucide-react";
+
+const schema = z.object({
+  name: z.string().min(2, "Required"),
+  email: z.string().email("Invalid email"),
+  phone: z.string().min(7, "Required"),
+  procedure: z.string().optional(),
+  message: z.string().optional(),
+  smsConsent: z.boolean().optional(),
+});
+type FormData = z.infer<typeof schema>;
+
+const procedures = [
+  "Brazilian Butt Lift (BBL)",
+  "Lipo 360",
+  "Tummy Tuck",
+  "Liposuction",
+  "Mommy Makeover",
+  "Abdominal Etching",
+  "Arm & Thigh Lift",
+  "Breast Augmentation",
+  "Breast Lift",
+  "Breast Reduction",
+  "Gynecomastia",
+  "Rhinoplasty",
+  "Facelift",
+  "Eyelid Surgery",
+  "Bichectomy",
+  "Otoplasty",
+  "Neck Lift",
+  "Botox & Fillers",
+  "Laser Resurfacing",
+  "Microneedling",
+  "Other / Not sure",
+];
+
+export default function FooterContactForm() {
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
+
+  async function onSubmit(data: FormData) {
+    setLoading(true);
+    try {
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      setSubmitted(true);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (submitted) {
+    return (
+      <div className="flex flex-col items-center justify-center py-16 text-center">
+        <div className="w-20 h-20 rounded-full border-2 border-gold flex items-center justify-center mb-5">
+          <CheckCircle size={34} className="text-gold" />
+        </div>
+        <h3 className="font-heading text-white text-4xl mb-3">Thank You!</h3>
+        <p className="text-white/50 text-base max-w-xs leading-relaxed">
+          We&apos;ve received your request and will reach out within 24 hours to
+          schedule your free consultation.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <p className="text-white/55 text-base mb-8">
+        Fill out the form below and we&apos;ll get in touch to book a call.
+      </p>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        {/* Row 1 */}
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <input
+              {...register("name")}
+              placeholder="* Full Name"
+              className="w-full bg-white/20 border border-white/40 focus:border-gold rounded px-4 py-3 text-white placeholder-white/60 text-base outline-none transition-colors"
+            />
+            {errors.name && (
+              <p className="text-red-400 text-xs mt-1">{errors.name.message}</p>
+            )}
+          </div>
+          <div>
+            <input
+              {...register("phone")}
+              placeholder="* Phone"
+              type="tel"
+              className="w-full bg-white/20 border border-white/40 focus:border-gold rounded px-4 py-3 text-white placeholder-white/60 text-base outline-none transition-colors"
+            />
+            {errors.phone && (
+              <p className="text-red-400 text-xs mt-1">{errors.phone.message}</p>
+            )}
+          </div>
+        </div>
+
+        {/* Row 2 */}
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <input
+              {...register("email")}
+              placeholder="* Email"
+              type="email"
+              className="w-full bg-white/20 border border-white/40 focus:border-gold rounded px-4 py-3 text-white placeholder-white/60 text-base outline-none transition-colors"
+            />
+            {errors.email && (
+              <p className="text-red-400 text-xs mt-1">{errors.email.message}</p>
+            )}
+          </div>
+          <div>
+            <select
+              {...register("procedure")}
+              className="w-full bg-white/20 border border-white/40 focus:border-gold rounded px-4 py-3 text-white/75 text-base outline-none transition-colors appearance-none"
+            >
+              <option value="" className="bg-navy">What are you interested in?</option>
+              {procedures.map((p) => (
+                <option key={p} value={p} className="bg-navy text-white">{p}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Textarea */}
+        <textarea
+          {...register("message")}
+          placeholder="Additional Comments: Please feel free to add any additional comments you would like to share"
+          rows={4}
+          className="w-full bg-white/20 border border-white/40 focus:border-gold rounded px-4 py-3 text-white placeholder-white/60 text-base outline-none transition-colors resize-none"
+        />
+
+        {/* SMS consent */}
+        <label className="flex items-start gap-3 cursor-pointer group">
+          <input
+            type="checkbox"
+            {...register("smsConsent")}
+            className="mt-1 w-4 h-4 accent-gold shrink-0"
+          />
+          <span className="text-white/45 text-sm leading-relaxed">
+            By checking this box, you agree to receive SMS messages from Your
+            Cosmetic Surgery &amp; SPA. You may reply STOP to opt-out at any
+            time. Message and data rates may apply.
+          </span>
+        </label>
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="mt-2 bg-transparent border border-white/40 hover:border-gold text-white hover:text-gold text-sm font-bold tracking-[0.2em] uppercase px-10 py-3.5 transition-all duration-200 disabled:opacity-50"
+        >
+          {loading ? "SENDING…" : "SUBMIT"}
+        </button>
+      </form>
+    </>
+  );
+}
