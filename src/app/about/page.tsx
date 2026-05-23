@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ShieldCheck, Award, GraduationCap, Heart } from "lucide-react";
 import CTABanner from "@/components/sections/CTABanner";
@@ -49,12 +50,21 @@ export default function AboutPage() {
       {/* Story */}
       <section className="py-24 bg-cream">
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
-          {/* Image placeholder */}
           <div className="relative">
-            <div className="aspect-[4/5] rounded-2xl bg-gradient-to-br from-navy-light to-navy overflow-hidden flex items-end justify-start p-8">
-              <div>
+            <div className="aspect-[4/5] rounded-2xl overflow-hidden relative">
+              <Image
+                src="/Dr-Mario-Reyes-Cosmetic Surgeon-miami.webp"
+                alt="Dr. Mario Reyes-Serrano — Board-Certified Plastic Surgeon Miami"
+                fill
+                className="object-cover object-top"
+                quality={90}
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              {/* Bottom overlay with name */}
+              <div className="absolute inset-0 bg-gradient-to-t from-navy/70 via-transparent to-transparent" />
+              <div className="absolute bottom-0 left-0 p-8">
                 <p className="text-gold text-xs tracking-widest uppercase mb-1">Dr. Mario Reyes-Serrano</p>
-                <p className="text-white/40 text-sm">Board-Certified Plastic Surgeon</p>
+                <p className="text-white/70 text-sm">Board-Certified Plastic Surgeon</p>
               </div>
             </div>
             {/* Floating badge */}
