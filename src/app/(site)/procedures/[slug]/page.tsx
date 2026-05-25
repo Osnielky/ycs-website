@@ -23,6 +23,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: `https://ycosmeticsurgery.com/procedures/${proc.slug}`,
     },
+    openGraph: {
+      title: `${proc.name} in Miami | Your Cosmetic Surgery & SPA`,
+      description: `${proc.description} Board-certified surgeons, free consultation, flexible financing. Hialeah, FL.`,
+      url: `https://ycosmeticsurgery.com/procedures/${proc.slug}`,
+    },
   };
 }
 
@@ -52,6 +57,13 @@ const faqs = [
   },
 ];
 
+const categoryLabel: Record<string, string> = {
+  body: "Body Contouring",
+  breast: "Breast Surgery",
+  face: "Facial Surgery",
+  medspa: "Medical Spa",
+};
+
 export default async function ProcedureDetailPage({ params }: Props) {
   const { slug } = await params;
   const proc = procedures.find((p) => p.slug === slug);
@@ -61,23 +73,88 @@ export default async function ProcedureDetailPage({ params }: Props) {
     .filter((p) => p.category === proc.category && p.slug !== proc.slug)
     .slice(0, 3);
 
+  const pageUrl = `https://ycosmeticsurgery.com/procedures/${proc.slug}`;
+
+  const jsonLd = [
+    // MedicalProcedure schema
+    {
+      "@context": "https://schema.org",
+      "@type": "MedicalProcedure",
+      name: proc.name,
+      description: proc.description,
+      url: pageUrl,
+      procedureType: "https://health-lifesci.schema.org/SurgicalProcedure",
+      followup: `Recovery time: ${proc.recovery}`,
+      preparation: "A private consultation with a board-certified surgeon to assess candidacy, review goals, and create a personalized surgical plan.",
+      howPerformed: proc.description,
+      recognizingAuthority: {
+        "@type": "MedicalOrganization",
+        name: "American Board of Plastic Surgery",
+      },
+      relevantSpecialty: {
+        "@type": "MedicalSpecialty",
+        name: "Plastic Surgery",
+      },
+      performer: {
+        "@type": "Physician",
+        name: "Dr. Mario Reyes-Serrano",
+        medicalSpecialty: "Plastic Surgery",
+        worksFor: {
+          "@type": "MedicalBusiness",
+          name: "Your Cosmetic Surgery & SPA",
+          url: "https://ycosmeticsurgery.com",
+        },
+      },
+    },
+    // FAQPage schema
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.q,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.a,
+        },
+      })),
+    },
+    // BreadcrumbList schema
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home",       item: "https://ycosmeticsurgery.com" },
+        { "@type": "ListItem", position: 2, name: "Procedures", item: "https://ycosmeticsurgery.com/procedures" },
+        { "@type": "ListItem", position: 3, name: proc.name,    item: pageUrl },
+      ],
+    },
+  ];
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       {/* Hero */}
       <section className={`relative bg-gradient-to-br ${gradientMap[proc.category]} pt-36 pb-24 overflow-hidden`}>
         <div className="absolute inset-0 hero-pattern opacity-40" />
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
         <div className="relative z-10 max-w-4xl mx-auto px-6">
-          {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-white/40 text-sm mb-10">
+          {/* Breadcrumb — semantic nav for accessibility + SEO */}
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-white/40 text-sm mb-10">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
-            <span>/</span>
+            <span aria-hidden="true">/</span>
             <Link href="/procedures" className="hover:text-white transition-colors">Procedures</Link>
-            <span>/</span>
-            <span className="text-gold">{proc.name}</span>
-          </div>
+            <span aria-hidden="true">/</span>
+            <span className="text-gold" aria-current="page">{proc.name}</span>
+          </nav>
 
-          <span className="text-gold text-xs tracking-[0.3em] uppercase font-medium">{proc.tagline}</span>
+          <p className="text-gold text-xs tracking-[0.3em] uppercase font-medium">
+            {categoryLabel[proc.category]}
+          </p>
           <h1 className="font-heading text-6xl md:text-7xl text-white font-light mt-2 mb-5">
             {proc.name}
           </h1>
@@ -139,7 +216,6 @@ export default async function ProcedureDetailPage({ params }: Props) {
 
           {/* Right: CTA sidebar */}
           <div className="space-y-5">
-            {/* Consultation card */}
             <div className="bg-navy rounded-2xl p-7 sticky top-28">
               <span className="gold-divider mb-4" />
               <h3 className="font-heading text-white text-2xl mb-2">
@@ -162,7 +238,6 @@ export default async function ProcedureDetailPage({ params }: Props) {
                 (305) 218-3513
               </a>
 
-              {/* Trust points */}
               <ul className="mt-6 space-y-2">
                 {["Board-certified surgeons", "AAAHC-accredited facility", "Natural results philosophy", "24/7 patient support"].map((t) => (
                   <li key={t} className="flex items-center gap-2 text-white/40 text-xs">

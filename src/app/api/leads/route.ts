@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@supabase/supabase-js";
+import { sendLeadEmail } from "@/lib/email";
 
 const schema = z.object({
   name: z.string().min(2),
@@ -46,6 +47,16 @@ export async function POST(req: NextRequest) {
     }
 
     console.log("[YCS Lead saved]", lead.name, lead.phone);
+
+    // Fire-and-forget — never blocks the response
+    sendLeadEmail({
+      name:      lead.name,
+      phone:     lead.phone,
+      email:     lead.email,
+      procedure: lead.procedure,
+      message:   lead.message,
+    });
+
     return NextResponse.json({ success: true });
 
   } catch (err) {

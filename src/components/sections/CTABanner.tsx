@@ -1,5 +1,3 @@
-"use client";
-
 import { Play, Star } from "lucide-react";
 
 const videos = [

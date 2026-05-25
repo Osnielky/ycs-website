@@ -51,11 +51,14 @@ export default function Hero() {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setPrev(current);
-      setCurrent((c) => (c + 1) % slides.length);
+      // Functional update: `c` is always the latest value, no stale closure
+      setCurrent((c) => {
+        setPrev(c);
+        return (c + 1) % slides.length;
+      });
     }, 6000);
     return () => clearInterval(timer);
-  }, [current]);
+  }, []); // Empty deps: interval is created once, never re-created
 
   async function onSubmit(data: FormData) {
     setLoading(true);

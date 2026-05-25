@@ -8,6 +8,15 @@ export const metadata: Metadata = {
   title: "All Procedures | Cosmetic Surgery Miami, Hialeah FL",
   description:
     "Explore all cosmetic surgery procedures at Your Cosmetic Surgery & SPA in Miami — BBL, Lipo 360, tummy tuck, breast augmentation, rhinoplasty, facelift, bichectomy & more. Board-certified surgeons. Flexible financing.",
+  alternates: {
+    canonical: "https://ycosmeticsurgery.com/procedures",
+  },
+  openGraph: {
+    title: "All Procedures | Your Cosmetic Surgery & SPA Miami",
+    description:
+      "Browse our full menu of surgical and non-surgical cosmetic procedures — body contouring, breast, face, and MedSpa. Board-certified surgeons in Hialeah, FL.",
+    url: "https://ycosmeticsurgery.com/procedures",
+  },
 };
 
 const categories = ["body", "breast", "face", "medspa"] as const;
@@ -19,9 +28,31 @@ const gradientMap: Record<string, string> = {
   medspa: "from-[#3d2a1a] to-[#2e1a0d]",
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Cosmetic Surgery & MedSpa Procedures — Your Cosmetic Surgery & SPA",
+  description:
+    "Complete list of cosmetic surgery and medical spa procedures offered at Your Cosmetic Surgery & SPA in Hialeah, FL, serving Miami and South Florida.",
+  url: "https://ycosmeticsurgery.com/procedures",
+  numberOfItems: procedures.length,
+  itemListElement: procedures.map((proc, idx) => ({
+    "@type": "ListItem",
+    position: idx + 1,
+    name: proc.name,
+    url: `https://ycosmeticsurgery.com/procedures/${proc.slug}`,
+    description: proc.tagline,
+  })),
+};
+
 export default function ProceduresPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       {/* Hero */}
       <section className="relative bg-navy pt-36 pb-24 overflow-hidden">
         <div className="absolute inset-0 hero-pattern opacity-40" />

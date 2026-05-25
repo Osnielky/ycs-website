@@ -71,16 +71,7 @@ export default function Navbar() {
   return (
     <>
       <header
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
-        style={{
-          background: scrolled
-            ? "linear-gradient(105deg, #1a6fe8 0%, #0e3aaa 30%, #081d6a 65%, #040d30 100%)"
-            : "linear-gradient(to bottom, rgba(4,13,48,0.15) 0%, transparent 100%)",
-          backdropFilter: scrolled ? "none" : "none",
-          boxShadow: scrolled
-            ? "0 6px 50px rgba(18,69,200,0.5), 0 2px 0 rgba(201,164,110,0.25)"
-            : "none",
-        }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "navbar-scrolled" : "navbar-top"}`}
       >
         {/* Subtle radial spotlight from top-center */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_120%_at_50%_-20%,rgba(59,130,246,0.35),transparent)]" />
