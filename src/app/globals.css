@@ -56,7 +56,7 @@ h5 {
 
 /* Hero slide image — mobile uses center top, desktop uses per-slide position via CSS var */
 .hero-slide-img {
-  object-position: center top;
+  object-position: center center;
 }
 @media (min-width: 768px) {
   .hero-slide-img {
