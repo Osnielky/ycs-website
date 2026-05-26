@@ -32,7 +32,7 @@ const slides = [
   { src: "/hero/1.jpg", position: "center center" },
   { src: "/hero/2.jpg", position: "center 25%" },
   { src: "/hero/3.jpg", position: "center 15%" },
-  { src: "/hero/4.jpg", position: "center 20%" },
+  { src: "/hero/4.webp", position: "center 20%" },
   { src: "/hero/5.jpg", position: "center 18%" },
   { src: "/hero/6.jpg", position: "center 20%" },
 ];
