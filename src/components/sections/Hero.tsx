@@ -29,7 +29,7 @@ const procedures = [
 
 /* ── Add more images to public/hero/ as 2.jpg, 3.jpg … to extend the slideshow ── */
 const slides = [
-  { src: "/hero/1.jpg", position: "center center" },
+  { src: "/hero/1.webp", position: "center center" },
   { src: "/hero/2.jpg", position: "center 25%" },
   { src: "/hero/3.jpg", position: "center 15%" },
   { src: "/hero/4.webp", position: "center 20%" },
