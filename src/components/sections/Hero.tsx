@@ -90,15 +90,15 @@ export default function Hero() {
             style={{
               opacity: i === current ? 1 : 0,
               zIndex: i === current ? 1 : 0,
-            }}
+              "--hero-pos": slide.position,
+            } as React.CSSProperties}
           >
             <Image
               src={slide.src}
               alt=""
               fill
               priority={i === 0}
-              className="object-cover"
-              style={{ objectPosition: slide.position }}
+              className="object-cover hero-slide-img"
               sizes="100vw"
               quality={75}
             />
@@ -107,9 +107,11 @@ export default function Hero() {
       })}
 
       {/* ── Overlays ── */}
-      {/* Dark gradient from left so text is legible */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-r from-navy-dark/90 via-navy-dark/60 to-navy-dark/20" />
-      {/* Bottom fade */}
+      {/* Mobile: top-to-bottom dark overlay so text is always legible */}
+      <div className="absolute inset-0 z-10 bg-gradient-to-b from-navy-dark/80 via-navy-dark/60 to-navy-dark/80 md:hidden" />
+      {/* Desktop: left-to-right gradient */}
+      <div className="absolute inset-0 z-10 bg-gradient-to-r from-navy-dark/90 via-navy-dark/60 to-navy-dark/20 hidden md:block" />
+      {/* Bottom fade — both */}
       <div className="absolute inset-0 z-10 bg-gradient-to-t from-navy-dark/80 via-transparent to-navy-dark/30" />
 
       {/* Slide indicator dots */}
@@ -127,7 +129,7 @@ export default function Hero() {
       </div>
 
       {/* ── Main content ── */}
-      <div className="relative z-20 max-w-7xl mx-auto px-6 pt-36 pb-24 grid lg:grid-cols-2 gap-12 items-center w-full">
+      <div className="relative z-20 max-w-7xl mx-auto px-5 pt-28 pb-16 md:pt-36 md:pb-24 grid lg:grid-cols-2 gap-10 md:gap-12 items-center w-full">
 
         {/* Left: copy */}
         <div>
@@ -145,10 +147,10 @@ export default function Hero() {
 
           {/* Headline */}
           <h1 className="font-heading text-white leading-[1.05] mb-6">
-            <span className="block text-5xl md:text-6xl lg:text-7xl font-light">
+            <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light">
               Trusted Plastic
             </span>
-            <span className="block text-5xl md:text-6xl lg:text-7xl font-light">
+            <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light">
               Surgeons in{" "}
               <em className="not-italic text-gold">Miami</em>
             </span>

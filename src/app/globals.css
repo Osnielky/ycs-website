@@ -54,6 +54,16 @@ h5 {
   border-radius: 3px;
 }
 
+/* Hero slide image — mobile uses center top, desktop uses per-slide position via CSS var */
+.hero-slide-img {
+  object-position: center top;
+}
+@media (min-width: 768px) {
+  .hero-slide-img {
+    object-position: var(--hero-pos, center center);
+  }
+}
+
 /* Gold divider utility */
 .gold-divider {
   display: block;
