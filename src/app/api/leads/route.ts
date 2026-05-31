@@ -55,6 +55,10 @@ export async function POST(req: NextRequest) {
       email:     lead.email,
       procedure: lead.procedure,
       message:   lead.message,
+    }).then(() => {
+      console.log("[YCS Email] Lead notification sent for:", lead.name);
+    }).catch((err) => {
+      console.error("[YCS Email] Lead notification FAILED for:", lead.name, err);
     });
 
     return NextResponse.json({ success: true });

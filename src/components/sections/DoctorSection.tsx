@@ -14,7 +14,7 @@ export default function DoctorSection() {
           alt="Dr. Mario Reyes-Serrano performing cosmetic surgery in Miami"
           fill
           className="object-cover object-center"
-          sizes="48vw"
+          sizes="(max-width: 1024px) 100vw, 48vw"
           quality={90}
         />
         {/* Gradient fade right → blends into dark panel */}

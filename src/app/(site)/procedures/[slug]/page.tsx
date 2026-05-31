@@ -27,6 +27,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${proc.name} in Miami | Your Cosmetic Surgery & SPA`,
       description: `${proc.description} Board-certified surgeons, free consultation, flexible financing. Hialeah, FL.`,
       url: `https://ycosmeticsurgery.com/procedures/${proc.slug}`,
+      images: [
+        {
+          url: `/procedures/${proc.slug}.webp`,
+          width: 1200,
+          height: 630,
+          alt: `${proc.name} results at Your Cosmetic Surgery & SPA, Miami`,
+        },
+      ],
     },
   };
 }

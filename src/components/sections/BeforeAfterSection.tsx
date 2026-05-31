@@ -11,8 +11,8 @@ const cases = [
     procedure: "Tummy Tuck",
     category: "Body",
     description: "Dramatic improvement in abdominal profile with tightened core muscles and removed excess skin.",
-    beforeImg: "/before-after/tummy-tuck-before.jpg",
-    afterImg:  "/before-after/tummy-tuck-after.jpg",
+    beforeImg: "/before-after/tummy-tuck-before.webp",
+    afterImg:  "/before-after/tummy-tuck-after.webp",
     beforeBg:  "from-[#c4bfb8] to-[#a89f96]",
     afterBg:   "from-[#e8d5c0] to-[#d4b896]",
   },
@@ -55,10 +55,10 @@ function BeforeAfterCard({
           {!beforeErr && (
             <Image
               src={c.beforeImg}
-              alt={`Before ${c.procedure}`}
+              alt={`Before ${c.procedure} at YCS Aesthetic Center, Miami`}
               fill
               className="object-cover object-center"
-              sizes="(max-width: 768px) 50vw, 20vw"
+              sizes="(max-width: 768px) 50vw, 17vw"
               onError={() => setBeforeErr(true)}
             />
           )}
@@ -72,10 +72,10 @@ function BeforeAfterCard({
           {!afterErr && (
             <Image
               src={c.afterImg}
-              alt={`After ${c.procedure}`}
+              alt={`After ${c.procedure} results — YCS Aesthetic Center Hialeah`}
               fill
               className="object-cover object-center"
-              sizes="(max-width: 768px) 50vw, 20vw"
+              sizes="(max-width: 768px) 50vw, 17vw"
               onError={() => setAfterErr(true)}
             />
           )}

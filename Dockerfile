@@ -10,12 +10,6 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Env vars needed at build time (values injected by Cloud Run at runtime)
-ARG SUPABASE_URL
-ARG SUPABASE_SERVICE_KEY
-ARG RESEND_API_KEY
-ARG CLINIC_EMAIL
-
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 

@@ -9,6 +9,48 @@ export const metadata: Metadata = {
   description:
     "Meet the Your Cosmetic Surgery & SPA team — Dr. Mario Reyes-Serrano and our board-certified plastic surgeons with 20+ years of experience in Miami and Hialeah, FL. Natural results, compassionate care.",
   alternates: { canonical: "https://ycosmeticsurgery.com/about" },
+  openGraph: {
+    title: "About Your Cosmetic Surgery & SPA | Miami, FL",
+    description:
+      "Board-certified plastic surgeons with 20+ years of experience. AAAHC-accredited facility in Hialeah. Over 5,000 transformations and counting.",
+    url: "https://ycosmeticsurgery.com/about",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Your Cosmetic Surgery & SPA Miami team" }],
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://ycosmeticsurgery.com/#organization",
+  name: "Your Cosmetic Surgery & SPA",
+  alternateName: "YCS Aesthetic Center",
+  url: "https://ycosmeticsurgery.com",
+  logo: "https://ycosmeticsurgery.com/Logo.jpg",
+  telephone: "+13052183513",
+  email: "info@ycosmeticsurgery.com",
+  foundingDate: "2004",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "1255 W 46th St Suite #6 & 7A",
+    addressLocality: "Hialeah",
+    addressRegion: "FL",
+    postalCode: "33012",
+    addressCountry: "US",
+  },
+  sameAs: [
+    "https://www.instagram.com/yourcosmetic_surgery_spa",
+    "https://www.facebook.com/yourcosmeticsurgeryspa/",
+    "https://www.tiktok.com/@your.cosmetic_surgery",
+  ],
+  hasCredential: [
+    { "@type": "EducationalOccupationalCredential", credentialCategory: "AAAHC Accreditation" },
+  ],
+  slogan: "Natural Results. Exceptional Care.",
+  areaServed: [
+    { "@type": "City", name: "Miami", sameAs: "https://www.wikidata.org/wiki/Q8652" },
+    { "@type": "City", name: "Hialeah", sameAs: "https://www.wikidata.org/wiki/Q501291" },
+    { "@type": "AdministrativeArea", name: "South Florida" },
+  ],
 };
 
 const milestones = [
@@ -30,6 +72,7 @@ const values = [
 export default function AboutPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* Hero */}
       <section className="relative bg-navy pt-36 pb-24 overflow-hidden">
         <div className="absolute inset-0 hero-pattern opacity-40" />

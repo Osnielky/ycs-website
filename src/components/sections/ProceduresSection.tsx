@@ -16,8 +16,8 @@ const tabs = [
 
 // Hero images cycled as procedure card visuals
 const heroImages = [
-  "/hero/1.jpg", "/hero/2.jpg", "/hero/3.jpg",
-  "/hero/4.jpg", "/hero/5.jpg", "/hero/6.jpg",
+  "/hero/1.webp", "/hero/2.webp", "/hero/3.webp",
+  "/hero/4.webp", "/hero/5.webp", "/hero/6.webp",
 ];
 
 // Category-specific gradient overlays on the image
@@ -44,8 +44,9 @@ function ProcedureCard({
   fallbackSrc: string;
   onInterested: () => void;
 }) {
-  // Try /procedures/{slug}.jpg first; if missing, fall back to hero image
-  const [src, setSrc] = useState(`/procedures/${proc.slug}.jpg`);
+  // Try /procedures/{slug}.webp first; if missing fall back to hero image
+  const webpSrc = `/procedures/${proc.slug}.webp`;
+  const [src, setSrc] = useState(webpSrc);
   const [imgErr, setImgErr] = useState(false);
 
   function handleError() {
@@ -65,7 +66,8 @@ function ProcedureCard({
             src={src}
             alt={proc.name}
             fill
-            className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+            className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+            style={{ objectPosition: proc.imagePosition ?? "center center" }}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             onError={handleError}
           />

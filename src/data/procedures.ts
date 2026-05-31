@@ -9,6 +9,7 @@ export interface Procedure {
   recovery: string;
   icon: string;
   featured: boolean;
+  imagePosition?: string;
 }
 
 export const procedures: Procedure[] = [
@@ -66,6 +67,7 @@ export const procedures: Procedure[] = [
     recovery: "3–6 weeks",
     icon: "❖",
     featured: true,
+    imagePosition: "center bottom",
   },
   {
     id: "mommy-makeover",
@@ -340,6 +342,7 @@ export const procedures: Procedure[] = [
     recovery: "2–3 weeks",
     icon: "✧",
     featured: false,
+    imagePosition: "center 60%",
   },
   // Breast (additional)
   {

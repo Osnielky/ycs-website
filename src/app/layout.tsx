@@ -88,6 +88,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${cormorant.variable} ${inter.variable}`} suppressHydrationWarning>
+      <head>
+        <link rel="preload" as="image" href="/hero/1.webp" fetchPriority="high" />
+      </head>
       <body className="min-h-screen flex flex-col antialiased" suppressHydrationWarning>
         {children}
       </body>

@@ -29,12 +29,12 @@ const procedures = [
 
 /* ── Add more images to public/hero/ as 2.jpg, 3.jpg … to extend the slideshow ── */
 const slides = [
-  { src: "/hero/1.webp", position: "center center" },
-  { src: "/hero/2.jpg", position: "center 25%" },
-  { src: "/hero/3.jpg", position: "center 15%" },
-  { src: "/hero/4.webp", position: "center 20%" },
-  { src: "/hero/5.jpg", position: "center 18%" },
-  { src: "/hero/6.jpg", position: "center 20%" },
+  { src: "/hero/1.webp", position: "center center", alt: "Cosmetic surgery consultation at Your Cosmetic Surgery & SPA in Miami, FL" },
+  { src: "/hero/2.webp", position: "center 25%",    alt: "Board-certified plastic surgeon performing procedure at YCS Aesthetic Center Hialeah" },
+  { src: "/hero/3.webp", position: "center 15%",    alt: "Patient transformation results at Your Cosmetic Surgery & SPA Miami" },
+  { src: "/hero/4.webp", position: "center 20%",    alt: "Cosmetic surgery results — BBL, tummy tuck, liposuction at YCS Miami" },
+  { src: "/hero/5.webp", position: "center 18%",    alt: "Luxury cosmetic surgery facility in Hialeah serving South Florida" },
+  { src: "/hero/6.webp", position: "center 20%",    alt: "Before and after cosmetic surgery at Your Cosmetic Surgery & SPA, Miami FL" },
 ];
 
 export default function Hero() {
@@ -95,7 +95,7 @@ export default function Hero() {
           >
             <Image
               src={slide.src}
-              alt=""
+              alt={slide.alt}
               fill
               priority={i === 0}
               className="object-cover hero-slide-img"
@@ -233,6 +233,9 @@ export default function Hero() {
                     <input
                       {...register("name")}
                       placeholder="Your Full Name"
+                      autoComplete="name"
+                      data-lpignore="true"
+                      data-1p-ignore
                       className="w-full bg-white/10 border border-white/25 focus:border-gold rounded-lg px-4 py-3 text-white placeholder-white/40 text-sm outline-none transition-colors"
                     />
                     {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name.message}</p>}
@@ -243,6 +246,9 @@ export default function Hero() {
                       {...register("phone")}
                       placeholder="Phone Number"
                       type="tel"
+                      autoComplete="tel"
+                      data-lpignore="true"
+                      data-1p-ignore
                       className="w-full bg-white/10 border border-white/25 focus:border-gold rounded-lg px-4 py-3 text-white placeholder-white/40 text-sm outline-none transition-colors"
                     />
                     {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone.message}</p>}
