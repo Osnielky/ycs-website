@@ -1,8 +1,14 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-const FROM   = "YCS Aesthetic Center <onboarding@resend.dev>";
-const TO     = process.env.CLINIC_EMAIL ?? "info@ycosmeticsurgery.com";
+const FROM = "YCS Aesthetic Center <onboarding@resend.dev>";
+
+function getResend() {
+  return new Resend(process.env.RESEND_API_KEY);
+}
+
+function getTo() {
+  return process.env.CLINIC_EMAIL ?? "info@ycosmeticsurgery.com";
+}
 
 function base(title: string, body: string) {
   return `<!DOCTYPE html>
@@ -94,9 +100,9 @@ export async function sendLeadEmail(lead: {
       row("Time",      new Date().toLocaleString("en-US", { timeZone: "America/New_York", dateStyle: "full", timeStyle: "short" })),
     )}`;
 
-  await resend.emails.send({
+  await getResend().emails.send({
     from:    FROM,
-    to:      TO,
+    to:      getTo(),
     subject,
     html:    base(subject, body),
   }).catch((err: unknown) => {
@@ -142,9 +148,9 @@ export async function sendAppointmentEmail(appt: {
       row("Submitted",  new Date().toLocaleString("en-US", { timeZone: "America/New_York", dateStyle: "full", timeStyle: "short" })),
     )}`;
 
-  await resend.emails.send({
+  await getResend().emails.send({
     from:    FROM,
-    to:      TO,
+    to:      getTo(),
     subject,
     html:    base(subject, body),
   }).catch((err: unknown) => {
