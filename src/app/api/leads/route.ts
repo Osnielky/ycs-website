@@ -12,7 +12,7 @@ const schema = z.object({
   smsConsent: z.boolean().optional(),
 });
 
-const supabase = createClient(
+const getSupabase = () => createClient(
   process.env.SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_KEY!
 );
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
 
     const lead = parsed.data;
 
-    const { error } = await supabase.from("leads").insert([{
+    const { error } = await getSupabase().from("leads").insert([{
       name: lead.name,
       phone: lead.phone,
       email: lead.email ?? null,

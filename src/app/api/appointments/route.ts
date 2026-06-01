@@ -12,7 +12,7 @@ const schema = z.object({
   scheduled_time: z.string().optional(), // "9:00 AM"
 });
 
-const supabase = createClient(
+const getSupabase = () => createClient(
   process.env.SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_KEY!
 );
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
     // ── 1. Find existing lead by phone, or create a new one ──────────────────
     let leadId: string;
 
-    const { data: existing } = await supabase
+    const { data: existing } = await getSupabase()
       .from("leads")
       .select("id")
       .eq("phone", phone)
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
       leadId = existing.id;
       console.log(`[YCS Appt] Existing lead ${leadId} matched by phone ${phone}`);
     } else {
-      const { data: newLead, error: leadErr } = await supabase
+      const { data: newLead, error: leadErr } = await getSupabase()
         .from("leads")
         .insert([{
           name,
@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
     }
 
     // ── 2. Create the appointment ─────────────────────────────────────────────
-    const { data: appt, error: apptErr } = await supabase
+    const { data: appt, error: apptErr } = await getSupabase()
       .from("appointments")
       .insert([{
         lead_id:        leadId,
