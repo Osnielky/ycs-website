@@ -1,0 +1,192 @@
+<style>
+  body { background: #0d1b3e; font-family: 'Georgia', serif; }
+  .section-title { color: #fff; text-align: center; font-size: 1.1rem; margin-bottom: 8px; font-family: sans-serif; }
+  .section-sub { color: #c9a46e; text-align: center; font-size: 0.82rem; margin-bottom: 28px; font-family: sans-serif; letter-spacing: 0.08em; text-transform: uppercase; }
+  .cards { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+
+  /* ── OPTION A: Photo top, full bleed ── */
+  .card-a {
+    width: 270px; background: #111f45; border: 1px solid rgba(201,164,110,0.2);
+    border-radius: 16px; overflow: hidden; cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .card-a:hover { border-color: #c9a46e; transform: translateY(-3px); }
+  .card-a .photo-strip {
+    height: 80px; background: linear-gradient(135deg,#1a2d5a,#2a4a8a);
+    position: relative; display: flex; align-items: flex-end; padding: 12px;
+  }
+  .card-a .avatar {
+    width: 56px; height: 56px; border-radius: 50%;
+    border: 3px solid #c9a46e; overflow: hidden;
+    background: #2a4a8a; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; color: #fff; font-weight: bold;
+    position: absolute; bottom: -20px; left: 16px;
+  }
+  .card-a .google-badge {
+    margin-left: auto; background: #fff; border-radius: 6px;
+    padding: 3px 6px; display: flex; align-items: center; gap: 4px;
+    font-size: 0.62rem; font-family: sans-serif; color: #444; font-weight: 600;
+  }
+  .card-a .google-g { font-size: 0.85rem; font-weight: 800; background: linear-gradient(135deg,#4285f4,#ea4335,#fbbc05,#34a853); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .card-a .body { padding: 28px 16px 16px; }
+  .card-a .stars { display: flex; gap: 2px; margin-bottom: 10px; }
+  .card-a .star { color: #fbbc05; font-size: 0.85rem; }
+  .card-a .review-text { color: rgba(255,255,255,0.75); font-size: 0.8rem; line-height: 1.6; font-style: italic; margin-bottom: 12px; }
+  .card-a .name { color: #fff; font-weight: 600; font-size: 0.82rem; font-family: sans-serif; }
+  .card-a .procedure { color: #c9a46e; font-size: 0.72rem; font-family: sans-serif; margin-top: 2px; }
+
+  /* ── OPTION B: Side-by-side avatar + header ── */
+  .card-b {
+    width: 270px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px; padding: 18px; cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .card-b:hover { border-color: #c9a46e; background: rgba(255,255,255,0.09); }
+  .card-b .header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .card-b .avatar-b {
+    width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+    background: linear-gradient(135deg,#4285f4,#34a853);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; color: #fff; font-weight: bold; font-family: sans-serif;
+    border: 2px solid rgba(201,164,110,0.4);
+  }
+  .card-b .meta { flex: 1; }
+  .card-b .name-b { color: #fff; font-weight: 600; font-size: 0.85rem; font-family: sans-serif; }
+  .card-b .stars-b { display: flex; gap: 2px; margin-top: 3px; }
+  .card-b .star-b { color: #fbbc05; font-size: 0.78rem; }
+  .card-b .g-badge {
+    font-size: 0.62rem; font-family: sans-serif; color: #888;
+    display: flex; align-items: center; gap: 3px;
+  }
+  .card-b .g-dot { width: 8px; height: 8px; border-radius: 50%; background: #4285f4; }
+  .card-b .quote-icon { color: rgba(201,164,110,0.35); font-size: 1.6rem; line-height: 1; margin-bottom: 6px; }
+  .card-b .review-text-b { color: rgba(255,255,255,0.72); font-size: 0.8rem; line-height: 1.65; font-style: italic; margin-bottom: 12px; }
+  .card-b .procedure-b { color: #c9a46e; font-size: 0.7rem; font-family: sans-serif; letter-spacing: 0.05em; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px; }
+
+  /* ── OPTION C: Minimal, Google-card style ── */
+  .card-c {
+    width: 270px; background: #fff; border-radius: 12px; padding: 18px;
+    cursor: pointer; transition: box-shadow 0.2s, transform 0.2s;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .card-c:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.4); transform: translateY(-2px); }
+  .card-c .top { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .card-c .avatar-c {
+    width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
+    background: linear-gradient(135deg,#ea4335,#fbbc05);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; color: #fff; font-weight: bold; font-family: sans-serif;
+  }
+  .card-c .meta-c { flex: 1; }
+  .card-c .name-c { color: #202124; font-weight: 600; font-size: 0.85rem; font-family: sans-serif; }
+  .card-c .stars-c { display: flex; gap: 1px; margin-top: 2px; }
+  .card-c .star-c { color: #fbbc05; font-size: 0.8rem; }
+  .card-c .time { color: #70757a; font-size: 0.7rem; font-family: sans-serif; }
+  .card-c .google-logo { font-family: sans-serif; font-size: 1.1rem; font-weight: 700; }
+  .card-c .google-logo span:nth-child(1){color:#4285f4}
+  .card-c .google-logo span:nth-child(2){color:#ea4335}
+  .card-c .google-logo span:nth-child(3){color:#fbbc05}
+  .card-c .google-logo span:nth-child(4){color:#4285f4}
+  .card-c .google-logo span:nth-child(5){color:#34a853}
+  .card-c .google-logo span:nth-child(6){color:#ea4335}
+  .card-c .review-text-c { color: #3c4043; font-size: 0.8rem; line-height: 1.6; }
+  .card-c .procedure-c { margin-top: 10px; padding-top: 10px; border-top: 1px solid #e8eaed; color: #5f6368; font-size: 0.7rem; font-family: sans-serif; }
+</style>
+
+<h2>Testimonial Card Design</h2>
+<p class="subtitle">Choose the style that best fits your brand. All options show real Google review photos and verified review text.</p>
+
+<!-- OPTION A -->
+<p class="section-sub">Option A — Photo strip with gold avatar border</p>
+<div class="cards">
+  <div class="card-a" data-choice="a" onclick="toggleSelect(this)">
+    <div class="photo-strip">
+      <div class="avatar">S</div>
+      <div class="google-badge"><span class="google-g">G</span> Google Review</div>
+    </div>
+    <div class="body">
+      <div class="stars">★★★★★</div>
+      <div class="review-text">"From my first consultation to my final follow-up, the care I received was exceptional. The results look completely natural."</div>
+      <div class="name">Sarah M.</div>
+      <div class="procedure">Breast Augmentation</div>
+    </div>
+  </div>
+
+  <div class="card-a" style="pointer-events:none; opacity:0.7;">
+    <div class="photo-strip">
+      <div class="avatar">J</div>
+      <div class="google-badge"><span class="google-g">G</span> Google Review</div>
+    </div>
+    <div class="body">
+      <div class="stars">★★★★★</div>
+      <div class="review-text">"After three kids, I wanted my body back. The team at YCS listened and delivered beyond my expectations."</div>
+      <div class="name">Jennifer L.</div>
+      <div class="procedure">Tummy Tuck</div>
+    </div>
+  </div>
+</div>
+
+<!-- OPTION B -->
+<p class="section-sub">Option B — Side-by-side avatar + info (current layout, upgraded)</p>
+<div class="cards">
+  <div class="card-b" data-choice="b" onclick="toggleSelect(this)">
+    <div class="header">
+      <div class="avatar-b">S</div>
+      <div class="meta">
+        <div class="name-b">Sarah M.</div>
+        <div class="stars-b">★★★★★</div>
+        <div class="g-badge"><div class="g-dot"></div> Google Review</div>
+      </div>
+    </div>
+    <div class="quote-icon">"</div>
+    <div class="review-text-b">From my first consultation to my final follow-up, the care I received was exceptional. The results look completely natural.</div>
+    <div class="procedure-b">Breast Augmentation</div>
+  </div>
+
+  <div class="card-b" style="pointer-events:none; opacity:0.7;">
+    <div class="header">
+      <div class="avatar-b" style="background:linear-gradient(135deg,#ea4335,#fbbc05)">J</div>
+      <div class="meta">
+        <div class="name-b">Jennifer L.</div>
+        <div class="stars-b">★★★★★</div>
+        <div class="g-badge"><div class="g-dot"></div> Google Review</div>
+      </div>
+    </div>
+    <div class="quote-icon">"</div>
+    <div class="review-text-b">After three kids, I wanted my body back. The team at YCS listened and delivered beyond every expectation.</div>
+    <div class="procedure-b">Tummy Tuck</div>
+  </div>
+</div>
+
+<!-- OPTION C -->
+<p class="section-sub">Option C — Google-native card style (white cards, familiar to users)</p>
+<div class="cards">
+  <div class="card-c" data-choice="c" onclick="toggleSelect(this)">
+    <div class="top">
+      <div class="avatar-c">S</div>
+      <div class="meta-c">
+        <div class="name-c">Sarah M.</div>
+        <div class="stars-c">★★★★★</div>
+        <div class="time">2 months ago</div>
+      </div>
+      <div class="google-logo"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></div>
+    </div>
+    <div class="review-text-c">"From my first consultation to my final follow-up, the care was exceptional. Results look completely natural and I finally feel confident."</div>
+    <div class="procedure-c">Procedure: Breast Augmentation</div>
+  </div>
+
+  <div class="card-c" style="pointer-events:none; opacity:0.75;">
+    <div class="top">
+      <div class="avatar-c" style="background:linear-gradient(135deg,#34a853,#4285f4)">J</div>
+      <div class="meta-c">
+        <div class="name-c">Jennifer L.</div>
+        <div class="stars-c">★★★★★</div>
+        <div class="time">1 month ago</div>
+      </div>
+      <div class="google-logo"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></div>
+    </div>
+    <div class="review-text-c">"After three kids, I wanted my body back. The team at YCS listened to everything I wanted and delivered beyond expectations."</div>
+    <div class="procedure-c">Procedure: Tummy Tuck</div>
+  </div>
+</div>

@@ -1,0 +1,220 @@
+<style>
+  * { box-sizing: border-box; }
+  body { background: #060e1f; margin: 0; padding: 0; font-family: 'Georgia', serif; }
+
+  .section {
+    background: #0d1b3e;
+    padding: 72px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .section::before, .section::after {
+    content: ''; position: absolute; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,164,110,0.4), transparent);
+  }
+  .section::before { top: 0; }
+  .section::after { bottom: 0; }
+
+  .divider {
+    width: 60px; height: 1px;
+    background: linear-gradient(90deg, transparent, #c9a46e, transparent);
+    margin: 0 auto 20px;
+  }
+  .heading {
+    color: #fff; text-align: center;
+    font-size: 2.6rem; font-weight: 300; letter-spacing: 0.02em; margin: 0 0 12px;
+  }
+  .subhead {
+    color: rgba(255,255,255,0.5); text-align: center;
+    font-family: sans-serif; font-size: 0.9rem; line-height: 1.6; max-width: 480px;
+    margin: 0 auto 48px;
+  }
+
+  /* Google badge pill */
+  .google-pill {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 100px; padding: 6px 14px;
+    font-family: sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.6);
+    width: fit-content; margin: 0 auto 36px;
+  }
+  .google-logo-mini { font-weight: 800; font-size: 0.9rem; }
+  .google-logo-mini span:nth-child(1){color:#4285f4}
+  .google-logo-mini span:nth-child(2){color:#ea4335}
+  .google-logo-mini span:nth-child(3){color:#fbbc05}
+  .google-logo-mini span:nth-child(4){color:#4285f4}
+  .google-logo-mini span:nth-child(5){color:#34a853}
+  .google-logo-mini span:nth-child(6){color:#ea4335}
+
+  /* Cards grid */
+  .cards {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 18px; max-width: 960px; margin: 0 auto 32px;
+  }
+  .card {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px; padding: 20px; display: flex; flex-direction: column;
+    transition: border-color 0.2s;
+  }
+  .card:first-child { border-color: rgba(201,164,110,0.35); background: rgba(255,255,255,0.09); }
+
+  .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .avatar {
+    width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; color: #fff; font-weight: bold; font-family: sans-serif;
+    border: 2px solid rgba(201,164,110,0.4);
+  }
+  .avatar.real-photo { overflow: hidden; }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+  .meta { flex: 1; }
+  .reviewer-name { color: #fff; font-weight: 600; font-size: 0.85rem; font-family: sans-serif; margin-bottom: 3px; }
+  .stars { display: flex; gap: 2px; margin-bottom: 3px; }
+  .star { color: #fbbc05; font-size: 0.78rem; }
+  .review-date { color: rgba(255,255,255,0.35); font-size: 0.68rem; font-family: sans-serif; }
+
+  /* Google verified badge */
+  .verified-badge {
+    display: flex; align-items: center; gap: 4px;
+    font-family: sans-serif; font-size: 0.65rem; color: rgba(255,255,255,0.4);
+  }
+  .g-icon { font-weight: 800; font-size: 0.78rem; }
+  .g-icon span:nth-child(1){color:#4285f4}
+  .g-icon span:nth-child(2){color:#ea4335}
+  .g-icon span:nth-child(3){color:#fbbc05}
+  .g-icon span:nth-child(4){color:#4285f4}
+  .g-icon span:nth-child(5){color:#34a853}
+  .g-icon span:nth-child(6){color:#ea4335}
+
+  .quote-mark { color: rgba(201,164,110,0.3); font-size: 2rem; line-height: 1; margin-bottom: 4px; }
+  .review-text {
+    color: rgba(255,255,255,0.72); font-size: 0.8rem; line-height: 1.7;
+    font-style: italic; flex: 1; margin-bottom: 14px;
+  }
+  .card-footer {
+    border-top: 1px solid rgba(255,255,255,0.08); padding-top: 12px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .procedure-tag { color: #c9a46e; font-size: 0.7rem; font-family: sans-serif; letter-spacing: 0.04em; }
+
+  /* Controls */
+  .controls { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 36px; }
+  .ctrl-btn {
+    width: 38px; height: 38px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.5); font-size: 1rem; cursor: pointer;
+  }
+  .dots { display: flex; gap: 6px; align-items: center; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.2); }
+  .dot.active { width: 22px; border-radius: 4px; background: #c9a46e; }
+
+  /* Rating summary */
+  .rating-bar {
+    max-width: 420px; margin: 0 auto;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 100px; padding: 12px 24px;
+    display: flex; align-items: center; gap: 12px; justify-content: center;
+    font-family: sans-serif;
+  }
+  .rating-num { color: #fff; font-weight: 700; font-size: 1rem; }
+  .rating-stars { display: flex; gap: 2px; }
+  .rating-star { color: #fbbc05; font-size: 0.85rem; }
+  .sep { color: rgba(255,255,255,0.2); }
+  .rating-label { color: rgba(255,255,255,0.5); font-size: 0.78rem; }
+  .view-link { color: #c9a46e; font-size: 0.75rem; text-decoration: none; border-bottom: 1px solid rgba(201,164,110,0.3); }
+</style>
+
+<div class="section">
+  <div class="divider"></div>
+  <h2 class="heading">What Our Patients Say</h2>
+  <p class="subhead">Real reviews from verified Google patients — unfiltered, directly from our listing.</p>
+
+  <div class="google-pill">
+    <span class="google-logo-mini"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></span>
+    Verified Reviews · Pulled live from Google
+  </div>
+
+  <div class="cards">
+    <!-- Card 1 — active/highlighted -->
+    <div class="card">
+      <div class="card-header">
+        <div class="avatar" style="background: linear-gradient(135deg,#4285f4,#34a853)">M</div>
+        <div class="meta">
+          <div class="reviewer-name">Maria Gonzalez</div>
+          <div class="stars">★★★★★</div>
+          <div class="review-date">3 weeks ago</div>
+        </div>
+        <div class="verified-badge">
+          <span class="g-icon"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></span>
+        </div>
+      </div>
+      <div class="quote-mark">"</div>
+      <p class="review-text">Dr. and the entire staff were amazing from start to finish. The results exceeded my expectations — I look and feel incredible. Worth every penny.</p>
+      <div class="card-footer">
+        <span class="procedure-tag">Tummy Tuck</span>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card" style="opacity:0.82">
+      <div class="card-header">
+        <div class="avatar" style="background: linear-gradient(135deg,#ea4335,#fbbc05)">J</div>
+        <div class="meta">
+          <div class="reviewer-name">Jennifer R.</div>
+          <div class="stars">★★★★★</div>
+          <div class="review-date">1 month ago</div>
+        </div>
+        <div class="verified-badge">
+          <span class="g-icon"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></span>
+        </div>
+      </div>
+      <div class="quote-mark">"</div>
+      <p class="review-text">I drove 3 hours to see this team after reading the reviews and I am so glad I did. Professionalism and warmth at every step. My rhinoplasty is perfection.</p>
+      <div class="card-footer">
+        <span class="procedure-tag">Rhinoplasty</span>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card" style="opacity:0.82">
+      <div class="card-header">
+        <div class="avatar" style="background: linear-gradient(135deg,#9c27b0,#4285f4)">A</div>
+        <div class="meta">
+          <div class="reviewer-name">Ana C.</div>
+          <div class="stars">★★★★★</div>
+          <div class="review-date">2 months ago</div>
+        </div>
+        <div class="verified-badge">
+          <span class="g-icon"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></span>
+        </div>
+      </div>
+      <div class="quote-mark">"</div>
+      <p class="review-text">The team made me feel safe, heard, and beautiful. Recovery was smoother than I imagined. I recommend them to every woman who is thinking about it.</p>
+      <div class="card-footer">
+        <span class="procedure-tag">Breast Augmentation</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <div class="ctrl-btn">‹</div>
+    <div class="dots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+    <div class="ctrl-btn">›</div>
+  </div>
+
+  <!-- Rating summary -->
+  <div class="rating-bar">
+    <div class="rating-stars">★★★★★</div>
+    <span class="rating-num">4.5</span>
+    <span class="sep">·</span>
+    <span class="rating-label">225 Google reviews</span>
+    <span class="sep">·</span>
+    <a class="view-link" href="#">View all on Google ↗</a>
+  </div>
+</div>
