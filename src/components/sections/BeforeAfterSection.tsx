@@ -7,35 +7,35 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import ConsultationModal from "@/components/sections/ConsultationModal";
 
-const cases = [
+const caseImages = [
   {
-    procedure: "Tummy Tuck",
-    category: "Body",
-    description: "Dramatic improvement in abdominal profile with tightened core muscles and removed excess skin.",
+    id: 1,
     beforeImg: "/before-after/tummy-tuck-before.webp",
     afterImg:  "/before-after/tummy-tuck-after.webp",
     beforeBg:  "from-[#c4bfb8] to-[#a89f96]",
     afterBg:   "from-[#e8d5c0] to-[#d4b896]",
   },
   {
-    procedure: "Breast Augmentation",
-    category: "Breast",
-    description: "Natural-looking volume enhancement achieving beautiful, proportionate results.",
+    id: 2,
     beforeImg: "/before-after/breast-aug-before.jpg",
     afterImg:  "/before-after/breast-aug-after.jpg",
     beforeBg:  "from-[#c0bdc4] to-[#9a96a8]",
     afterBg:   "from-[#dce0e8] to-[#b4bccc]",
   },
   {
-    procedure: "Rhinoplasty",
-    category: "Face",
-    description: "Refined nasal bridge and tip creating perfect facial harmony without an operated appearance.",
+    id: 3,
     beforeImg: "/before-after/rhinoplasty-before.jpg",
     afterImg:  "/before-after/rhinoplasty-after.jpg",
     beforeBg:  "from-[#bdc4c0] to-[#96a89a]",
     afterBg:   "from-[#d4e8d8] to-[#a8ccb0]",
   },
 ];
+
+type CaseData = typeof caseImages[0] & {
+  category: string;
+  procedure: string;
+  description: string;
+};
 
 function BeforeAfterCard({
   c,
@@ -44,7 +44,7 @@ function BeforeAfterCard({
   afterLabel,
   interestedLabel,
 }: {
-  c: typeof cases[0];
+  c: CaseData;
   onInterested: () => void;
   beforeLabel: string;
   afterLabel: string;
@@ -129,6 +129,17 @@ export default function BeforeAfterSection() {
   const t = useTranslations("beforeAfter");
   const [activeProcedure, setActiveProcedure] = useState<string | null>(null);
 
+  const caseTranslations = [
+    { category: t("case1Category"), procedure: t("case1Procedure"), description: t("case1Description") },
+    { category: t("case2Category"), procedure: t("case2Procedure"), description: t("case2Description") },
+    { category: t("case3Category"), procedure: t("case3Procedure"), description: t("case3Description") },
+  ];
+
+  const cases: CaseData[] = caseImages.map((img, i) => ({
+    ...img,
+    ...caseTranslations[i],
+  }));
+
   return (
     <>
       <section className="py-24 bg-white" id="gallery-preview">
@@ -148,7 +159,7 @@ export default function BeforeAfterSection() {
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             {cases.map((c) => (
               <BeforeAfterCard
-                key={c.procedure}
+                key={c.id}
                 c={c}
                 onInterested={() => setActiveProcedure(c.procedure)}
                 beforeLabel={t("before")}

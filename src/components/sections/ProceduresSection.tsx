@@ -14,14 +14,6 @@ const heroImages = [
   "/hero/4.webp", "/hero/5.webp", "/hero/6.webp",
 ];
 
-// Category-specific gradient overlays on the image
-const overlayMap: Record<string, string> = {
-  body:   "from-[#0d1b3e]/85 via-[#0d1b3e]/40 to-[#0d1b3e]/10",
-  breast: "from-[#1a0d35]/85 via-[#2d1a4a]/40 to-[#2d1a4a]/10",
-  face:   "from-[#0d2e2c]/85 via-[#1a3d3a]/40 to-[#1a3d3a]/10",
-  medspa: "from-[#2e1a0d]/85 via-[#3d2a1a]/40 to-[#3d2a1a]/10",
-};
-
 const bgMap: Record<string, string> = {
   body:   "bg-[#0d1b3e]",
   breast: "bg-[#1a0d35]",
@@ -36,6 +28,7 @@ function ProcedureCard({
   learnMore,
   interested,
   recovery,
+  categoryLabel,
 }: {
   proc: Procedure;
   fallbackSrc: string;
@@ -43,6 +36,7 @@ function ProcedureCard({
   learnMore: string;
   interested: string;
   recovery: string;
+  categoryLabel: Record<string, string>;
 }) {
   // Try /procedures/{slug}.webp first; if missing fall back to hero image
   const webpSrc = `/procedures/${proc.slug}.webp`;
@@ -75,7 +69,7 @@ function ProcedureCard({
 
         {/* Category pill */}
         <span className="absolute top-4 left-4 z-10 bg-white/15 backdrop-blur-sm border border-white/20 text-white text-[9px] font-bold tracking-[0.2em] uppercase px-3 py-1.5 rounded-full">
-          {proc.category}
+          {categoryLabel[proc.category] ?? proc.category}
         </span>
 
         {/* Procedure icon — bottom of image */}
@@ -135,6 +129,13 @@ export default function ProceduresSection() {
     { key: "medspa", label: t("tabMedspa") },
   ] as const;
 
+  const categoryLabel: Record<string, string> = {
+    body:   t("tabBody"),
+    breast: t("tabBreast"),
+    face:   t("tabFace"),
+    medspa: t("tabMedspa"),
+  };
+
   const filtered = procedures.filter((p) => p.category === active);
 
   return (
@@ -182,6 +183,7 @@ export default function ProceduresSection() {
                 learnMore={t("learnMore")}
                 interested={t("interested")}
                 recovery={t("recovery")}
+                categoryLabel={categoryLabel}
               />
             ))}
           </div>

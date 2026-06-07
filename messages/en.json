@@ -224,7 +224,16 @@
     "before": "Before",
     "after": "After",
     "interested": "I'm Interested in This Procedure",
-    "viewGallery": "View Full Gallery"
+    "viewGallery": "View Full Gallery",
+    "case1Category": "Body",
+    "case1Procedure": "Tummy Tuck",
+    "case1Description": "Dramatic abdominal transformation after two pregnancies.",
+    "case2Category": "Breast",
+    "case2Procedure": "Breast Augmentation",
+    "case2Description": "Natural, proportionate results with silicone implants.",
+    "case3Category": "Face",
+    "case3Procedure": "Rhinoplasty",
+    "case3Description": "Subtle refinement that enhances natural facial harmony."
   },
   "testimonials": {
     "heading": "What Our Patients Say",

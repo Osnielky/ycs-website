@@ -224,7 +224,16 @@
     "before": "Antes",
     "after": "Después",
     "interested": "Me Interesa Este Procedimiento",
-    "viewGallery": "Ver Galería Completa"
+    "viewGallery": "Ver Galería Completa",
+    "case1Category": "Cuerpo",
+    "case1Procedure": "Abdominoplastia",
+    "case1Description": "Transformación abdominal dramática después de dos embarazos.",
+    "case2Category": "Senos",
+    "case2Procedure": "Aumento de Senos",
+    "case2Description": "Resultados naturales y proporcionales con implantes de silicona.",
+    "case3Category": "Cara",
+    "case3Procedure": "Rinoplastia",
+    "case3Description": "Refinamiento sutil que realza la armonía facial natural."
   },
   "testimonials": {
     "heading": "Lo Que Dicen Nuestros Pacientes",
