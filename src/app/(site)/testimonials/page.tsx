@@ -27,6 +27,33 @@ const platforms = [
 
 const totalReviews = platforms.reduce((sum, p) => sum + parseInt(p.count), 0);
 
+const reviewsJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Patient Reviews — Your Cosmetic Surgery & SPA",
+  url: "https://ycosmeticsurgery.com/testimonials",
+  numberOfItems: testimonials.length,
+  itemListElement: testimonials.map((t, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    item: {
+      "@type": "Review",
+      author: { "@type": "Person", name: t.name },
+      reviewBody: t.text,
+      reviewRating: {
+        "@type": "Rating",
+        ratingValue: t.rating,
+        bestRating: 5,
+      },
+      itemReviewed: {
+        "@type": "MedicalBusiness",
+        name: "Your Cosmetic Surgery & SPA",
+        url: "https://ycosmeticsurgery.com",
+      },
+    },
+  })),
+};
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "MedicalBusiness",
@@ -66,6 +93,10 @@ const jsonLd = {
 export default function TestimonialsPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewsJsonLd) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
