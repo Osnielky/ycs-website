@@ -43,6 +43,7 @@ const reviewsJsonLd = {
       reviewRating: {
         "@type": "Rating",
         ratingValue: t.rating,
+        worstRating: 1,
         bestRating: 5,
       },
       itemReviewed: {
@@ -74,7 +75,7 @@ const jsonLd = {
     author: { "@type": "Person", name: t.name },
     reviewRating: {
       "@type": "Rating",
-      ratingValue: String(t.rating),
+      ratingValue: t.rating,
       bestRating: "5",
       worstRating: "1",
     },
