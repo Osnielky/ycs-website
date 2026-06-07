@@ -17,11 +17,13 @@ function timingSafeEqual(a: string, b: string): boolean {
 export default function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  if (pathname.startsWith('/admin') && !pathname.startsWith('/admin/login')) {
-    const adminToken = process.env.ADMIN_TOKEN;
-    const session = req.cookies.get('admin_session');
-    if (!adminToken || !timingSafeEqual(session?.value ?? '', adminToken)) {
-      return NextResponse.redirect(new URL('/admin/login', req.url));
+  if (pathname.startsWith('/admin')) {
+    if (!pathname.startsWith('/admin/login')) {
+      const adminToken = process.env.ADMIN_TOKEN;
+      const session = req.cookies.get('admin_session');
+      if (!adminToken || !timingSafeEqual(session?.value ?? '', adminToken)) {
+        return NextResponse.redirect(new URL('/admin/login', req.url));
+      }
     }
     return NextResponse.next();
   }
