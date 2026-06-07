@@ -79,6 +79,13 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  icons: {
+    icon: [
+      { url: '/logo.svg', type: 'image/svg+xml' },
+    ],
+    apple: '/logo.svg',
+  },
+  manifest: '/site.webmanifest',
 };
 
 export default function RootLayout({

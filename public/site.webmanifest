@@ -1,0 +1,12 @@
+{
+  "name": "Your Cosmetic Surgery & SPA",
+  "short_name": "YCS",
+  "description": "Board-certified plastic surgeons in Miami & Hialeah, FL",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#0d1b3e",
+  "background_color": "#faf9f7",
+  "icons": [
+    { "src": "/logo.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
