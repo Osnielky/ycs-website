@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
+import LanguageSwitcher from "./LanguageSwitcher";
 import Image from "next/image";
 import { Menu, X, Phone, ChevronDown } from "lucide-react";
 
@@ -53,6 +55,13 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileProc, setMobileProc] = useState(false);
+  const t = useTranslations("nav");
+  const catLabel: Record<string, string> = {
+    Body: t("body"),
+    Breast: t("breast"),
+    Face: t("face"),
+    MedSpa: t("medspa"),
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -115,7 +124,7 @@ export default function Navbar() {
               onMouseLeave={() => setDropdownOpen(false)}
             >
               <button className="flex items-center gap-1 text-white/85 hover:text-gold text-[13px] font-medium tracking-widest uppercase transition-colors py-2">
-                Procedures
+                {t("procedures")}
                 <ChevronDown
                   size={13}
                   className={`transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`}
@@ -137,7 +146,7 @@ export default function Navbar() {
                       className={`pr-5 ${i < 3 ? "border-r border-cream-dark" : ""}`}
                     >
                       <h4 className="font-heading text-navy text-[18px] font-semibold mb-3 pb-2 border-b border-gold/40">
-                        {col.category}
+                        {catLabel[col.category] ?? col.category}
                       </h4>
                       <ul className="space-y-1">
                         {col.items.map((item) => (
@@ -159,23 +168,23 @@ export default function Navbar() {
                     href="/procedures"
                     className="text-navy/55 hover:text-navy transition-colors"
                   >
-                    View all procedures →
+                    {t("viewAllProcedures")}
                   </Link>
                   <Link
                     href="/gallery"
                     className="text-navy/55 hover:text-navy transition-colors"
                   >
-                    Before &amp; After gallery →
+                    {t("beforeAfterGallery")}
                   </Link>
                 </div>
               </div>
             </li>
 
             {[
-              { label: "Gallery", href: "/gallery" },
-              { label: "About", href: "/about" },
-              { label: "Testimonials", href: "/testimonials" },
-              { label: "Contact", href: "/contact" },
+              { label: t("gallery"), href: "/gallery" },
+              { label: t("about"), href: "/about" },
+              { label: t("testimonials"), href: "/testimonials" },
+              { label: t("contact"), href: "/contact" },
             ].map((link) => (
               <li key={link.href}>
                 <Link
@@ -190,6 +199,7 @@ export default function Navbar() {
 
           {/* Right CTA */}
           <div className="flex items-center gap-4">
+            <LanguageSwitcher />
             <a
               href="tel:+13052183513"
               className="hidden md:flex lg:hidden xl:flex items-center gap-1.5 text-gold hover:text-gold-light text-[13px] font-medium transition-colors"
@@ -201,12 +211,12 @@ export default function Navbar() {
               href="/contact"
               className="hidden md:inline-flex items-center bg-gold hover:bg-gold-dark text-white text-[12px] font-semibold tracking-[0.15em] uppercase px-6 py-2.5 rounded-full transition-all duration-200 hover:scale-105 hover:shadow-[0_4px_20px_rgba(201,164,110,0.4)]"
             >
-              Free Consultation
+              {t("bookConsultation")}
             </Link>
             <button
               className="lg:hidden text-white/90 hover:text-gold transition-colors p-1"
               onClick={() => setMobileOpen(true)}
-              aria-label="Open menu"
+              aria-label={t("openMenu")}
             >
               <Menu size={22} />
             </button>
@@ -259,7 +269,7 @@ export default function Navbar() {
               className="w-full flex items-center justify-between py-3.5 text-white text-lg font-heading border-b border-white/10"
               onClick={() => setMobileProc(!mobileProc)}
             >
-              Procedures
+              {t("procedures")}
               <ChevronDown
                 size={16}
                 className={`text-gold transition-transform duration-200 ${mobileProc ? "rotate-180" : ""}`}
@@ -270,7 +280,7 @@ export default function Navbar() {
                 {procedureMenu.map((col) => (
                   <div key={col.category} className="mt-4">
                     <p className="text-gold text-[10px] tracking-[0.3em] uppercase font-semibold mb-2">
-                      {col.category}
+                      {catLabel[col.category] ?? col.category}
                     </p>
                     {col.items.map((item) => (
                       <Link
@@ -288,10 +298,10 @@ export default function Navbar() {
             )}
 
             {[
-              { label: "Gallery", href: "/gallery" },
-              { label: "About", href: "/about" },
-              { label: "Testimonials", href: "/testimonials" },
-              { label: "Contact", href: "/contact" },
+              { label: t("gallery"), href: "/gallery" },
+              { label: t("about"), href: "/about" },
+              { label: t("testimonials"), href: "/testimonials" },
+              { label: t("contact"), href: "/contact" },
             ].map((link) => (
               <Link
                 key={link.href}
@@ -306,12 +316,15 @@ export default function Navbar() {
 
           {/* Panel footer */}
           <div className="px-6 py-6 border-t border-white/10 space-y-3">
+            <div className="flex justify-center mb-2">
+              <LanguageSwitcher />
+            </div>
             <Link
               href="/contact"
               className="block w-full text-center bg-gold hover:bg-gold-dark text-white py-3.5 rounded-full text-sm font-semibold tracking-[0.15em] uppercase transition-colors"
               onClick={() => setMobileOpen(false)}
             >
-              Book Free Consultation
+              {t("bookFreeConsultation")}
             </Link>
             <a
               href="tel:+13052183513"
