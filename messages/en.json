@@ -75,7 +75,17 @@
   },
   "cta": {
     "sectionTitle": "Real Patients, Real Results",
-    "sectionSubtitle": "Hear directly from the patients whose lives were transformed at Your Cosmetic Surgery & SPA."
+    "sectionSubtitle": "Hear directly from the patients whose lives were transformed at Your Cosmetic Surgery & SPA.",
+    "comingSoon": "Coming Soon",
+    "video1Name": "Patient Story",
+    "video1Procedure": "Your Cosmetic Surgery & SPA",
+    "video1Quote": "Real results from a real patient.",
+    "video2Name": "Patient Story",
+    "video2Procedure": "Your Cosmetic Surgery & SPA",
+    "video2Quote": "Real results from a real patient.",
+    "video3Name": "Anabel — New Jersey",
+    "video3Procedure": "Lipo + BBL",
+    "video3Quote": "Real results from a real patient."
   },
   "footer": {
     "contactUs": "Contact Us",

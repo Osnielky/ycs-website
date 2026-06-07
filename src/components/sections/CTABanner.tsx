@@ -1,34 +1,16 @@
 import { Play, Star } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
-const videos = [
-  {
-    id: "v1",
-    tiktokId: "7642393826211925279",
-    name: "Patient Story",
-    procedure: "Your Cosmetic Surgery & SPA",
-    rating: 5,
-    quote: "Real results from a real patient.",
-  },
-  {
-    id: "v2",
-    tiktokId: "7356006842247712046",
-    name: "Patient Story",
-    procedure: "Your Cosmetic Surgery & SPA",
-    rating: 5,
-    quote: "Real results from a real patient.",
-  },
-  {
-    id: "v3",
-    tiktokId: "7403557762489257246",
-    name: "Anabel — New Jersey",
-    procedure: "Lipo + BBL",
-    rating: 5,
-    quote: "Real results from a real patient.",
-  },
-];
+type VideoEntry = {
+  id: string;
+  tiktokId: string;
+  name: string;
+  procedure: string;
+  rating: number;
+  quote: string;
+};
 
-function VideoCard({ video }: { video: typeof videos[0] }) {
+function VideoCard({ video, comingSoon }: { video: VideoEntry; comingSoon: string }) {
   return (
     <div className="flex flex-col group">
       {/* Video area — portrait 9:16 matches TikTok format */}
@@ -53,7 +35,7 @@ function VideoCard({ video }: { video: typeof videos[0] }) {
               <div className="w-16 h-16 rounded-full border-2 border-white/20 flex items-center justify-center bg-white/8">
                 <Play size={22} className="text-white/30 fill-white/30 ml-1" />
               </div>
-              <span className="text-white/30 text-[11px] tracking-widest uppercase">Coming soon</span>
+              <span className="text-white/30 text-[11px] tracking-widest uppercase">{comingSoon}</span>
             </div>
           </>
         )}
@@ -77,6 +59,33 @@ function VideoCard({ video }: { video: typeof videos[0] }) {
 export default async function CTABanner() {
   const t = await getTranslations("cta");
 
+  const videos: VideoEntry[] = [
+    {
+      id: "v1",
+      tiktokId: "7642393826211925279",
+      name: t("video1Name"),
+      procedure: t("video1Procedure"),
+      rating: 5,
+      quote: t("video1Quote"),
+    },
+    {
+      id: "v2",
+      tiktokId: "7356006842247712046",
+      name: t("video2Name"),
+      procedure: t("video2Procedure"),
+      rating: 5,
+      quote: t("video2Quote"),
+    },
+    {
+      id: "v3",
+      tiktokId: "7403557762489257246",
+      name: t("video3Name"),
+      procedure: t("video3Procedure"),
+      rating: 5,
+      quote: t("video3Quote"),
+    },
+  ];
+
   return (
     <section className="py-24 bg-navy-dark relative overflow-hidden" id="patient-stories">
       <div className="absolute inset-0 hero-pattern opacity-20" />
@@ -98,7 +107,7 @@ export default async function CTABanner() {
         {/* Video grid — portrait ratio for phone-recorded testimonials */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {videos.map((v) => (
-            <VideoCard key={v.id} video={v} />
+            <VideoCard key={v.id} video={v} comingSoon={t("comingSoon")} />
           ))}
         </div>
       </div>

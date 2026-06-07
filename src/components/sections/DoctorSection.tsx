@@ -68,8 +68,7 @@ export default async function DoctorSection() {
                   <circle cx="30" cy="30" r="3" fill="currentColor" stroke="none" />
                 </svg>
                 <div className="text-center">
-                  <p className="text-white text-[9px] tracking-[0.15em] uppercase leading-tight">American Society of</p>
-                  <p className="text-white text-[9px] tracking-[0.15em] uppercase leading-tight">Plastic Surgeons</p>
+                  <p className="text-white text-[9px] tracking-[0.15em] uppercase leading-tight">{t("asps")}</p>
                 </div>
               </div>
 
@@ -80,8 +79,7 @@ export default async function DoctorSection() {
                   <path d="M30 4 L33 22 L50 15 L37 28 L56 30 L37 32 L50 45 L33 38 L30 56 L27 38 L10 45 L23 32 L4 30 L23 28 L10 15 L27 22 Z" />
                 </svg>
                 <div className="text-center">
-                  <p className="text-white text-[9px] tracking-[0.12em] uppercase leading-tight">American Board of</p>
-                  <p className="text-white text-[9px] tracking-[0.12em] uppercase leading-tight">Plastic Surgery</p>
+                  <p className="text-white text-[9px] tracking-[0.12em] uppercase leading-tight">{t("abps")}</p>
                 </div>
               </div>
             </div>
