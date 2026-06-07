@@ -72,8 +72,6 @@ function ProcedureCard({
             onError={handleError}
           />
         )}
-        {/* Gradient overlay */}
-        <div className={`absolute inset-0 bg-gradient-to-t ${overlayMap[proc.category]}`} />
 
         {/* Category pill */}
         <span className="absolute top-4 left-4 z-10 bg-white/15 backdrop-blur-sm border border-white/20 text-white text-[9px] font-bold tracking-[0.2em] uppercase px-3 py-1.5 rounded-full">
