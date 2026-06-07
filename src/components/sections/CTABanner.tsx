@@ -1,4 +1,5 @@
 import { Play, Star } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 const videos = [
   {
@@ -73,7 +74,9 @@ function VideoCard({ video }: { video: typeof videos[0] }) {
   );
 }
 
-export default function CTABanner() {
+export default async function CTABanner() {
+  const t = await getTranslations("cta");
+
   return (
     <section className="py-24 bg-navy-dark relative overflow-hidden" id="patient-stories">
       <div className="absolute inset-0 hero-pattern opacity-20" />
@@ -85,11 +88,10 @@ export default function CTABanner() {
         <div className="text-center mb-16">
           <span className="gold-divider mx-auto mb-5" />
           <h2 className="font-heading text-5xl md:text-6xl text-white font-light mb-4">
-            Real Patients, Real Results
+            {t("sectionTitle")}
           </h2>
           <p className="text-white/50 text-lg max-w-xl mx-auto">
-            Hear directly from the patients whose lives were transformed at
-            Your Cosmetic Surgery &amp; SPA.
+            {t("sectionSubtitle")}
           </p>
         </div>
 

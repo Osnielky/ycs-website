@@ -1,13 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
-const stats = [
-  { value: 20, suffix: "+", label: "Years of Experience" },
-  { value: 5000, suffix: "+", label: "Patients Transformed" },
-  { value: 98, suffix: "%", label: "Patient Satisfaction" },
-  { value: 15, suffix: "+", label: "Procedures Offered" },
-];
+import { useTranslations } from "next-intl";
 
 function AnimatedNumber({
   value,
@@ -45,6 +39,15 @@ function AnimatedNumber({
 }
 
 export default function StatsBar() {
+  const t = useTranslations("stats");
+
+  const stats = [
+    { value: 20, suffix: "+", label: t("yearsExperience") },
+    { value: 5000, suffix: "+", label: t("patientsTransformed") },
+    { value: 98, suffix: "%", label: t("patientSatisfaction") },
+    { value: 15, suffix: "+", label: t("proceduresOffered") },
+  ];
+
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
 

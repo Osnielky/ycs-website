@@ -1,31 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Phone, ArrowDown, Star } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-
-const schema = z.object({
-  name: z.string().min(2, "Please enter your name"),
-  phone: z.string().min(7, "Please enter a valid phone number"),
-  procedure: z.string().optional(),
-});
-type FormData = z.infer<typeof schema>;
-
-const procedures = [
-  "Breast Augmentation",
-  "Tummy Tuck",
-  "Rhinoplasty",
-  "Liposuction",
-  "Brazilian Butt Lift",
-  "Facelift",
-  "Mommy Makeover",
-  "Botox & Fillers",
-  "Other / Not sure",
-];
+import { useTranslations } from "next-intl";
 
 /* ── Add more images to public/hero/ as 2.jpg, 3.jpg … to extend the slideshow ── */
 const slides = [
@@ -38,6 +20,18 @@ const slides = [
 ];
 
 export default function Hero() {
+  const t = useTranslations("hero");
+
+  const schema = useMemo(() => z.object({
+    name: z.string().min(2, t("formNameError")),
+    phone: z.string().min(7, t("formPhoneError")),
+    procedure: z.string().optional(),
+  }), [t]);
+
+  type FormData = z.infer<typeof schema>;
+
+  const procedures = t.raw("procedureOptions") as string[];
+
   const [current, setCurrent] = useState(0);
   const [prev, setPrev] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
@@ -141,18 +135,18 @@ export default function Hero() {
               ))}
             </div>
             <span className="text-white/80 text-xs tracking-wider">
-              4.9 · 500+ Verified Patient Reviews · Miami, FL
+              {t("badge")}
             </span>
           </div>
 
           {/* Headline */}
           <h1 className="font-heading text-white leading-[1.05] mb-6">
             <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light">
-              Trusted Plastic
+              {t("headline1")}
             </span>
             <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light">
-              Surgeons in{" "}
-              <em className="not-italic text-gold">Miami</em>
+              {t("headline2")}{" "}
+              <em className="not-italic text-gold">{t("headlineHighlight")}</em>
             </span>
           </h1>
 
@@ -161,9 +155,7 @@ export default function Hero() {
 
           {/* Sub */}
           <p className="text-white/70 text-lg leading-relaxed mb-8 max-w-lg font-sans">
-            Expert cosmetic surgery services for stunning transformations.
-            Board-certified surgeons with 20+ years of experience, flexible
-            financing, and free consultations. Serving Hialeah and all of South Florida.
+            {t("subheadline")}
           </p>
 
           {/* CTA buttons */}
@@ -172,13 +164,13 @@ export default function Hero() {
               href="/contact"
               className="inline-flex items-center justify-center bg-gold hover:bg-gold-dark text-white font-semibold text-sm tracking-[0.12em] uppercase px-8 py-4 rounded-full transition-all duration-200 hover:scale-105 hover:shadow-[0_8px_30px_rgba(201,164,110,0.5)]"
             >
-              Book Free Consultation
+              {t("bookConsultation")}
             </Link>
             <Link
               href="/gallery"
               className="inline-flex items-center justify-center border border-white/30 hover:border-gold text-white hover:text-gold text-sm tracking-[0.12em] uppercase px-8 py-4 rounded-full transition-all duration-200"
             >
-              View Our Results
+              {t("viewResults")}
             </Link>
           </div>
 
@@ -189,7 +181,7 @@ export default function Hero() {
               className="inline-flex items-center gap-2 text-white/50 hover:text-gold transition-colors text-sm"
             >
               <Phone size={14} />
-              <span>Or call us: (305) 218-3513</span>
+              <span>{t("callUs")}</span>
             </a>
             <span className="hidden sm:block text-white/20">|</span>
             <a
@@ -201,7 +193,7 @@ export default function Hero() {
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
               </svg>
-              <span>Chat on WhatsApp</span>
+              <span>{t("chatWhatsapp")}</span>
             </a>
           </div>
         </div>
@@ -215,24 +207,24 @@ export default function Hero() {
                 <div className="w-16 h-16 bg-gold/20 border border-gold rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-gold text-2xl">✓</span>
                 </div>
-                <h3 className="font-heading text-white text-2xl mb-2">Thank You!</h3>
+                <h3 className="font-heading text-white text-2xl mb-2">{t("thankYouTitle")}</h3>
                 <p className="text-white/60 text-sm leading-relaxed">
-                  We&apos;ve received your request and will contact you within 24 hours to schedule your free consultation.
+                  {t("thankYouMessage")}
                 </p>
               </div>
             ) : (
               <>
                 <div className="mb-6">
                   <span className="gold-divider mb-3" />
-                  <h2 className="font-heading text-white text-2xl font-light">Free Consultation</h2>
-                  <p className="text-white/50 text-sm mt-1">No obligation · Private · Personalized</p>
+                  <h2 className="font-heading text-white text-2xl font-light">{t("formTitle")}</h2>
+                  <p className="text-white/50 text-sm mt-1">{t("formSubtitle")}</p>
                 </div>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                   <div>
                     <input
                       {...register("name")}
-                      placeholder="Your Full Name"
+                      placeholder={t("formNamePlaceholder")}
                       autoComplete="name"
                       data-lpignore="true"
                       data-1p-ignore
@@ -244,7 +236,7 @@ export default function Hero() {
                   <div>
                     <input
                       {...register("phone")}
-                      placeholder="Phone Number"
+                      placeholder={t("formPhonePlaceholder")}
                       type="tel"
                       autoComplete="tel"
                       data-lpignore="true"
@@ -259,7 +251,7 @@ export default function Hero() {
                       {...register("procedure")}
                       className="w-full bg-white/10 border border-white/25 focus:border-gold rounded-lg px-4 py-3 text-white/70 text-sm outline-none transition-colors appearance-none"
                     >
-                      <option value="" className="bg-navy text-white">Procedure of Interest (optional)</option>
+                      <option value="" className="bg-navy text-white">{t("formProcedurePlaceholder")}</option>
                       {procedures.map((p) => (
                         <option key={p} value={p} className="bg-navy text-white">{p}</option>
                       ))}
@@ -271,11 +263,11 @@ export default function Hero() {
                     disabled={loading}
                     className="w-full bg-gold hover:bg-gold-dark text-white font-semibold text-sm tracking-[0.1em] uppercase py-3.5 rounded-lg transition-all duration-200 hover:shadow-[0_4px_20px_rgba(201,164,110,0.5)] disabled:opacity-60"
                   >
-                    {loading ? "Sending…" : "Request My Free Consultation"}
+                    {loading ? t("formSubmitting") : t("formSubmit")}
                   </button>
 
                   <p className="text-white/30 text-[11px] text-center leading-relaxed">
-                    By submitting, you agree to receive a call or text from our team. We never share your information.
+                    {t("formDisclaimer")}
                   </p>
                 </form>
               </>

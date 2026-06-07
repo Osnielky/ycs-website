@@ -1,7 +1,10 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 
-export default function DoctorSection() {
+export default async function DoctorSection() {
+  const t = await getTranslations("doctor");
+
   return (
     <section
       className="relative min-h-[70vh] flex items-center overflow-hidden bg-navy-dark"
@@ -32,20 +35,20 @@ export default function DoctorSection() {
 
             {/* Eyebrow */}
             <p className="text-gold text-xs tracking-[0.35em] uppercase mb-4 font-sans">
-              Your Cosmetic Surgery &amp; SPA · Miami, Florida
+              {t("eyebrow")}
             </p>
 
             {/* Heading */}
             <h2 className="font-heading text-white font-light leading-tight mb-4">
-              <span className="block text-3xl md:text-4xl">Meet</span>
+              <span className="block text-3xl md:text-4xl">{t("meetLabel")}</span>
               <span className="block text-5xl md:text-6xl xl:text-7xl italic text-gold">
-                Dr. Mario Reyes-Serrano
+                {t("name")}
               </span>
             </h2>
 
             {/* Subtitle */}
             <p className="text-white/60 text-xs tracking-[0.3em] uppercase font-sans mb-6">
-              Board-Certified Plastic Surgeon · 20+ Years of Excellence
+              {t("subtitle")}
             </p>
 
             {/* Gold divider */}
@@ -53,12 +56,7 @@ export default function DoctorSection() {
 
             {/* Bio */}
             <p className="text-white/70 text-base leading-relaxed mb-8 font-sans max-w-lg">
-              Dr. Mario Reyes-Serrano is a board-certified plastic surgeon with over 20 years
-              of experience delivering natural-looking, transformative results in Miami and
-              Hialeah, Florida. Specializing in body contouring, breast procedures, facial
-              rejuvenation, and minimally invasive treatments, Dr. Reyes-Serrano combines
-              surgical precision with an artistic eye to help each patient achieve their
-              unique aesthetic goals — safely and confidently.
+              {t("bio")}
             </p>
 
             {/* Credential logos */}
@@ -90,7 +88,7 @@ export default function DoctorSection() {
 
             {/* Specialty badges */}
             <div className="flex flex-wrap gap-3 mb-10">
-              {["BBL & Body Contouring", "Breast Augmentation", "Tummy Tuck", "Rhinoplasty", "Facial Rejuvenation"].map((spec) => (
+              {([t("spec1"), t("spec2"), t("spec3"), t("spec4"), t("spec5")] as string[]).map((spec) => (
                 <span
                   key={spec}
                   className="text-[11px] text-gold/80 border border-gold/25 rounded-full px-3 py-1 tracking-wide font-sans"
@@ -106,13 +104,13 @@ export default function DoctorSection() {
                 href="/about"
                 className="inline-flex items-center justify-center border border-white/40 hover:border-gold text-white hover:text-gold text-xs font-bold tracking-[0.2em] uppercase px-8 py-4 transition-all duration-200"
               >
-                Learn More About Dr. Reyes-Serrano
+                {t("learnMore")}
               </Link>
               <Link
                 href="/contact"
                 className="inline-flex items-center justify-center bg-gold hover:bg-gold-dark text-white text-xs font-bold tracking-[0.2em] uppercase px-8 py-4 transition-all duration-200 hover:shadow-[0_8px_30px_rgba(201,164,110,0.4)]"
               >
-                Book Consultation
+                {t("bookConsultation")}
               </Link>
             </div>
 
