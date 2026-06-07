@@ -54,7 +54,7 @@ export const metadata: Metadata = {
       "Board-certified plastic surgeons with 20+ years of experience in Miami. Natural results, flexible financing, free consultations. Serving Hialeah, Miami, and all of South Florida.",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/api/og",
         width: 1200,
         height: 630,
         alt: "Your Cosmetic Surgery & SPA Miami",
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     title: "Your Cosmetic Surgery & SPA | Trusted Plastic Surgeons in Miami",
     description:
       "Board-certified plastic surgeons with 20+ years of experience in Miami. Free consultations. Serving Hialeah & South Florida.",
-    images: ["/og-image.jpg"],
+    images: ["/api/og"],
   },
   robots: {
     index: true,

@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `https://ycosmeticsurgery.com/procedures/${proc.slug}`,
       images: [
         {
-          url: `/procedures/${proc.slug}.webp`,
+          url: `/api/og?title=${encodeURIComponent(proc.name + ' Miami')}`,
           width: 1200,
           height: 630,
           alt: `${proc.name} results at Your Cosmetic Surgery & SPA, Miami`,

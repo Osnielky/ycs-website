@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     description:
       "Board-certified plastic surgeons with 20+ years of experience. AAAHC-accredited facility in Hialeah. Over 5,000 transformations and counting.",
     url: "https://ycosmeticsurgery.com/about",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Your Cosmetic Surgery & SPA Miami team" }],
+    images: [{ url: "/api/og?title=About+Us", width: 1200, height: 630, alt: "Your Cosmetic Surgery & SPA Miami team" }],
   },
 };
 
