@@ -60,7 +60,7 @@ function ProcedureCard({
   return (
     <div className="group overflow-hidden rounded-2xl border border-cream-dark card-hover flex flex-col bg-white shadow-[0_2px_12px_rgba(13,27,62,0.06)]">
       {/* ── Image panel ── */}
-      <div className={`relative h-52 overflow-hidden shrink-0 ${bgMap[proc.category]}`}>
+      <div className={`relative h-96 overflow-hidden shrink-0 ${bgMap[proc.category]}`}>
         {!imgErr && (
           <Image
             src={src}
