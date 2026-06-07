@@ -1,19 +1,6 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
-
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
-  subsets: ["latin"],
-  weight: ["300", "600", "700"], // 400 & 500 are never used in the UI
-  display: "swap",
-});
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
+import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ycosmeticsurgery.com"),
@@ -80,27 +67,12 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: [
-      { url: '/logo.svg', type: 'image/svg+xml' },
-    ],
-    apple: '/logo.svg',
+    icon: [{ url: "/logo.svg", type: "image/svg+xml" }],
+    apple: "/logo.svg",
   },
-  manifest: '/site.webmanifest',
+  manifest: "/site.webmanifest",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en" className={`${cormorant.variable} ${inter.variable}`} suppressHydrationWarning>
-      <head>
-        <link rel="preload" as="image" href="/hero/1.webp" fetchPriority="high" />
-      </head>
-      <body className="min-h-screen flex flex-col antialiased" suppressHydrationWarning>
-        {children}
-      </body>
-    </html>
-  );
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return children;
 }
