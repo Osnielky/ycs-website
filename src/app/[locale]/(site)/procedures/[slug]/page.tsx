@@ -6,11 +6,14 @@ import { procedures } from "@/data/procedures";
 import CTABanner from "@/components/sections/CTABanner";
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export async function generateStaticParams() {
-  return procedures.map((p) => ({ slug: p.slug }));
+  const locales = ['en', 'es'];
+  return locales.flatMap((locale) =>
+    procedures.map((p) => ({ locale, slug: p.slug }))
+  );
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
