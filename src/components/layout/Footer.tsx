@@ -1,18 +1,24 @@
-import Link from "next/link";
+import { getTranslations, getLocale } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { MapPin, Clock, Mail, Star } from "lucide-react";
 import FooterContactForm from "./FooterContactForm";
 
-const quickNav = [
-  { label: "HOME", href: "/" },
-  { label: "PROCEDURES", href: "/procedures" },
-  { label: "GALLERY", href: "/gallery" },
-  { label: "ABOUT", href: "/about" },
-  { label: "TESTIMONIALS", href: "/testimonials" },
-  { label: "CONTACT US", href: "/contact" },
-];
+export default async function Footer() {
+  const t = await getTranslations("footer");
+  const locale = await getLocale();
 
-export default function Footer() {
+  const quickNav = [
+    { label: t("navHome"), href: "/" },
+    { label: t("navProcedures"), href: "/procedures" },
+    { label: t("navGallery"), href: "/gallery" },
+    { label: t("navAbout"), href: "/about" },
+    { label: t("navTestimonials"), href: "/testimonials" },
+    { label: t("navContact"), href: "/contact" },
+  ];
+
+  void locale;
+
   return (
     <footer>
       {/* ══════════════════════════════════════════════
@@ -66,7 +72,7 @@ export default function Footer() {
 
               {/* Heading */}
               <h2 className="font-heading text-4xl md:text-5xl xl:text-6xl text-white font-light leading-none mb-2 whitespace-nowrap">
-                Contact <em className="text-gold">Us</em>
+                {t("contactUs").split(" ")[0]} <em className="text-gold">{t("contactUs").split(" ").slice(1).join(" ")}</em>
               </h2>
 
               {/* Big phone */}
@@ -92,8 +98,8 @@ export default function Footer() {
                 <MapPin size={18} className="text-gold mt-1 shrink-0" />
                 <div>
                   <p className="text-white font-semibold text-base">Your Cosmetic Surgery &amp; SPA</p>
-                  <p className="text-white/55 text-base">1255 W 46th St, Suite #6 &amp; 7A</p>
-                  <p className="text-white/55 text-base">Hialeah, FL 33012</p>
+                  <p className="text-white/55 text-base">{t("address")}</p>
+                  <p className="text-white/55 text-base">{t("city")}</p>
                 </div>
               </div>
 
@@ -101,9 +107,9 @@ export default function Footer() {
               <div className="flex items-start gap-3">
                 <Clock size={18} className="text-gold mt-1 shrink-0" />
                 <div>
-                  <p className="text-white font-semibold text-base">Office Hours</p>
-                  <p className="text-white/55 text-base">Mon – Fri: 9:00am – 6:00pm</p>
-                  <p className="text-white/55 text-base">Saturday: 10:00am – 3:00pm</p>
+                  <p className="text-white font-semibold text-base">{t("officeHours")}</p>
+                  <p className="text-white/55 text-base">{t("hoursWeekday")}</p>
+                  <p className="text-white/55 text-base">{t("hoursSaturday")}</p>
                 </div>
               </div>
 
@@ -159,7 +165,7 @@ export default function Footer() {
                     <Star key={i} size={12} className="fill-gold text-gold" />
                   ))}
                 </div>
-                <span className="text-white/65 text-sm">4.9 Stars from 500+ Reviews</span>
+                <span className="text-white/65 text-sm">{t("stars")}</span>
               </div>
             </div>
 
@@ -194,13 +200,11 @@ export default function Footer() {
       {/* ── Gold bottom bar ── */}
       <div className="bg-gold">
         <div className="w-full px-10 xl:px-20 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-[12px] text-white/90">
-          <p>© {new Date().getFullYear()} Your Cosmetic Surgery &amp; SPA. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Your Cosmetic Surgery &amp; SPA. {t("copyright")}</p>
           <div className="flex gap-6">
-            {["Privacy Policy", "Terms of Service", "Accessibility Statement"].map((label) => (
-              <Link key={label} href="#" className="hover:text-white transition-colors">
-                {label}
-              </Link>
-            ))}
+            <Link href="#" className="hover:text-white transition-colors">{t("privacyPolicy")}</Link>
+            <Link href="#" className="hover:text-white transition-colors">{t("termsOfService")}</Link>
+            <Link href="#" className="hover:text-white transition-colors">{t("accessibilityStatement")}</Link>
           </div>
         </div>
       </div>
@@ -213,21 +217,21 @@ export default function Footer() {
             <rect x="3" y="4" width="18" height="18" rx="2" />
             <path strokeLinecap="round" d="M8 2v4M16 2v4M3 10h18" />
           </svg>
-          Book
+          {t("mobileBook")}
         </Link>
         <a href="tel:+13052183513"
           className="flex-1 flex flex-col items-center justify-center py-3 gap-1 text-white/65 hover:text-gold text-[10px] tracking-widest uppercase transition-colors border-l border-r border-white/10">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
             <path d="M2.25 6.338c0-1.105.9-2 2.01-1.994l3.47.048a2 2 0 011.98 1.716l.43 3.225a2 2 0 01-1.222 2.104l-.837.355c-.132.056-.2.198-.15.332a12.087 12.087 0 006.193 6.193c.134.05.276-.018.332-.15l.355-.837a2 2 0 012.104-1.222l3.225.43A2 2 0 0121.75 18.27l-.048 3.47A2 2 0 0119.7 23.75C10.024 23.75.25 13.976.25 4.3a2 2 0 012.007-1.96z" />
           </svg>
-          Call
+          {t("mobileCall")}
         </a>
         <a href="sms:+13052183513"
           className="flex-1 flex flex-col items-center justify-center py-3 gap-1 text-white/65 hover:text-gold text-[10px] tracking-widest uppercase transition-colors">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
             <path d="M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 01.778-.332 48.294 48.294 0 005.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
           </svg>
-          Text
+          {t("mobileText")}
         </a>
       </div>
     </footer>

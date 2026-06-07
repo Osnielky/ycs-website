@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { CheckCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const schema = z.object({
   name: z.string().min(2, "Required"),
@@ -41,6 +42,7 @@ const procedures = [
 ];
 
 export default function FooterContactForm() {
+  const t = useTranslations("footerForm");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -70,10 +72,9 @@ export default function FooterContactForm() {
         <div className="w-20 h-20 rounded-full border-2 border-gold flex items-center justify-center mb-5">
           <CheckCircle size={34} className="text-gold" />
         </div>
-        <h3 className="font-heading text-white text-4xl mb-3">Thank You!</h3>
+        <h3 className="font-heading text-white text-4xl mb-3">{t("thankYouTitle")}</h3>
         <p className="text-white/50 text-base max-w-xs leading-relaxed">
-          We&apos;ve received your request and will reach out within 24 hours to
-          schedule your free consultation.
+          {t("thankYouMessage")}
         </p>
       </div>
     );
@@ -82,7 +83,7 @@ export default function FooterContactForm() {
   return (
     <>
       <p className="text-white/55 text-base mb-8">
-        Fill out the form below and we&apos;ll get in touch to book a call.
+        {t("intro")}
       </p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -91,7 +92,7 @@ export default function FooterContactForm() {
           <div>
             <input
               {...register("name")}
-              placeholder="* Full Name"
+              placeholder={t("namePlaceholder")}
               className="w-full bg-white/20 border border-white/40 focus:border-gold rounded px-4 py-3 text-white placeholder-white/60 text-base outline-none transition-colors"
             />
             {errors.name && (
@@ -101,7 +102,7 @@ export default function FooterContactForm() {
           <div>
             <input
               {...register("phone")}
-              placeholder="* Phone"
+              placeholder={t("phonePlaceholder")}
               type="tel"
               className="w-full bg-white/20 border border-white/40 focus:border-gold rounded px-4 py-3 text-white placeholder-white/60 text-base outline-none transition-colors"
             />
@@ -116,7 +117,7 @@ export default function FooterContactForm() {
           <div>
             <input
               {...register("email")}
-              placeholder="* Email"
+              placeholder={t("emailPlaceholder")}
               type="email"
               className="w-full bg-white/20 border border-white/40 focus:border-gold rounded px-4 py-3 text-white placeholder-white/60 text-base outline-none transition-colors"
             />
@@ -129,7 +130,7 @@ export default function FooterContactForm() {
               {...register("procedure")}
               className="w-full bg-white/20 border border-white/40 focus:border-gold rounded px-4 py-3 text-white/75 text-base outline-none transition-colors appearance-none"
             >
-              <option value="" className="bg-navy">What are you interested in?</option>
+              <option value="" className="bg-navy">{t("procedurePlaceholder")}</option>
               {procedures.map((p) => (
                 <option key={p} value={p} className="bg-navy text-white">{p}</option>
               ))}
@@ -140,7 +141,7 @@ export default function FooterContactForm() {
         {/* Textarea */}
         <textarea
           {...register("message")}
-          placeholder="Additional Comments: Please feel free to add any additional comments you would like to share"
+          placeholder={t("messagePlaceholder")}
           rows={4}
           className="w-full bg-white/20 border border-white/40 focus:border-gold rounded px-4 py-3 text-white placeholder-white/60 text-base outline-none transition-colors resize-none"
         />
@@ -153,9 +154,7 @@ export default function FooterContactForm() {
             className="mt-1 w-4 h-4 accent-gold shrink-0"
           />
           <span className="text-white/45 text-sm leading-relaxed">
-            By checking this box, you agree to receive SMS messages from Your
-            Cosmetic Surgery &amp; SPA. You may reply STOP to opt-out at any
-            time. Message and data rates may apply.
+            {t("smsConsent")}
           </span>
         </label>
 
@@ -164,7 +163,7 @@ export default function FooterContactForm() {
           disabled={loading}
           className="mt-2 bg-transparent border border-white/40 hover:border-gold text-white hover:text-gold text-sm font-bold tracking-[0.2em] uppercase px-10 py-3.5 transition-all duration-200 disabled:opacity-50"
         >
-          {loading ? "SENDING…" : "SUBMIT"}
+          {loading ? t("submitting") : t("submit")}
         </button>
       </form>
     </>
