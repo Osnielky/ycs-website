@@ -110,7 +110,22 @@
     "submit": "ENVIAR",
     "submitting": "ENVIANDO…",
     "thankYouTitle": "¡Gracias!",
-    "thankYouMessage": "Hemos recibido su solicitud y nos comunicaremos en 24 horas para programar su consulta gratuita."
+    "thankYouMessage": "Hemos recibido su solicitud y nos comunicaremos en 24 horas para programar su consulta gratuita.",
+    "errorRequired": "Requerido",
+    "errorEmail": "Correo inválido",
+    "procedureOptions": [
+      "Contorneado Corporal",
+      "Cirugía de Senos",
+      "Cirugía Facial",
+      "Spa Médico",
+      "BBL (Aumento de Glúteos)",
+      "Abdominoplastia",
+      "Liposucción / Lipo 360",
+      "Aumento de Senos",
+      "Rinoplastia",
+      "Mommy Makeover",
+      "Otro"
+    ]
   },
   "proceduresPage": {
     "heroTitle": "Nuestros Procedimientos",

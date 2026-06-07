@@ -1,4 +1,4 @@
-import { getTranslations, getLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { MapPin, Clock, Mail, Star } from "lucide-react";
@@ -6,7 +6,6 @@ import FooterContactForm from "./FooterContactForm";
 
 export default async function Footer() {
   const t = await getTranslations("footer");
-  const locale = await getLocale();
 
   const quickNav = [
     { label: t("navHome"), href: "/" },
@@ -16,8 +15,6 @@ export default async function Footer() {
     { label: t("navTestimonials"), href: "/testimonials" },
     { label: t("navContact"), href: "/contact" },
   ];
-
-  void locale;
 
   return (
     <footer>

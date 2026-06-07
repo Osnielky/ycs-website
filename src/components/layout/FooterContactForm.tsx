@@ -1,50 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { CheckCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-const schema = z.object({
-  name: z.string().min(2, "Required"),
-  email: z.string().email("Invalid email"),
-  phone: z.string().min(7, "Required"),
-  procedure: z.string().optional(),
-  message: z.string().optional(),
-  smsConsent: z.boolean().optional(),
-});
-type FormData = z.infer<typeof schema>;
-
-const procedures = [
-  "Brazilian Butt Lift (BBL)",
-  "Lipo 360",
-  "Tummy Tuck",
-  "Liposuction",
-  "Mommy Makeover",
-  "Abdominal Etching",
-  "Arm & Thigh Lift",
-  "Breast Augmentation",
-  "Breast Lift",
-  "Breast Reduction",
-  "Gynecomastia",
-  "Rhinoplasty",
-  "Facelift",
-  "Eyelid Surgery",
-  "Bichectomy",
-  "Otoplasty",
-  "Neck Lift",
-  "Botox & Fillers",
-  "Laser Resurfacing",
-  "Microneedling",
-  "Other / Not sure",
-];
-
 export default function FooterContactForm() {
   const t = useTranslations("footerForm");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const schema = useMemo(() => z.object({
+    name: z.string().min(2, t("errorRequired")),
+    email: z.string().email(t("errorEmail")),
+    phone: z.string().min(7, t("errorRequired")),
+    procedure: z.string().optional(),
+    message: z.string().optional(),
+    smsConsent: z.boolean().optional(),
+  }), [t]);
+
+  type FormData = z.infer<typeof schema>;
+
+  const procedureOptions = t.raw("procedureOptions") as string[];
 
   const {
     register,
@@ -131,7 +110,7 @@ export default function FooterContactForm() {
               className="w-full bg-white/20 border border-white/40 focus:border-gold rounded px-4 py-3 text-white/75 text-base outline-none transition-colors appearance-none"
             >
               <option value="" className="bg-navy">{t("procedurePlaceholder")}</option>
-              {procedures.map((p) => (
+              {procedureOptions.map((p) => (
                 <option key={p} value={p} className="bg-navy text-white">{p}</option>
               ))}
             </select>

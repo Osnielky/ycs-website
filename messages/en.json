@@ -110,7 +110,22 @@
     "submit": "SUBMIT",
     "submitting": "SENDING…",
     "thankYouTitle": "Thank You!",
-    "thankYouMessage": "We've received your request and will reach out within 24 hours to schedule your free consultation."
+    "thankYouMessage": "We've received your request and will reach out within 24 hours to schedule your free consultation.",
+    "errorRequired": "Required",
+    "errorEmail": "Invalid email",
+    "procedureOptions": [
+      "Body Contouring",
+      "Breast Surgery",
+      "Facial Surgery",
+      "Medical Spa",
+      "BBL (Brazilian Butt Lift)",
+      "Tummy Tuck",
+      "Liposuction / Lipo 360",
+      "Breast Augmentation",
+      "Rhinoplasty",
+      "Mommy Makeover",
+      "Other"
+    ]
   },
   "proceduresPage": {
     "heroTitle": "Our Procedures",
