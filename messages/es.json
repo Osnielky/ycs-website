@@ -205,5 +205,37 @@
   "galleryPage": {
     "heroTitle": "Galería Antes y Después",
     "heroSubtitle": "Vea resultados reales de nuestros cirujanos certificados en Miami."
+  },
+  "proceduresSection": {
+    "heading": "Nuestros Procedimientos",
+    "subheading": "Desde transformaciones quirúrgicas hasta mejoras no invasivas, cada procedimiento está diseñado para su anatomía y objetivos estéticos únicos.",
+    "tabBody": "Cuerpo",
+    "tabBreast": "Senos",
+    "tabFace": "Rostro",
+    "tabMedspa": "MedSpa",
+    "recovery": "Recuperación",
+    "learnMore": "Saber Más",
+    "interested": "Me Interesa",
+    "viewAll": "Ver Todos los Procedimientos"
+  },
+  "beforeAfter": {
+    "heading": "Pacientes Reales. Resultados Reales.",
+    "subheading": "Cada transformación es única. Explore una selección de los recorridos de nuestros pacientes — compartidos con su pleno consentimiento para inspirar a otros.",
+    "before": "Antes",
+    "after": "Después",
+    "interested": "Me Interesa Este Procedimiento",
+    "viewGallery": "Ver Galería Completa"
+  },
+  "testimonials": {
+    "heading": "Lo Que Dicen Nuestros Pacientes",
+    "subheadingLive": "Reseñas reales de pacientes verificados en Google — obtenidas en tiempo real de nuestro perfil.",
+    "subheadingFallback": "Nuestro mayor logro es la confianza que ayudamos a restaurar.",
+    "verifiedBadge": "Reseñas Verificadas de Google",
+    "verifiedReviews": "reseñas verificadas",
+    "viewAllGoogle": "Ver todas en Google ↗",
+    "platforms": "Google · RealSelf · Healthgrades",
+    "prevLabel": "Testimonio anterior",
+    "nextLabel": "Siguiente testimonio",
+    "goToReview": "Ir a la reseña {n}"
   }
 }

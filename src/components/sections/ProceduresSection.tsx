@@ -1,18 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { ArrowRight, Clock } from "lucide-react";
 import { procedures, type Procedure } from "@/data/procedures";
 import ConsultationModal from "@/components/sections/ConsultationModal";
-
-const tabs = [
-  { key: "body",   label: "Body" },
-  { key: "breast", label: "Breast" },
-  { key: "face",   label: "Face" },
-  { key: "medspa", label: "MedSpa" },
-] as const;
 
 // Hero images cycled as procedure card visuals
 const heroImages = [
@@ -39,10 +33,16 @@ function ProcedureCard({
   proc,
   fallbackSrc,
   onInterested,
+  learnMore,
+  interested,
+  recovery,
 }: {
   proc: Procedure;
   fallbackSrc: string;
   onInterested: () => void;
+  learnMore: string;
+  interested: string;
+  recovery: string;
 }) {
   // Try /procedures/{slug}.webp first; if missing fall back to hero image
   const webpSrc = `/procedures/${proc.slug}.webp`;
@@ -100,7 +100,7 @@ function ProcedureCard({
 
         <div className="flex items-center gap-1.5 text-[#0d1b3e]/35 text-xs mb-5">
           <Clock size={11} />
-          <span>Recovery: {proc.recovery}</span>
+          <span>{recovery}: {proc.recovery}</span>
         </div>
 
         {/* Dual CTA */}
@@ -109,13 +109,13 @@ function ProcedureCard({
             href={`/procedures/${proc.slug}`}
             className="text-center text-[10px] font-bold tracking-[0.14em] uppercase py-3 rounded-lg border border-[#0d1b3e]/18 text-[#0d1b3e] hover:bg-[#0d1b3e] hover:text-white hover:border-[#0d1b3e] transition-all duration-200"
           >
-            Learn More
+            {learnMore}
           </Link>
           <button
             onClick={onInterested}
             className="text-center text-[10px] font-bold tracking-[0.14em] uppercase py-3 rounded-lg bg-[#c9a46e] text-white hover:bg-[#a87d45] transition-all duration-200 hover:shadow-[0_4px_16px_rgba(201,164,110,0.4)]"
           >
-            I&apos;m Interested
+            {interested}
           </button>
         </div>
       </div>
@@ -124,8 +124,16 @@ function ProcedureCard({
 }
 
 export default function ProceduresSection() {
+  const t = useTranslations("proceduresSection");
   const [active, setActive] = useState<string>("body");
   const [activeProcedure, setActiveProcedure] = useState<string | null>(null);
+
+  const tabs = [
+    { key: "body",   label: t("tabBody") },
+    { key: "breast", label: t("tabBreast") },
+    { key: "face",   label: t("tabFace") },
+    { key: "medspa", label: t("tabMedspa") },
+  ] as const;
 
   const filtered = procedures.filter((p) => p.category === active);
 
@@ -137,11 +145,10 @@ export default function ProceduresSection() {
           <div className="text-center mb-14">
             <span className="gold-divider mx-auto mb-5" />
             <h2 className="font-heading text-5xl md:text-6xl text-navy font-light mb-4">
-              Our Procedures
+              {t("heading")}
             </h2>
             <p className="text-navy/55 text-lg max-w-2xl mx-auto leading-relaxed">
-              From surgical transformation to non-invasive enhancements, every
-              procedure is tailored to your unique anatomy and aesthetic goals.
+              {t("subheading")}
             </p>
           </div>
 
@@ -172,6 +179,9 @@ export default function ProceduresSection() {
                 proc={proc}
                 fallbackSrc={heroImages[idx % heroImages.length]}
                 onInterested={() => setActiveProcedure(proc.name)}
+                learnMore={t("learnMore")}
+                interested={t("interested")}
+                recovery={t("recovery")}
               />
             ))}
           </div>
@@ -182,7 +192,7 @@ export default function ProceduresSection() {
               href="/procedures"
               className="inline-flex items-center gap-2 border-2 border-navy text-navy hover:bg-navy hover:text-white text-sm font-semibold tracking-[0.12em] uppercase px-8 py-3.5 rounded-full transition-all duration-200"
             >
-              View All Procedures <ArrowRight size={14} />
+              {t("viewAll")} <ArrowRight size={14} />
             </Link>
           </div>
         </div>

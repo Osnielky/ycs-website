@@ -205,5 +205,37 @@
   "galleryPage": {
     "heroTitle": "Before & After Gallery",
     "heroSubtitle": "See real patient results from our board-certified surgeons in Miami."
+  },
+  "proceduresSection": {
+    "heading": "Our Procedures",
+    "subheading": "From surgical transformation to non-invasive enhancements, every procedure is tailored to your unique anatomy and aesthetic goals.",
+    "tabBody": "Body",
+    "tabBreast": "Breast",
+    "tabFace": "Face",
+    "tabMedspa": "MedSpa",
+    "recovery": "Recovery",
+    "learnMore": "Learn More",
+    "interested": "I'm Interested",
+    "viewAll": "View All Procedures"
+  },
+  "beforeAfter": {
+    "heading": "Real Patients. Real Results.",
+    "subheading": "Every transformation is unique. Browse a selection of our patients' journeys — shared with their full consent to inspire others.",
+    "before": "Before",
+    "after": "After",
+    "interested": "I'm Interested in This Procedure",
+    "viewGallery": "View Full Gallery"
+  },
+  "testimonials": {
+    "heading": "What Our Patients Say",
+    "subheadingLive": "Real reviews from verified Google patients — pulled live from our listing.",
+    "subheadingFallback": "Our greatest achievement is the confidence we help restore.",
+    "verifiedBadge": "Verified Google Reviews",
+    "verifiedReviews": "verified reviews",
+    "viewAllGoogle": "View all on Google ↗",
+    "platforms": "Google · RealSelf · Healthgrades",
+    "prevLabel": "Previous testimonial",
+    "nextLabel": "Next testimonial",
+    "goToReview": "Go to review {n}"
   }
 }

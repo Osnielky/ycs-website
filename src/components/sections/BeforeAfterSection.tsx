@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import ConsultationModal from "@/components/sections/ConsultationModal";
@@ -39,9 +40,15 @@ const cases = [
 function BeforeAfterCard({
   c,
   onInterested,
+  beforeLabel,
+  afterLabel,
+  interestedLabel,
 }: {
   c: typeof cases[0];
   onInterested: () => void;
+  beforeLabel: string;
+  afterLabel: string;
+  interestedLabel: string;
 }) {
   const [beforeErr, setBeforeErr] = useState(false);
   const [afterErr,  setAfterErr]  = useState(false);
@@ -63,7 +70,7 @@ function BeforeAfterCard({
             />
           )}
           <span className="absolute bottom-3 left-3 bg-[#0d1b3e]/70 text-white text-[10px] font-semibold tracking-widest uppercase px-2.5 py-1 rounded-full z-10">
-            Before
+            {beforeLabel}
           </span>
         </div>
 
@@ -80,7 +87,7 @@ function BeforeAfterCard({
             />
           )}
           <span className="absolute bottom-3 right-3 bg-[#c9a46e]/90 text-white text-[10px] font-semibold tracking-widest uppercase px-2.5 py-1 rounded-full z-10">
-            After
+            {afterLabel}
           </span>
         </div>
 
@@ -111,7 +118,7 @@ function BeforeAfterCard({
           onClick={onInterested}
           className="w-full text-center border border-[#0d1b3e]/15 hover:border-[#c9a46e] hover:bg-[#c9a46e] text-[#0d1b3e] hover:text-white text-[11px] font-bold tracking-[0.14em] uppercase py-3 rounded-lg transition-all duration-200"
         >
-          I&apos;m Interested in This Procedure
+          {interestedLabel}
         </button>
       </div>
     </div>
@@ -119,6 +126,7 @@ function BeforeAfterCard({
 }
 
 export default function BeforeAfterSection() {
+  const t = useTranslations("beforeAfter");
   const [activeProcedure, setActiveProcedure] = useState<string | null>(null);
 
   return (
@@ -129,11 +137,10 @@ export default function BeforeAfterSection() {
           <div className="text-center mb-14">
             <span className="gold-divider mx-auto mb-5" />
             <h2 className="font-heading text-5xl md:text-6xl text-[#0d1b3e] font-light mb-4">
-              Real Patients. Real Results.
+              {t("heading")}
             </h2>
             <p className="text-[#0d1b3e]/55 text-lg max-w-2xl mx-auto leading-relaxed">
-              Every transformation is unique. Browse a selection of our
-              patients&apos; journeys — shared with their full consent to inspire others.
+              {t("subheading")}
             </p>
           </div>
 
@@ -144,6 +151,9 @@ export default function BeforeAfterSection() {
                 key={c.procedure}
                 c={c}
                 onInterested={() => setActiveProcedure(c.procedure)}
+                beforeLabel={t("before")}
+                afterLabel={t("after")}
+                interestedLabel={t("interested")}
               />
             ))}
           </div>
@@ -154,7 +164,7 @@ export default function BeforeAfterSection() {
               href="/gallery"
               className="inline-flex items-center gap-2 bg-[#0d1b3e] hover:bg-[#1a2d5a] text-white text-sm font-semibold tracking-[0.12em] uppercase px-8 py-3.5 rounded-full transition-all duration-200 hover:shadow-[0_4px_20px_rgba(13,27,62,0.25)]"
             >
-              View Full Gallery <ArrowRight size={14} />
+              {t("viewGallery")} <ArrowRight size={14} />
             </Link>
           </div>
         </div>

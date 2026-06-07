@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { testimonials } from "@/data/procedures";
 import type { GoogleReview, ReviewsResponse } from "@/app/api/google-reviews/route";
@@ -123,6 +124,7 @@ function GoogleLogo({ size = 16 }: { size?: number }) {
 }
 
 export default function TestimonialsSection() {
+  const t = useTranslations("testimonials");
   const [index, setIndex] = useState(0);
   const [reviews, setReviews] = useState<GoogleReview[]>(fallbackReviews);
   const [meta, setMeta] = useState({ rating: 4.9, totalReviews: 500 });
@@ -161,19 +163,17 @@ export default function TestimonialsSection() {
         <div className="text-center mb-14">
           <span className="gold-divider mx-auto mb-5" />
           <h2 className="font-heading text-5xl md:text-6xl text-white font-light mb-4">
-            What Our Patients Say
+            {t("heading")}
           </h2>
           <p className="text-white/50 text-lg max-w-xl mx-auto">
-            {isLive
-              ? "Real reviews from verified Google patients — pulled live from our listing."
-              : "Our greatest achievement is the confidence we help restore."}
+            {isLive ? t("subheadingLive") : t("subheadingFallback")}
           </p>
 
           {/* Google verified pill */}
           {isLive && (
             <div className="inline-flex items-center gap-2 mt-4 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 text-xs font-sans text-white/50">
               <GoogleLogo size={13} />
-              Verified Google Reviews
+              {t("verifiedBadge")}
             </div>
           )}
         </div>
@@ -190,7 +190,7 @@ export default function TestimonialsSection() {
           <button
             onClick={prev}
             className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:border-gold hover:text-gold transition-all"
-            aria-label="Previous testimonial"
+            aria-label={t("prevLabel")}
           >
             <ChevronLeft size={16} />
           </button>
@@ -202,14 +202,14 @@ export default function TestimonialsSection() {
                 className={`rounded-full transition-all duration-200 ${
                   i === index ? "w-6 h-2 bg-gold" : "w-2 h-2 bg-white/25 hover:bg-white/50"
                 }`}
-                aria-label={`Go to review ${i + 1}`}
+                aria-label={t("goToReview", { n: i + 1 })}
               />
             ))}
           </div>
           <button
             onClick={next}
             className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:border-gold hover:text-gold transition-all"
-            aria-label="Next testimonial"
+            aria-label={t("nextLabel")}
           >
             <ChevronRight size={16} />
           </button>
@@ -225,7 +225,9 @@ export default function TestimonialsSection() {
             </div>
             <span className="text-white font-semibold">{meta.rating.toFixed(1)}</span>
             <span className="text-white/40 text-sm">·</span>
-            <span className="text-white/55 text-sm">{meta.totalReviews.toLocaleString()}+ verified reviews</span>
+            <span className="text-white/55 text-sm">
+              {meta.totalReviews.toLocaleString()}+ {t("verifiedReviews")}
+            </span>
             <span className="text-white/40 text-sm">·</span>
             {isLive ? (
               <a
@@ -234,10 +236,10 @@ export default function TestimonialsSection() {
                 rel="noopener noreferrer"
                 className="text-gold/80 text-sm hover:text-gold transition-colors underline underline-offset-2"
               >
-                View all on Google ↗
+                {t("viewAllGoogle")}
               </a>
             ) : (
-              <span className="text-white/55 text-sm">Google · RealSelf · Healthgrades</span>
+              <span className="text-white/55 text-sm">{t("platforms")}</span>
             )}
           </div>
         </div>
