@@ -29,7 +29,7 @@ const jsonLd = {
   telephone: "+13052183513",
   email: "info@ycosmeticsurgery.com",
   logo: "https://ycosmeticsurgery.com/logo.png",
-  image: "https://ycosmeticsurgery.com/og-image.jpg",
+  image: "https://ycosmeticsurgery.com/api/og",
   address: {
     "@type": "PostalAddress",
     streetAddress: "1255 W 46th St, Suite #6 & 7A",

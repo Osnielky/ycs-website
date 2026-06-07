@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
             fontFamily: 'serif',
           }}
         >
-          Your Cosmetic Surgery &amp; SPA
+          Your Cosmetic Surgery & SPA
         </div>
         <div
           style={{

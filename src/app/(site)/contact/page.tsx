@@ -26,7 +26,7 @@ const jsonLd = {
   telephone: "+13052183513",
   email: "info@ycosmeticsurgery.com",
   priceRange: "$$",
-  image: "https://ycosmeticsurgery.com/og-image.jpg",
+  image: "https://ycosmeticsurgery.com/api/og",
   logo: "https://ycosmeticsurgery.com/logo.png",
   address: {
     "@type": "PostalAddress",
