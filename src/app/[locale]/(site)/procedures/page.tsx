@@ -1,23 +1,43 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ArrowRight, Clock } from "lucide-react";
-import { procedures, categoryLabels } from "@/data/procedures";
+import { setRequestLocale, getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
+import { hreflangAlternatesForLocale } from "@/lib/seo";
+import { procedures } from "@/data/procedures";
 import CTABanner from "@/components/sections/CTABanner";
 
-export const metadata: Metadata = {
-  title: "All Procedures | Cosmetic Surgery Miami, Hialeah FL",
-  description:
-    "Explore all cosmetic surgery procedures at Your Cosmetic Surgery & SPA in Miami — BBL, Lipo 360, tummy tuck, breast augmentation, rhinoplasty, facelift, bichectomy & more. Board-certified surgeons. Flexible financing.",
-  alternates: {
-    canonical: "https://ycosmeticsurgery.com/procedures",
-  },
-  openGraph: {
-    title: "All Procedures | Your Cosmetic Surgery & SPA Miami",
+interface Props {
+  params: Promise<{ locale: string }>;
+}
+
+export function generateStaticParams() {
+  return [{ locale: "en" }, { locale: "es" }];
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: "All Procedures | Cosmetic Surgery Miami, Hialeah FL",
     description:
-      "Browse our full menu of surgical and non-surgical cosmetic procedures — body contouring, breast, face, and MedSpa. Board-certified surgeons in Hialeah, FL.",
-    url: "https://ycosmeticsurgery.com/procedures",
-  },
-};
+      "Explore all cosmetic surgery procedures at Your Cosmetic Surgery & SPA in Miami — BBL, Lipo 360, tummy tuck, breast augmentation, rhinoplasty, facelift, bichectomy & more. Board-certified surgeons. Flexible financing.",
+    alternates: {
+      canonical:
+        locale === "en"
+          ? "https://ycosmeticsurgery.com/procedures"
+          : "https://ycosmeticsurgery.com/es/procedures",
+      languages: hreflangAlternatesForLocale("procedures", locale),
+    },
+    openGraph: {
+      title: "All Procedures | Your Cosmetic Surgery & SPA Miami",
+      description:
+        "Browse our full menu of surgical and non-surgical cosmetic procedures — body contouring, breast, face, and MedSpa. Board-certified surgeons in Hialeah, FL.",
+      url:
+        locale === "en"
+          ? "https://ycosmeticsurgery.com/procedures"
+          : "https://ycosmeticsurgery.com/es/procedures",
+    },
+  };
+}
 
 const categories = ["body", "breast", "face", "medspa"] as const;
 
@@ -45,7 +65,19 @@ const jsonLd = {
   })),
 };
 
-export default function ProceduresPage() {
+export default async function ProceduresPage({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations("proceduresPage");
+  const tSection = await getTranslations("proceduresSection");
+
+  const categoryLabels: Record<string, string> = {
+    body: tSection("tabBody"),
+    breast: tSection("tabBreast"),
+    face: tSection("tabFace"),
+    medspa: tSection("tabMedspa"),
+  };
+
   return (
     <>
       <script
@@ -60,11 +92,10 @@ export default function ProceduresPage() {
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <span className="gold-divider mx-auto mb-6" />
           <h1 className="font-heading text-6xl md:text-7xl text-white font-light mb-5">
-            Our Procedures
+            {t("heroTitle")}
           </h1>
           <p className="text-white/60 text-xl leading-relaxed max-w-2xl mx-auto">
-            From surgical transformation to non-invasive enhancements — every
-            procedure is designed around your unique goals and anatomy.
+            {t("heroSubtitle")}
           </p>
         </div>
       </section>
@@ -97,18 +128,22 @@ export default function ProceduresPage() {
                       >
                         <div>
                           <span className="text-gold/50 text-2xl mb-4 block">{proc.icon}</span>
-                          <h3 className="font-heading text-white text-2xl font-light mb-1">{proc.name}</h3>
+                          <h3 className="font-heading text-white text-2xl font-light mb-1">
+                            {locale === "es" && proc.es?.name ? proc.es.name : proc.name}
+                          </h3>
                           <p className="text-gold text-xs tracking-widest uppercase">{proc.tagline}</p>
                         </div>
                         <div>
-                          <p className="text-white/50 text-sm leading-relaxed mb-4 line-clamp-2">{proc.description}</p>
+                          <p className="text-white/50 text-sm leading-relaxed mb-4 line-clamp-2">
+                            {locale === "es" && proc.es?.description ? proc.es.description : proc.description}
+                          </p>
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-1.5 text-white/40 text-xs">
                               <Clock size={11} />
                               <span>{proc.recovery}</span>
                             </div>
                             <span className="flex items-center gap-1 text-gold text-xs font-medium group-hover:gap-2 transition-all">
-                              Learn More <ArrowRight size={12} />
+                              {t("learnMore")} <ArrowRight size={12} />
                             </span>
                           </div>
                         </div>
