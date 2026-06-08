@@ -1,22 +1,44 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { ShieldCheck, Award, GraduationCap, Heart } from "lucide-react";
+import { setRequestLocale, getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
+import { hreflangAlternatesForLocale } from "@/lib/seo";
 import CTABanner from "@/components/sections/CTABanner";
 
-export const metadata: Metadata = {
-  title: "About Us | Board-Certified Plastic Surgeons in Miami",
-  description:
-    "Meet the Your Cosmetic Surgery & SPA team — Dr. Mario Reyes-Serrano and our board-certified plastic surgeons with 20+ years of experience in Miami and Hialeah, FL. Natural results, compassionate care.",
-  alternates: { canonical: "https://ycosmeticsurgery.com/about" },
-  openGraph: {
-    title: "About Your Cosmetic Surgery & SPA | Miami, FL",
+interface Props {
+  params: Promise<{ locale: string }>;
+}
+
+export function generateStaticParams() {
+  return [{ locale: "en" }, { locale: "es" }];
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: "About Us | Board-Certified Plastic Surgeons in Miami",
     description:
-      "Board-certified plastic surgeons with 20+ years of experience. AAAHC-accredited facility in Hialeah. Over 5,000 transformations and counting.",
-    url: "https://ycosmeticsurgery.com/about",
-    images: [{ url: "/api/og?title=About+Us", width: 1200, height: 630, alt: "Your Cosmetic Surgery & SPA Miami team" }],
-  },
-};
+      "Meet the Your Cosmetic Surgery & SPA team — Dr. Mario Reyes-Serrano and our board-certified plastic surgeons with 20+ years of experience in Miami and Hialeah, FL. Natural results, compassionate care.",
+    alternates: {
+      canonical:
+        locale === "en"
+          ? "https://ycosmeticsurgery.com/about"
+          : "https://ycosmeticsurgery.com/es/about",
+      languages: hreflangAlternatesForLocale("about", locale),
+    },
+    openGraph: {
+      title: "About Your Cosmetic Surgery & SPA | Miami, FL",
+      description:
+        "Board-certified plastic surgeons with 20+ years of experience. AAAHC-accredited facility in Hialeah. Over 5,000 transformations and counting.",
+      url:
+        locale === "en"
+          ? "https://ycosmeticsurgery.com/about"
+          : "https://ycosmeticsurgery.com/es/about",
+      images: [{ url: "/api/og?title=About+Us", width: 1200, height: 630, alt: "Your Cosmetic Surgery & SPA Miami team" }],
+    },
+  };
+}
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -53,23 +75,29 @@ const jsonLd = {
   ],
 };
 
-const milestones = [
-  { year: "2004", event: "Your Cosmetic Surgery & SPA founded with a commitment to natural, patient-first results in South Florida." },
-  { year: "2008", event: "Achieved AAAHC accreditation for our state-of-the-art surgical facility in Hialeah." },
-  { year: "2012", event: "Surpassed 1,000 successful procedures with a 98% patient satisfaction rate." },
-  { year: "2016", event: "Expanded services to include cutting-edge MedSpa treatments alongside surgical procedures." },
-  { year: "2020", event: "Recognized among the Top Cosmetic Surgery Centers in South Florida." },
-  { year: "2024", event: "Over 5,000 transformations and counting — each one a unique story of renewed confidence." },
-];
+const valueIcons = [ShieldCheck, Award, GraduationCap, Heart];
 
-const values = [
-  { icon: ShieldCheck, title: "Safety First", desc: "Every procedure is performed in our AAAHC-accredited surgical suite in Hialeah, with the highest standards of patient safety." },
-  { icon: Award, title: "Artistry & Precision", desc: "We blend surgical expertise with an artist's eye — every result is designed to look natural and enhance your unique beauty." },
-  { icon: GraduationCap, title: "20+ Years Experience", desc: "Our board-certified surgeons bring decades of combined experience across every facet of cosmetic and aesthetic medicine." },
-  { icon: Heart, title: "Patient-Centered Care", desc: "From your first call to your final follow-up, you are treated with discretion, compassion, and genuine care." },
-];
+export default async function AboutPage({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations("aboutPage");
 
-export default function AboutPage() {
+  const milestones = [
+    { year: "2004", event: t("milestone2004") },
+    { year: "2008", event: t("milestone2008") },
+    { year: "2012", event: t("milestone2012") },
+    { year: "2016", event: t("milestone2016") },
+    { year: "2020", event: t("milestone2020") },
+    { year: "2024", event: t("milestone2024") },
+  ];
+
+  const values = [
+    { icon: valueIcons[0], title: t("safetyTitle"), desc: t("safetyDesc") },
+    { icon: valueIcons[1], title: t("artTitle"), desc: t("artDesc") },
+    { icon: valueIcons[2], title: t("expTitle"), desc: t("expDesc") },
+    { icon: valueIcons[3], title: t("careTitle"), desc: t("careDesc") },
+  ];
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
@@ -80,12 +108,10 @@ export default function AboutPage() {
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <span className="gold-divider mx-auto mb-6" />
           <h1 className="font-heading text-6xl md:text-7xl text-white font-light mb-5">
-            About Us
+            {t("heroTitle")}
           </h1>
           <p className="text-white/60 text-xl leading-relaxed max-w-2xl mx-auto">
-            Trusted plastic surgeons in Miami with over 20 years of experience.
-            We are dedicated to helping patients across South Florida achieve
-            natural, stunning results.
+            {t("heroSubtitle")}
           </p>
         </div>
       </section>
@@ -103,51 +129,34 @@ export default function AboutPage() {
                 quality={90}
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
-              {/* Bottom overlay with name */}
               <div className="absolute inset-0 bg-gradient-to-t from-navy/70 via-transparent to-transparent" />
               <div className="absolute bottom-0 left-0 p-8">
                 <p className="text-gold text-xs tracking-widest uppercase mb-1">Dr. Mario Reyes-Serrano</p>
-                <p className="text-white/70 text-sm">Board-Certified Plastic Surgeon</p>
+                <p className="text-white/70 text-sm">{t("drTitle")}</p>
               </div>
             </div>
-            {/* Floating badge */}
             <div className="absolute -bottom-6 -right-6 bg-white border border-cream-dark rounded-2xl p-5 shadow-xl">
               <p className="font-heading text-4xl text-navy mb-0.5">20+</p>
-              <p className="text-navy/50 text-xs tracking-widest uppercase">Years of Experience</p>
+              <p className="text-navy/50 text-xs tracking-widest uppercase">{t("expTitle")}</p>
             </div>
           </div>
 
-          {/* Copy */}
           <div>
             <span className="gold-divider mb-6" />
             <h2 className="font-heading text-5xl text-navy font-light mb-5">
-              Miami&apos;s Trusted<br />Cosmetic Surgery Center
+              {t("storyHeading")}
             </h2>
             <div className="space-y-4 text-navy/65 leading-relaxed">
-              <p>
-                Your Cosmetic Surgery &amp; SPA is a state-of-the-art clinic staffed by
-                respected board-certified surgeons with over 20 years of experience each.
-                We have become a trusted name in plastic surgery across South Florida,
-                serving patients from Miami, Hialeah, and from all over the country.
-              </p>
-              <p>
-                With flexible financing options, we make a wide variety of popular
-                procedures accessible for everyone. Our team&apos;s philosophy is simple:
-                we don&apos;t change who you are — we reveal the best version of you.
-                Every treatment plan is crafted individually, never templated.
-              </p>
-              <p>
-                Led by Dr. Mario Reyes-Serrano, our surgical team brings decades of
-                combined expertise to every procedure — from BBL and Lipo 360 to
-                rhinoplasty, facelifts, and everything in between.
-              </p>
+              <p>{t("storyP1")}</p>
+              <p>{t("storyP2")}</p>
+              <p>{t("storyP3")}</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
               <Link
                 href="/contact"
                 className="inline-flex items-center justify-center bg-navy hover:bg-navy-light text-white text-sm font-semibold tracking-[0.12em] uppercase px-7 py-3.5 rounded-full transition-all duration-200"
               >
-                Book Free Consultation
+                {t("bookConsultation")}
               </Link>
               <a
                 href="tel:+13052183513"
@@ -165,7 +174,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-14">
             <span className="gold-divider mx-auto mb-5" />
-            <h2 className="font-heading text-5xl text-navy font-light mb-4">Our Values</h2>
+            <h2 className="font-heading text-5xl text-navy font-light mb-4">{t("valuesTitle")}</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((v) => (
@@ -187,7 +196,7 @@ export default function AboutPage() {
           <div className="text-center mb-14">
             <span className="gold-divider mx-auto mb-5" />
             <h2 className="font-heading text-5xl text-navy font-light">
-              Meet Our Surgeon
+              {t("meetSurgeon")}
             </h2>
           </div>
           <div className="bg-white rounded-2xl p-10 border border-cream-dark flex flex-col md:flex-row gap-8 items-center">
@@ -195,19 +204,10 @@ export default function AboutPage() {
               MR
             </div>
             <div>
-              <p className="text-gold text-xs tracking-[0.3em] uppercase mb-1">Board-Certified Plastic Surgeon</p>
+              <p className="text-gold text-xs tracking-[0.3em] uppercase mb-1">{t("drTitle")}</p>
               <h3 className="font-heading text-4xl text-navy mb-3">Dr. Mario Reyes-Serrano</h3>
-              <p className="text-navy/60 leading-relaxed mb-4">
-                Dr. Reyes-Serrano is one of Miami&apos;s most respected and trusted plastic
-                surgeons with more than 20 years of experience in cosmetic and
-                reconstructive surgery. His expertise spans body contouring, breast surgery,
-                and facial procedures, with a reputation for results that look completely natural.
-              </p>
-              <p className="text-navy/60 leading-relaxed">
-                Patients travel from across the country — and internationally — to be
-                treated by Dr. Reyes-Serrano and the Your Cosmetic Surgery &amp; SPA team
-                in Hialeah, FL.
-              </p>
+              <p className="text-navy/60 leading-relaxed mb-4">{t("drBio1")}</p>
+              <p className="text-navy/60 leading-relaxed">{t("drBio2")}</p>
             </div>
           </div>
         </div>
@@ -218,7 +218,7 @@ export default function AboutPage() {
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-14">
             <span className="gold-divider mx-auto mb-5" />
-            <h2 className="font-heading text-5xl text-navy font-light">Our Journey</h2>
+            <h2 className="font-heading text-5xl text-navy font-light">{t("ourJourney")}</h2>
           </div>
           <div className="relative">
             <div className="absolute left-[28px] top-0 bottom-0 w-px bg-gradient-to-b from-gold/60 via-gold/30 to-transparent" />
