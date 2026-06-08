@@ -198,7 +198,7 @@ export default function Navbar() {
           </ul>
 
           {/* Right CTA */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 shrink-0">
             <LanguageSwitcher />
             <a
               href="tel:+13052183513"
@@ -209,7 +209,7 @@ export default function Navbar() {
             </a>
             <Link
               href="/contact"
-              className="hidden md:inline-flex items-center bg-gold hover:bg-gold-dark text-white text-[12px] font-semibold tracking-[0.15em] uppercase px-6 py-2.5 rounded-full transition-all duration-200 hover:scale-105 hover:shadow-[0_4px_20px_rgba(201,164,110,0.4)]"
+              className="hidden md:inline-flex items-center whitespace-nowrap bg-gold hover:bg-gold-dark text-white text-[12px] font-semibold tracking-[0.15em] uppercase px-6 py-2.5 rounded-full transition-all duration-200 hover:scale-105 hover:shadow-[0_4px_20px_rgba(201,164,110,0.4)]"
             >
               {t("bookConsultation")}
             </Link>
