@@ -14,6 +14,8 @@ export interface Procedure {
     name: string;
     description: string;
     benefits: string[];
+    tagline?: string;
+    recovery?: string;
   };
 }
 
@@ -38,6 +40,7 @@ export const procedures: Procedure[] = [
     featured: true,
     es: {
       name: "Abdominoplastia",
+      tagline: "Recupera tu contorno",
       description: "La abdominoplastia elimina el exceso de piel y grasa del abdomen mientras fortalece los músculos subyacentes, creando un perfil más firme y liso.",
       benefits: [
         "Perfil abdominal más plano y tonificado",
@@ -45,6 +48,7 @@ export const procedures: Procedure[] = [
         "Eliminación de estrías bajo el ombligo",
         "Resultados duraderos con estilo de vida saludable",
       ],
+      recovery: "4–6 semanas",
     },
   },
   {
@@ -66,6 +70,7 @@ export const procedures: Procedure[] = [
     featured: true,
     es: {
       name: "Liposucción",
+      tagline: "Esculpe tu silueta",
       description: "Las técnicas avanzadas de liposucción eliminan depósitos de grasa resistentes a la dieta y el ejercicio, remodelando y refinando sus contornos naturales.",
       benefits: [
         "Reducción de grasa localizada",
@@ -73,6 +78,7 @@ export const procedures: Procedure[] = [
         "Mejora de las proporciones corporales",
         "Técnicas mínimamente invasivas disponibles",
       ],
+      recovery: "2–4 semanas",
     },
   },
   {
@@ -95,6 +101,7 @@ export const procedures: Procedure[] = [
     imagePosition: "center bottom",
     es: {
       name: "Aumento de Glúteos (BBL)",
+      tagline: "Curvas realzadas",
       description: "El BBL combina liposucción estratégica con transferencia de grasa para realzar el volumen y la forma, creando curvas naturales y hermosas.",
       benefits: [
         "Realce de volumen de aspecto natural",
@@ -102,6 +109,7 @@ export const procedures: Procedure[] = [
         "Mejor proporción cintura-cadera",
         "Doble beneficio: liposucción + aumento",
       ],
+      recovery: "3–6 semanas",
     },
   },
   {
@@ -123,6 +131,7 @@ export const procedures: Procedure[] = [
     featured: false,
     es: {
       name: "Mommy Makeover",
+      tagline: "Redescúbrete",
       description: "Una combinación personalizada de procedimientos — típicamente de senos, abdomen y contorneado — diseñada para restaurar su cuerpo y confianza previos al embarazo.",
       benefits: [
         "Restauración corporal integral",
@@ -130,6 +139,7 @@ export const procedures: Procedure[] = [
         "Período de recuperación único",
         "Resultados dramáticos y transformadores",
       ],
+      recovery: "4–8 semanas",
     },
   },
   {
@@ -151,6 +161,7 @@ export const procedures: Procedure[] = [
     featured: false,
     es: {
       name: "Contorneado Corporal",
+      tagline: "Define tu figura",
       description: "Después de una pérdida de peso significativa o como procedimiento independiente, el contorneado corporal elimina el exceso de piel y tensa el tejido restante para una apariencia refinada y segura.",
       benefits: [
         "Eliminación del exceso de piel",
@@ -158,6 +169,7 @@ export const procedures: Procedure[] = [
         "Mejora de las proporciones corporales",
         "Mayor confianza tras la pérdida de peso",
       ],
+      recovery: "4–6 semanas",
     },
   },
   // Breast
@@ -180,6 +192,7 @@ export const procedures: Procedure[] = [
     featured: true,
     es: {
       name: "Aumento de Senos",
+      tagline: "Belleza natural, amplificada",
       description: "Usando implantes de silicona o solución salina, o transferencia de grasa, realzamos el volumen y la forma de los senos para lograr resultados hermosos, proporcionados y de apariencia natural.",
       benefits: [
         "Mayor volumen y plenitud de los senos",
@@ -187,6 +200,7 @@ export const procedures: Procedure[] = [
         "Aspecto y sensación natural con silicona",
         "Resultados duraderos",
       ],
+      recovery: "2–4 semanas",
     },
   },
   {
@@ -208,6 +222,7 @@ export const procedures: Procedure[] = [
     featured: true,
     es: {
       name: "Levantamiento de Senos",
+      tagline: "Restaura tu perfil",
       description: "Una mastopexia eleva y remoldea los senos caídos eliminando el exceso de piel y reposicionando el tejido mamario para un contorno más juvenil y elevado.",
       benefits: [
         "Posición mamaria elevada y juvenil",
@@ -215,6 +230,7 @@ export const procedures: Procedure[] = [
         "Complejo areola-pezón reposicionado",
         "Se puede combinar con aumento",
       ],
+      recovery: "2–4 semanas",
     },
   },
   {
@@ -236,6 +252,7 @@ export const procedures: Procedure[] = [
     featured: false,
     es: {
       name: "Reducción de Senos",
+      tagline: "Comodidad y confianza",
       description: "La cirugía de reducción mamaria elimina el exceso de tejido y piel para lograr un tamaño más proporcional a su figura, aliviando las molestias y mejorando la calidad de vida.",
       benefits: [
         "Alivio del dolor de cuello, espalda y hombros",
@@ -243,6 +260,7 @@ export const procedures: Procedure[] = [
         "Mayor actividad física",
         "Mejor autoimagen",
       ],
+      recovery: "3–4 semanas",
     },
   },
   // Face
@@ -265,6 +283,7 @@ export const procedures: Procedure[] = [
     featured: true,
     es: {
       name: "Rinoplastia",
+      tagline: "Armonía en cada rasgo",
       description: "La cirugía de remodelación nasal refina el tamaño, forma y proporción de la nariz para crear armonía facial, ya sea para mejora estética o funcional.",
       benefits: [
         "Mejor simetría nasal",
@@ -272,6 +291,7 @@ export const procedures: Procedure[] = [
         "Corrección de problemas respiratorios",
         "Refinamiento de apariencia natural",
       ],
+      recovery: "2–3 semanas visible, 1 año final",
     },
   },
   {
@@ -293,6 +313,7 @@ export const procedures: Procedure[] = [
     featured: true,
     es: {
       name: "Lifting Facial",
+      tagline: "Retrocede el tiempo",
       description: "Una ritidectomía trata la piel flácida, las arrugas profundas y la pérdida de volumen facial para restaurar una apariencia naturalmente juvenil y renovada.",
       benefits: [
         "Reducción de pliegues faciales profundos",
@@ -300,6 +321,7 @@ export const procedures: Procedure[] = [
         "Tejidos faciales reposicionados",
         "Apariencia juvenil y descansada",
       ],
+      recovery: "2–3 semanas",
     },
   },
   {
@@ -321,6 +343,7 @@ export const procedures: Procedure[] = [
     featured: true,
     es: {
       name: "Cirugía de Párpados",
+      tagline: "Ojos que cautivan",
       description: "La blefaroplastia elimina el exceso de piel y grasa de los párpados superiores y/o inferiores, creando una apariencia ocular más alerta, juvenil y renovada.",
       benefits: [
         "Ojos más brillantes y abiertos",
@@ -328,6 +351,7 @@ export const procedures: Procedure[] = [
         "Mejor visión si el colgamiento era obstructivo",
         "Cicatrización mínima",
       ],
+      recovery: "1–2 semanas",
     },
   },
   {
@@ -349,6 +373,7 @@ export const procedures: Procedure[] = [
     featured: false,
     es: {
       name: "Lifting de Cuello",
+      tagline: "Elegancia refinada",
       description: "Un lifting de cuello elimina el exceso de piel, bandas y grasa bajo el mentón para restaurar un contorno de cuello y mandíbula limpio y juvenil.",
       benefits: [
         "Línea de mandíbula definida",
@@ -356,6 +381,7 @@ export const procedures: Procedure[] = [
         "Grasa excedente eliminada",
         "Músculos del cuello tonificados",
       ],
+      recovery: "2–3 semanas",
     },
   },
   // MedSpa
@@ -378,6 +404,7 @@ export const procedures: Procedure[] = [
     featured: true,
     es: {
       name: "Botox y Rellenos",
+      tagline: "Rejuvenece sin cirugía",
       description: "Neurotoxinas y rellenos dérmicos administrados con precisión suavizan líneas, restauran volumen y esculpen los contornos faciales para un resultado naturalmente renovado.",
       benefits: [
         "Resultados inmediatos",
@@ -385,6 +412,7 @@ export const procedures: Procedure[] = [
         "Arrugas y líneas suavizadas",
         "Volumen facial restaurado",
       ],
+      recovery: "Sin tiempo de recuperación",
     },
   },
   {
@@ -406,6 +434,7 @@ export const procedures: Procedure[] = [
     featured: true,
     es: {
       name: "Resurfacing con Láser",
+      tagline: "Revela una piel radiante",
       description: "Los tratamientos láser avanzados abordan irregularidades de textura, daño solar, cicatrices y signos de envejecimiento, revelando una piel más suave y luminosa.",
       benefits: [
         "Mejor textura de la piel",
@@ -413,6 +442,7 @@ export const procedures: Procedure[] = [
         "Cicatrices minimizadas",
         "Producción de colágeno estimulada",
       ],
+      recovery: "3–7 días",
     },
   },
   {
@@ -434,6 +464,7 @@ export const procedures: Procedure[] = [
     featured: false,
     es: {
       name: "Microagujas",
+      tagline: "Renueva desde adentro",
       description: "La terapia de inducción de colágeno estimula el proceso de reparación natural de la piel, mejorando el tono, la textura y la firmeza con un tiempo de inactividad mínimo.",
       benefits: [
         "Líneas finas reducidas",
@@ -441,6 +472,7 @@ export const procedures: Procedure[] = [
         "Poros minimizados",
         "Estimulación natural de colágeno",
       ],
+      recovery: "1–2 días",
     },
   },
   // Body (additional)
@@ -463,6 +495,7 @@ export const procedures: Procedure[] = [
     featured: true,
     es: {
       name: "Lipo 360",
+      tagline: "Escultura de 360°",
       description: "El Lipo 360 trabaja todo el midsección — abdomen, flancos, espalda y cintura — para crear una silueta dramáticamente más delgada y contorneada desde todos los ángulos.",
       benefits: [
         "Transformación completa de 360° del midsección",
@@ -470,6 +503,7 @@ export const procedures: Procedure[] = [
         "Eliminación de grasa en áreas difíciles",
         "Resultados dramáticos y duraderos",
       ],
+      recovery: "2–4 semanas",
     },
   },
   {
@@ -491,6 +525,7 @@ export const procedures: Procedure[] = [
     featured: false,
     es: {
       name: "Lifting de Brazos y Muslos",
+      tagline: "Firma y tonifica",
       description: "Un lifting de brazos o muslos elimina el exceso de piel flácida causada por la pérdida de peso o el envejecimiento, restaurando una apariencia más firme y tonificada.",
       benefits: [
         "Eliminación del exceso de piel colgante",
@@ -498,6 +533,7 @@ export const procedures: Procedure[] = [
         "Mejor comodidad y movilidad",
         "Resultados duraderos con peso estable",
       ],
+      recovery: "2–4 semanas",
     },
   },
   {
@@ -520,6 +556,7 @@ export const procedures: Procedure[] = [
     imagePosition: "center 60%",
     es: {
       name: "Marcación Abdominal",
+      tagline: "Definición esculpida",
       description: "La marcación abdominal usa liposucción de precisión para eliminar grasa selectivamente alrededor de los grupos musculares naturales, revelando una definición de six-pack que no se logra solo con ejercicio.",
       benefits: [
         "Definición visible de six-pack",
@@ -527,6 +564,7 @@ export const procedures: Procedure[] = [
         "Cicatrización mínima",
         "Eliminación permanente de grasa",
       ],
+      recovery: "2–3 semanas",
     },
   },
   // Breast (additional)
@@ -549,6 +587,7 @@ export const procedures: Procedure[] = [
     featured: false,
     es: {
       name: "Ginecomastia",
+      tagline: "Un pecho más plano y masculino",
       description: "La cirugía de reducción mamaria masculina elimina el exceso de tejido glandular y grasa del pecho, creando un contorno más plano, firme y masculino.",
       benefits: [
         "Pecho más plano y definido",
@@ -556,6 +595,7 @@ export const procedures: Procedure[] = [
         "Resultados permanentes",
         "Cicatrización mínima visible",
       ],
+      recovery: "2–3 semanas",
     },
   },
   // Face (additional)
@@ -578,6 +618,7 @@ export const procedures: Procedure[] = [
     featured: false,
     es: {
       name: "Otoplastia",
+      tagline: "Orejas en equilibrio perfecto",
       description: "La cirugía de remodelación de orejas corrige orejas prominentes o asimétricas reposicionando y remodelando el cartílago para una apariencia más equilibrada y natural.",
       benefits: [
         "Posición y forma de orejas corregidas",
@@ -585,6 +626,7 @@ export const procedures: Procedure[] = [
         "Resultados duraderos",
         "Adecuado para adolescentes y adultos",
       ],
+      recovery: "1–2 semanas",
     },
   },
   {
@@ -606,6 +648,7 @@ export const procedures: Procedure[] = [
     featured: false,
     es: {
       name: "Bichectomía",
+      tagline: "Pómulos esculpidos",
       description: "La extracción de grasa bucal reduce la plenitud en las mejillas eliminando la bolsa de grasa bucal, creando un contorno facial más delgado y definido con pómulos prominentes.",
       benefits: [
         "Perfil facial más delgado",
@@ -613,6 +656,7 @@ export const procedures: Procedure[] = [
         "Mínimamente invasivo — sin incisiones externas",
         "Resultados permanentes",
       ],
+      recovery: "1–2 semanas",
     },
   },
 ];

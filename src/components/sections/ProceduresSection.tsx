@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { ArrowRight, Clock } from "lucide-react";
@@ -29,6 +29,7 @@ function ProcedureCard({
   interested,
   recovery,
   categoryLabel,
+  locale,
 }: {
   proc: Procedure;
   fallbackSrc: string;
@@ -37,7 +38,12 @@ function ProcedureCard({
   interested: string;
   recovery: string;
   categoryLabel: Record<string, string>;
+  locale: string;
 }) {
+  const displayName = (locale === "es" && proc.es?.name) ? proc.es.name : proc.name;
+  const displayTagline = (locale === "es" && proc.es?.tagline) ? proc.es.tagline : proc.tagline;
+  const displayDescription = (locale === "es" && proc.es?.description) ? proc.es.description : proc.description;
+  const displayRecovery = (locale === "es" && proc.es?.recovery) ? proc.es.recovery : proc.recovery;
   // Try /procedures/{slug}.webp first; if missing fall back to hero image
   const webpSrc = `/procedures/${proc.slug}.webp`;
   const [src, setSrc] = useState(webpSrc);
@@ -83,18 +89,18 @@ function ProcedureCard({
       {/* ── Content ── */}
       <div className="p-6 flex flex-col flex-1">
         <p className="text-[#c9a46e] text-[10px] tracking-[0.22em] uppercase font-semibold mb-1">
-          {proc.tagline}
+          {displayTagline}
         </p>
         <h3 className="font-heading text-[#0d1b3e] text-[1.45rem] font-light leading-snug mb-3">
-          {proc.name}
+          {displayName}
         </h3>
         <p className="text-[#0d1b3e]/55 text-sm leading-relaxed line-clamp-2 flex-1 mb-4">
-          {proc.description}
+          {displayDescription}
         </p>
 
         <div className="flex items-center gap-1.5 text-[#0d1b3e]/35 text-xs mb-5">
           <Clock size={11} />
-          <span>{recovery}: {proc.recovery}</span>
+          <span>{recovery}: {displayRecovery}</span>
         </div>
 
         {/* Dual CTA */}
@@ -119,6 +125,7 @@ function ProcedureCard({
 
 export default function ProceduresSection() {
   const t = useTranslations("proceduresSection");
+  const locale = useLocale();
   const [active, setActive] = useState<string>("body");
   const [activeProcedure, setActiveProcedure] = useState<string | null>(null);
 
@@ -184,6 +191,7 @@ export default function ProceduresSection() {
                 interested={t("interested")}
                 recovery={t("recovery")}
                 categoryLabel={categoryLabel}
+                locale={locale}
               />
             ))}
           </div>
