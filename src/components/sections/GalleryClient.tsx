@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import Link from "next/link";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 interface CaseItem {
   id: number;
@@ -30,7 +31,7 @@ const cases: CaseItem[] = [
   { id: 12, procedure: "Breast Reduction",    category: "Breast", recovery: "3–4 weeks",    beforeBg: "from-[#989ca0] to-[#787c84]", afterBg: "from-[#dce0e8] to-[#b8c0cc]", featured: false, size: "medium" },
 ];
 
-const CATEGORIES = ["All", "Body", "Breast", "Face", "MedSpa"];
+const CATEGORY_KEYS = ["All", "Body", "Breast", "Face", "MedSpa"] as const;
 
 const DOT_COLOR: Record<string, string> = {
   Body:   "bg-[#4a7aff]",
@@ -41,7 +42,18 @@ const DOT_COLOR: Record<string, string> = {
 
 // ─── Drag slider (used in lightbox) ──────────────────────────────────────────
 
-function DragSlider({ beforeBg, afterBg }: { beforeBg: string; afterBg: string }) {
+function DragSlider({
+  beforeBg,
+  afterBg,
+  beforeLabel,
+  afterLabel,
+}: {
+  beforeBg: string;
+  afterBg: string;
+  beforeLabel: string;
+  afterLabel: string;
+  dragHint: string;
+}) {
   const [pos, setPos] = useState(50);
   const dragging = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -63,7 +75,7 @@ function DragSlider({ beforeBg, afterBg }: { beforeBg: string; afterBg: string }
       {/* Before */}
       <div className={`absolute inset-0 bg-gradient-to-br ${beforeBg}`}>
         <span className="absolute bottom-3 left-3 bg-black/50 backdrop-blur-sm text-white text-[10px] font-bold tracking-[0.18em] uppercase px-2.5 py-1 rounded-sm">
-          Before
+          {beforeLabel}
         </span>
       </div>
 
@@ -73,7 +85,7 @@ function DragSlider({ beforeBg, afterBg }: { beforeBg: string; afterBg: string }
         style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
       >
         <span className="absolute bottom-3 right-3 bg-[#c9a46e]/80 backdrop-blur-sm text-white text-[10px] font-bold tracking-[0.18em] uppercase px-2.5 py-1 rounded-sm">
-          After
+          {afterLabel}
         </span>
       </div>
 
@@ -93,22 +105,29 @@ function DragSlider({ beforeBg, afterBg }: { beforeBg: string; afterBg: string }
           <polyline points="14,4 18,10 14,16" />
         </svg>
       </div>
-
-      {/* Drag hint — fades out after first drag */}
-      {pos === 50 && (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-          <div className="flex items-center gap-2 bg-black/35 backdrop-blur-sm rounded-full px-3 py-1.5 animate-pulse">
-            <span className="text-white/80 text-[11px] tracking-wide">Drag to reveal</span>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
 
 // ─── Card (hover reveals after) ──────────────────────────────────────────────
 
-function GalleryCard({ item, onClick }: { item: CaseItem; onClick: () => void }) {
+function GalleryCard({
+  item,
+  onClick,
+  beforeLabel,
+  afterLabel,
+  featuredLabel,
+  viewFullSizeLabel,
+  recoveryLabel,
+}: {
+  item: CaseItem;
+  onClick: () => void;
+  beforeLabel: string;
+  afterLabel: string;
+  featuredLabel: string;
+  viewFullSizeLabel: string;
+  recoveryLabel: string;
+}) {
   const [hovered, setHovered] = useState(false);
   const imgH = item.size === "large" ? "h-80" : item.size === "medium" ? "h-64" : "h-52";
 
@@ -148,10 +167,10 @@ function GalleryCard({ item, onClick }: { item: CaseItem; onClick: () => void })
 
           {/* Labels */}
           <span className="absolute bottom-3 left-3 z-10 bg-black/45 backdrop-blur-sm text-white text-[9px] font-bold tracking-[0.18em] uppercase px-2 py-0.5 rounded-sm pointer-events-none">
-            Before
+            {beforeLabel}
           </span>
           <span className="absolute bottom-3 right-3 z-10 bg-[#c9a46e]/75 backdrop-blur-sm text-white text-[9px] font-bold tracking-[0.18em] uppercase px-2 py-0.5 rounded-sm pointer-events-none">
-            After
+            {afterLabel}
           </span>
 
           {/* Category dot */}
@@ -160,14 +179,14 @@ function GalleryCard({ item, onClick }: { item: CaseItem; onClick: () => void })
           {/* Featured badge */}
           {item.featured && (
             <div className="absolute top-3 right-3 z-10 bg-[#c9a46e]/85 backdrop-blur-sm text-white text-[9px] font-bold tracking-[0.18em] uppercase px-2 py-0.5 rounded-sm">
-              Featured
+              {featuredLabel}
             </div>
           )}
 
           {/* Expand overlay */}
           <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
             <div className="bg-white/15 backdrop-blur-sm border border-white/30 rounded-full px-4 py-1.5">
-              <span className="text-white text-[11px] tracking-wider font-medium">View Full Size</span>
+              <span className="text-white text-[11px] tracking-wider font-medium">{viewFullSizeLabel}</span>
             </div>
           </div>
         </div>
@@ -179,7 +198,7 @@ function GalleryCard({ item, onClick }: { item: CaseItem; onClick: () => void })
             <p className="text-[#0d1b3e]/40 text-[11px] tracking-wider uppercase mt-0.5">{item.category}</p>
           </div>
           <div className="text-right">
-            <p className="text-[#0d1b3e]/30 text-[10px] tracking-wider uppercase">Recovery</p>
+            <p className="text-[#0d1b3e]/30 text-[10px] tracking-wider uppercase">{recoveryLabel}</p>
             <p className="text-[#c9a46e] text-xs font-semibold mt-0.5">{item.recovery}</p>
           </div>
         </div>
@@ -196,12 +215,24 @@ function Lightbox({
   onClose,
   onPrev,
   onNext,
+  beforeLabel,
+  afterLabel,
+  dragHint,
+  recoveryLabel,
+  disclaimer,
+  bookLabel,
 }: {
   items: CaseItem[];
   index: number;
   onClose: () => void;
   onPrev: () => void;
   onNext: () => void;
+  beforeLabel: string;
+  afterLabel: string;
+  dragHint: string;
+  recoveryLabel: string;
+  disclaimer: string;
+  bookLabel: string;
 }) {
   const item = items[index];
 
@@ -245,7 +276,13 @@ function Lightbox({
 
         {/* Slider */}
         <div className="h-[400px] md:h-[440px]">
-          <DragSlider beforeBg={item.beforeBg} afterBg={item.afterBg} />
+          <DragSlider
+            beforeBg={item.beforeBg}
+            afterBg={item.afterBg}
+            beforeLabel={beforeLabel}
+            afterLabel={afterLabel}
+            dragHint={dragHint}
+          />
         </div>
 
         {/* Info panel */}
@@ -256,21 +293,19 @@ function Lightbox({
               <h3 className="font-[var(--font-heading)] text-white text-2xl font-light">{item.procedure}</h3>
             </div>
             <div className="text-right shrink-0 ml-4">
-              <p className="text-white/35 text-[10px] tracking-wider uppercase">Recovery</p>
+              <p className="text-white/35 text-[10px] tracking-wider uppercase">{recoveryLabel}</p>
               <p className="text-white/70 text-sm mt-0.5 font-medium">{item.recovery}</p>
             </div>
           </div>
 
-          <p className="text-white/40 text-xs leading-relaxed mb-5">
-            Results are representative of outcomes at YCS Aesthetic Center. Individual results may vary. All images displayed with full written patient consent.
-          </p>
+          <p className="text-white/40 text-xs leading-relaxed mb-5">{disclaimer}</p>
 
           <Link
             href="/contact"
             onClick={onClose}
             className="flex items-center justify-center w-full bg-[#c9a46e] hover:bg-[#a87d45] text-white font-semibold text-xs tracking-[0.15em] uppercase py-3.5 rounded-lg transition-all duration-200 hover:shadow-[0_4px_20px_rgba(201,164,110,0.4)]"
           >
-            Book a Free Consultation
+            {bookLabel}
           </Link>
         </div>
 
@@ -297,8 +332,17 @@ function Lightbox({
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 export default function GalleryClient() {
+  const t = useTranslations("galleryPage");
   const [activeCategory, setActiveCategory] = useState("All");
   const [lightboxIndex, setLightboxIndex]   = useState<number | null>(null);
+
+  const categoryDisplayLabel: Record<string, string> = {
+    All:    t("filterAll"),
+    Body:   t("filterBody"),
+    Breast: t("filterBreast"),
+    Face:   t("filterFace"),
+    MedSpa: t("filterMedSpa"),
+  };
 
   const filtered = activeCategory === "All"
     ? cases
@@ -307,6 +351,15 @@ export default function GalleryClient() {
   const countFor = (cat: string) =>
     cat === "All" ? cases.length : cases.filter((c) => c.category === cat).length;
 
+  const beforeLabel     = t("before");
+  const afterLabel      = t("after");
+  const featuredLabel   = t("featured");
+  const dragHint        = t("dragToReveal");
+  const viewFullSize    = t("viewFullSize");
+  const recoveryLabel   = t("recoveryLabel");
+  const disclaimer      = t("lightboxDisclaimer");
+  const bookLabel       = t("bookConsultation");
+
   return (
     <>
       {/* ── Hero ── */}
@@ -314,24 +367,23 @@ export default function GalleryClient() {
         <div className="absolute inset-0 hero-pattern opacity-25" />
         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#c9a46e]/50 to-transparent" />
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#c9a46e]/20 to-transparent" />
-        {/* Ambient glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[280px] bg-[#c9a46e]/6 blur-[100px] rounded-full pointer-events-none" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <div className="inline-flex items-center gap-2 bg-[#c9a46e]/12 border border-[#c9a46e]/25 rounded-full px-4 py-1.5 mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-[#c9a46e] animate-pulse" />
-            <span className="text-[#c9a46e]/80 text-[11px] tracking-[0.22em] uppercase font-semibold">Real Patient Results</span>
+            <span className="text-[#c9a46e]/80 text-[11px] tracking-[0.22em] uppercase font-semibold">{t("badgeLabel")}</span>
           </div>
 
           <span className="gold-divider mx-auto mb-6" />
 
           <h1 className="font-[var(--font-heading)] text-white font-light leading-[1.06] mb-5">
-            <span className="block text-5xl md:text-7xl">Before &amp; After</span>
+            <span className="block text-5xl md:text-7xl">{t("heroTitle")}</span>
             <em className="not-italic block text-5xl md:text-7xl text-[#c9a46e]">Gallery</em>
           </h1>
 
           <p className="text-white/50 text-lg leading-relaxed max-w-xl mx-auto">
-            Every transformation represents a patient who trusted us. Drag the slider in each photo to see their result.
+            {t("heroSubtitle")}
           </p>
         </div>
       </section>
@@ -339,7 +391,7 @@ export default function GalleryClient() {
       {/* ── Consent bar ── */}
       <div className="bg-[#1a2d5a]/40 border-y border-[#c9a46e]/12 py-2.5">
         <p className="text-center text-white/30 text-[11px] tracking-[0.15em] uppercase">
-          All photographs displayed with full informed written patient consent · Individual results may vary
+          {t("consentBar")}
         </p>
       </div>
 
@@ -349,7 +401,7 @@ export default function GalleryClient() {
 
           {/* Filter tabs */}
           <div className="flex flex-wrap justify-center gap-2 mb-5">
-            {CATEGORIES.map((cat) => {
+            {CATEGORY_KEYS.map((cat) => {
               const active = cat === activeCategory;
               return (
                 <button
@@ -361,7 +413,7 @@ export default function GalleryClient() {
                       : "bg-white border border-[#0d1b3e]/12 text-[#0d1b3e]/45 hover:border-[#0d1b3e]/35 hover:text-[#0d1b3e] hover:shadow-sm"
                   }`}
                 >
-                  {cat}
+                  {categoryDisplayLabel[cat]}
                   <span className={`inline-flex items-center justify-center w-4 h-4 rounded-full text-[10px] font-bold leading-none ${
                     active ? "bg-[#c9a46e] text-white" : "bg-[#0d1b3e]/8 text-[#0d1b3e]/40"
                   }`}>
@@ -374,8 +426,8 @@ export default function GalleryClient() {
 
           {/* Count line */}
           <p className="text-center text-[#0d1b3e]/30 text-[11px] tracking-[0.18em] uppercase mb-12">
-            {filtered.length} result{filtered.length !== 1 ? "s" : ""}
-            {activeCategory !== "All" && ` · ${activeCategory}`}
+            {filtered.length} {filtered.length !== 1 ? t("resultsSuffix") : t("resultSuffix")}
+            {activeCategory !== "All" && ` · ${categoryDisplayLabel[activeCategory]}`}
           </p>
 
           {/* Masonry grid */}
@@ -385,13 +437,18 @@ export default function GalleryClient() {
                 key={item.id}
                 item={item}
                 onClick={() => setLightboxIndex(idx)}
+                beforeLabel={beforeLabel}
+                afterLabel={afterLabel}
+                featuredLabel={featuredLabel}
+                viewFullSizeLabel={viewFullSize}
+                recoveryLabel={recoveryLabel}
               />
             ))}
           </div>
 
           {filtered.length === 0 && (
             <div className="text-center py-20">
-              <p className="text-[#0d1b3e]/30 text-sm tracking-wider">No results in this category yet.</p>
+              <p className="text-[#0d1b3e]/30 text-sm tracking-wider">{t("noResults")}</p>
             </div>
           )}
 
@@ -399,16 +456,16 @@ export default function GalleryClient() {
           <div className="mt-20 pt-16 border-t border-[#0d1b3e]/8 text-center">
             <span className="gold-divider mx-auto mb-6" />
             <p className="font-[var(--font-heading)] text-[#0d1b3e] text-3xl md:text-4xl font-light mb-2">
-              Ready for your transformation?
+              {t("ctaHeading")}
             </p>
             <p className="text-[#0d1b3e]/45 text-sm mb-8">
-              Free consultations · No obligation · Personalized plan
+              {t("ctaSubtitle")}
             </p>
             <Link
               href="/contact"
               className="inline-flex items-center justify-center bg-[#0d1b3e] hover:bg-[#060e1f] text-white font-semibold text-[11px] tracking-[0.18em] uppercase px-10 py-4 rounded-full transition-all duration-200 hover:shadow-[0_8px_30px_rgba(13,27,62,0.28)]"
             >
-              Book Your Free Consultation
+              {t("ctaButton")}
             </Link>
           </div>
         </div>
@@ -422,6 +479,12 @@ export default function GalleryClient() {
           onClose={() => setLightboxIndex(null)}
           onPrev={() => setLightboxIndex((i) => (i === null ? 0 : (i - 1 + filtered.length) % filtered.length))}
           onNext={() => setLightboxIndex((i) => (i === null ? 0 : (i + 1) % filtered.length))}
+          beforeLabel={beforeLabel}
+          afterLabel={afterLabel}
+          dragHint={dragHint}
+          recoveryLabel={recoveryLabel}
+          disclaimer={disclaimer}
+          bookLabel={bookLabel}
         />
       )}
     </>

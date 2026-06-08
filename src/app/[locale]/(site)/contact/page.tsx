@@ -1,20 +1,40 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import { hreflangAlternatesForLocale } from "@/lib/seo";
 import ContactForm from "@/components/sections/ContactForm";
 
-export const metadata: Metadata = {
-  title: "Contact Us | Book a Free Consultation in Miami, FL",
-  description:
-    "Contact Your Cosmetic Surgery & SPA in Hialeah, FL. Call (305) 218-3513 or fill out our form to schedule a free, private cosmetic surgery consultation. Serving Miami, Hialeah, and all of South Florida.",
-  alternates: {
-    canonical: "https://ycosmeticsurgery.com/contact",
-  },
-  openGraph: {
-    title: "Contact Us | Your Cosmetic Surgery & SPA Miami",
+interface Props {
+  params: Promise<{ locale: string }>;
+}
+
+export function generateStaticParams() {
+  return [{ locale: "en" }, { locale: "es" }];
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: "Contact Us | Book a Free Consultation in Miami, FL",
     description:
-      "Book your free consultation with our board-certified plastic surgeons. Located in Hialeah, FL — serving all of South Florida.",
-    url: "https://ycosmeticsurgery.com/contact",
-  },
-};
+      "Contact Your Cosmetic Surgery & SPA in Hialeah, FL. Call (305) 218-3513 or fill out our form to schedule a free, private cosmetic surgery consultation. Serving Miami, Hialeah, and all of South Florida.",
+    alternates: {
+      canonical:
+        locale === "en"
+          ? "https://ycosmeticsurgery.com/contact"
+          : "https://ycosmeticsurgery.com/es/contact",
+      languages: hreflangAlternatesForLocale("contact", locale),
+    },
+    openGraph: {
+      title: "Contact Us | Your Cosmetic Surgery & SPA Miami",
+      description:
+        "Book your free consultation with our board-certified plastic surgeons. Located in Hialeah, FL — serving all of South Florida.",
+      url:
+        locale === "en"
+          ? "https://ycosmeticsurgery.com/contact"
+          : "https://ycosmeticsurgery.com/es/contact",
+    },
+  };
+}
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -71,7 +91,9 @@ const jsonLd = {
   },
 };
 
-export default function ContactPage() {
+export default async function ContactPage({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   return (
     <>
       <script

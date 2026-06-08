@@ -1,42 +1,31 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Phone, MapPin, Clock, Mail, CheckCircle } from "lucide-react";
-
-const schema = z.object({
-  name: z.string().min(2, "Please enter your full name"),
-  email: z.string().email("Please enter a valid email address"),
-  phone: z.string().min(7, "Please enter a valid phone number"),
-  procedure: z.string().optional(),
-  message: z.string().optional(),
-});
-type FormData = z.infer<typeof schema>;
-
-const procedures = [
-  "Tummy Tuck",
-  "Liposuction",
-  "Brazilian Butt Lift",
-  "Mommy Makeover",
-  "Body Contouring",
-  "Breast Augmentation",
-  "Breast Lift",
-  "Breast Reduction",
-  "Rhinoplasty",
-  "Facelift",
-  "Eyelid Surgery",
-  "Neck Lift",
-  "Botox & Fillers",
-  "Laser Resurfacing",
-  "Microneedling",
-  "Other / Not sure",
-];
+import { useTranslations } from "next-intl";
 
 export default function ContactForm() {
+  const t = useTranslations("contactPage");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const schema = useMemo(
+    () =>
+      z.object({
+        name: z.string().min(2, t("nameError")),
+        email: z.string().email(t("emailError")),
+        phone: z.string().min(7, t("phoneError")),
+        procedure: z.string().optional(),
+        message: z.string().optional(),
+      }),
+    [t]
+  );
+  type FormData = z.infer<typeof schema>;
+
+  const procedureOptions = t.raw("procedureOptions") as string[];
 
   const {
     register,
@@ -67,11 +56,10 @@ export default function ContactForm() {
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <span className="gold-divider mx-auto mb-6" />
           <h1 className="font-heading text-6xl md:text-7xl text-white font-light mb-5">
-            Contact Us
+            {t("heroTitle")}
           </h1>
           <p className="text-white/60 text-xl leading-relaxed max-w-2xl mx-auto">
-            We&apos;d love to hear from you. Schedule a free, private
-            consultation and take the first step toward your transformation.
+            {t("heroSubtitle")}
           </p>
         </div>
       </section>
@@ -84,11 +72,10 @@ export default function ContactForm() {
             <div>
               <span className="gold-divider mb-5" />
               <h2 className="font-heading text-4xl text-navy font-light mb-2">
-                Get In Touch
+                {t("getInTouchTitle")}
               </h2>
               <p className="text-navy/55 leading-relaxed">
-                Our patient coordinators are available Monday through Friday
-                to answer your questions and schedule your consultation.
+                {t("getInTouchDesc")}
               </p>
             </div>
 
@@ -98,7 +85,7 @@ export default function ContactForm() {
                   <Phone size={16} className="text-gold" />
                 </div>
                 <div>
-                  <p className="text-navy/40 text-xs tracking-widest uppercase mb-0.5">Phone</p>
+                  <p className="text-navy/40 text-xs tracking-widest uppercase mb-0.5">{t("phoneLabel")}</p>
                   <p className="text-navy font-medium group-hover:text-gold transition-colors">(305) 218-3513</p>
                 </div>
               </a>
@@ -108,7 +95,7 @@ export default function ContactForm() {
                   <Mail size={16} className="text-gold" />
                 </div>
                 <div>
-                  <p className="text-navy/40 text-xs tracking-widest uppercase mb-0.5">Email</p>
+                  <p className="text-navy/40 text-xs tracking-widest uppercase mb-0.5">{t("emailLabel")}</p>
                   <p className="text-navy font-medium group-hover:text-gold transition-colors">info@ycosmeticsurgery.com</p>
                 </div>
               </a>
@@ -118,7 +105,7 @@ export default function ContactForm() {
                   <MapPin size={16} className="text-gold" />
                 </div>
                 <div>
-                  <p className="text-navy/40 text-xs tracking-widest uppercase mb-0.5">Location</p>
+                  <p className="text-navy/40 text-xs tracking-widest uppercase mb-0.5">{t("locationLabel")}</p>
                   <p className="text-navy">1255 W 46th St, Suite #6 &amp; 7A</p>
                   <p className="text-navy/60">Hialeah, FL 33012</p>
                 </div>
@@ -129,10 +116,10 @@ export default function ContactForm() {
                   <Clock size={16} className="text-gold" />
                 </div>
                 <div>
-                  <p className="text-navy/40 text-xs tracking-widest uppercase mb-0.5">Hours</p>
-                  <p className="text-navy text-sm">Mon – Fri: 9:00 AM – 6:00 PM</p>
-                  <p className="text-navy text-sm">Saturday: 10:00 AM – 3:00 PM</p>
-                  <p className="text-navy/50 text-sm">Sunday: Closed</p>
+                  <p className="text-navy/40 text-xs tracking-widest uppercase mb-0.5">{t("hoursLabel")}</p>
+                  <p className="text-navy text-sm">{t("hoursWeekday")}</p>
+                  <p className="text-navy text-sm">{t("hoursSaturday")}</p>
+                  <p className="text-navy/50 text-sm">{t("hoursSunday")}</p>
                 </div>
               </div>
             </div>
@@ -160,38 +147,37 @@ export default function ContactForm() {
                   <div className="w-16 h-16 bg-gold/10 border-2 border-gold rounded-full flex items-center justify-center mx-auto mb-5">
                     <CheckCircle size={28} className="text-gold" />
                   </div>
-                  <h3 className="font-heading text-navy text-3xl mb-3">Thank You!</h3>
+                  <h3 className="font-heading text-navy text-3xl mb-3">{t("thankYouTitle")}</h3>
                   <p className="text-navy/55 leading-relaxed max-w-sm mx-auto">
-                    We&apos;ve received your request and will reach out within 24 hours
-                    to schedule your complimentary consultation.
+                    {t("thankYouMessage")}
                   </p>
                 </div>
               ) : (
                 <>
                   <span className="gold-divider mb-5" />
                   <h2 className="font-heading text-3xl text-navy font-light mb-1">
-                    Book Your Free Consultation
+                    {t("formTitle")}
                   </h2>
                   <p className="text-navy/45 text-sm mb-7">
-                    No obligation. Private. Personalized just for you.
+                    {t("formSubtitle")}
                   </p>
 
                   <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-xs font-medium text-navy/60 uppercase tracking-widest mb-1.5">
-                          Full Name *
+                          {t("nameLabel")}
                         </label>
                         <input
                           {...register("name")}
-                          placeholder="Jane Doe"
+                          placeholder={t("namePlaceholder")}
                           className="w-full bg-cream border border-cream-dark focus:border-gold rounded-lg px-4 py-3 text-navy placeholder-navy/30 text-sm outline-none transition-colors"
                         />
                         {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
                       </div>
                       <div>
                         <label className="block text-xs font-medium text-navy/60 uppercase tracking-widest mb-1.5">
-                          Phone *
+                          {t("phoneFormLabel")}
                         </label>
                         <input
                           {...register("phone")}
@@ -205,7 +191,7 @@ export default function ContactForm() {
 
                     <div>
                       <label className="block text-xs font-medium text-navy/60 uppercase tracking-widest mb-1.5">
-                        Email Address *
+                        {t("emailFormLabel")}
                       </label>
                       <input
                         {...register("email")}
@@ -218,14 +204,14 @@ export default function ContactForm() {
 
                     <div>
                       <label className="block text-xs font-medium text-navy/60 uppercase tracking-widest mb-1.5">
-                        Procedure of Interest
+                        {t("procedureLabel")}
                       </label>
                       <select
                         {...register("procedure")}
                         className="w-full bg-cream border border-cream-dark focus:border-gold rounded-lg px-4 py-3 text-navy/70 text-sm outline-none transition-colors appearance-none"
                       >
-                        <option value="">Select a procedure (optional)</option>
-                        {procedures.map((p) => (
+                        <option value="">{t("procedureDefault")}</option>
+                        {procedureOptions.map((p) => (
                           <option key={p} value={p}>{p}</option>
                         ))}
                       </select>
@@ -233,11 +219,11 @@ export default function ContactForm() {
 
                     <div>
                       <label className="block text-xs font-medium text-navy/60 uppercase tracking-widest mb-1.5">
-                        Message
+                        {t("messageLabel")}
                       </label>
                       <textarea
                         {...register("message")}
-                        placeholder="Tell us about your goals or ask any questions…"
+                        placeholder={t("messagePlaceholder")}
                         rows={4}
                         className="w-full bg-cream border border-cream-dark focus:border-gold rounded-lg px-4 py-3 text-navy placeholder-navy/30 text-sm outline-none transition-colors resize-none"
                       />
@@ -248,12 +234,11 @@ export default function ContactForm() {
                       disabled={loading}
                       className="w-full bg-navy hover:bg-navy-light text-white font-semibold text-sm tracking-[0.12em] uppercase py-4 rounded-lg transition-all duration-200 hover:shadow-[0_4px_20px_rgba(13,27,62,0.3)] disabled:opacity-60"
                     >
-                      {loading ? "Submitting…" : "Request My Free Consultation"}
+                      {loading ? t("submittingButton") : t("submitButton")}
                     </button>
 
                     <p className="text-navy/30 text-[11px] text-center leading-relaxed">
-                      By submitting this form, you consent to receiving a call or text
-                      from our team. Your information is private and never shared.
+                      {t("formDisclaimer")}
                     </p>
                   </form>
                 </>

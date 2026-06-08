@@ -1,28 +1,48 @@
 import type { Metadata } from "next";
 import { Star, Quote } from "lucide-react";
+import { setRequestLocale, getTranslations } from "next-intl/server";
+import { hreflangAlternatesForLocale } from "@/lib/seo";
 import { testimonials } from "@/data/procedures";
 import CTABanner from "@/components/sections/CTABanner";
 
-export const metadata: Metadata = {
-  title: "Patient Testimonials | Real Results in Miami, FL",
-  description:
-    "Read what real patients say about Your Cosmetic Surgery & SPA in Miami. 500+ verified reviews with a 4.9 average rating. BBL, tummy tuck, breast augmentation, rhinoplasty & more — see why South Florida trusts us.",
-  alternates: {
-    canonical: "https://ycosmeticsurgery.com/testimonials",
-  },
-  openGraph: {
-    title: "Patient Testimonials | Your Cosmetic Surgery & SPA Miami",
+interface Props {
+  params: Promise<{ locale: string }>;
+}
+
+export function generateStaticParams() {
+  return [{ locale: "en" }, { locale: "es" }];
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: "Patient Testimonials | Real Results in Miami, FL",
     description:
-      "500+ verified reviews, 4.9 average rating across Google, RealSelf, Healthgrades, and Vitals. Read real patient stories from our cosmetic surgery patients in Miami.",
-    url: "https://ycosmeticsurgery.com/testimonials",
-  },
-};
+      "Read what real patients say about Your Cosmetic Surgery & SPA in Miami. 500+ verified reviews with a 4.9 average rating. BBL, tummy tuck, breast augmentation, rhinoplasty & more — see why South Florida trusts us.",
+    alternates: {
+      canonical:
+        locale === "en"
+          ? "https://ycosmeticsurgery.com/testimonials"
+          : "https://ycosmeticsurgery.com/es/testimonials",
+      languages: hreflangAlternatesForLocale("testimonials", locale),
+    },
+    openGraph: {
+      title: "Patient Testimonials | Your Cosmetic Surgery & SPA Miami",
+      description:
+        "500+ verified reviews, 4.9 average rating across Google, RealSelf, Healthgrades, and Vitals. Read real patient stories from our cosmetic surgery patients in Miami.",
+      url:
+        locale === "en"
+          ? "https://ycosmeticsurgery.com/testimonials"
+          : "https://ycosmeticsurgery.com/es/testimonials",
+    },
+  };
+}
 
 const platforms = [
-  { name: "Google",      rating: "4.9", count: "312" },
-  { name: "RealSelf",    rating: "4.8", count: "180" },
-  { name: "Healthgrades",rating: "5.0", count: "94"  },
-  { name: "Vitals",      rating: "4.9", count: "67"  },
+  { name: "Google",       rating: "4.9", count: "312" },
+  { name: "RealSelf",     rating: "4.8", count: "180" },
+  { name: "Healthgrades", rating: "5.0", count: "94"  },
+  { name: "Vitals",       rating: "4.9", count: "67"  },
 ];
 
 const totalReviews = platforms.reduce((sum, p) => sum + parseInt(p.count), 0);
@@ -91,7 +111,11 @@ const jsonLd = {
   },
 };
 
-export default function TestimonialsPage() {
+export default async function TestimonialsPage({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations("testimonialsPage");
+
   return (
     <>
       <script
@@ -110,11 +134,10 @@ export default function TestimonialsPage() {
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <span className="gold-divider mx-auto mb-6" />
           <h1 className="font-heading text-6xl md:text-7xl text-white font-light mb-5">
-            Patient Stories
+            {t("heroTitle")}
           </h1>
           <p className="text-white/60 text-xl leading-relaxed max-w-2xl mx-auto">
-            The most meaningful validation we receive comes from our patients.
-            Here are the words they&apos;ve shared after their transformations.
+            {t("heroSubtitle")}
           </p>
         </div>
       </section>
@@ -135,7 +158,7 @@ export default function TestimonialsPage() {
                   ))}
                 </div>
                 <p className="text-navy font-semibold text-sm">{p.name}</p>
-                <p className="text-navy/40 text-xs">{p.count} reviews</p>
+                <p className="text-navy/40 text-xs">{p.count} {t("reviewsLabel")}</p>
               </div>
             ))}
           </div>
@@ -146,32 +169,32 @@ export default function TestimonialsPage() {
       <section className="py-24 bg-cream">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {testimonials.map((t) => (
+            {testimonials.map((review) => (
               <article
-                key={t.id}
+                key={review.id}
                 itemScope
                 itemType="https://schema.org/Review"
                 className="bg-white rounded-2xl p-7 border border-cream-dark card-hover flex flex-col"
               >
                 <Quote size={28} className="text-gold/30 mb-4" />
                 <div className="flex gap-1 mb-4" itemProp="reviewRating" itemScope itemType="https://schema.org/Rating">
-                  {[...Array(t.rating)].map((_, i) => (
+                  {[...Array(review.rating)].map((_, i) => (
                     <Star key={i} size={13} className="fill-gold text-gold" />
                   ))}
-                  <meta itemProp="ratingValue" content={String(t.rating)} />
+                  <meta itemProp="ratingValue" content={String(review.rating)} />
                   <meta itemProp="bestRating" content="5" />
                 </div>
                 <p
                   itemProp="reviewBody"
                   className="text-navy/65 text-sm leading-relaxed flex-1 mb-6 italic"
                 >
-                  &ldquo;{t.text}&rdquo;
+                  &ldquo;{review.text}&rdquo;
                 </p>
                 <div className="border-t border-cream-dark pt-4">
                   <p itemProp="author" itemScope itemType="https://schema.org/Person" className="text-navy font-semibold text-sm">
-                    <span itemProp="name">{t.name}</span>
+                    <span itemProp="name">{review.name}</span>
                   </p>
-                  <p itemProp="name" className="text-gold text-xs tracking-wider mt-0.5">{t.procedure}</p>
+                  <p itemProp="name" className="text-gold text-xs tracking-wider mt-0.5">{review.procedure}</p>
                 </div>
               </article>
             ))}
