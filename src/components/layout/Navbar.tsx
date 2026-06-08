@@ -116,7 +116,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop links */}
-          <ul className="hidden lg:flex items-center gap-7">
+          <ul className="hidden xl:flex items-center gap-7">
             {/* Procedures mega-menu */}
             <li
               className="relative"
@@ -202,7 +202,7 @@ export default function Navbar() {
             <LanguageSwitcher />
             <a
               href="tel:+13052183513"
-              className="hidden md:flex lg:hidden xl:flex items-center gap-1.5 text-gold hover:text-gold-light text-[13px] font-medium transition-colors"
+              className="hidden md:flex xl:hidden 2xl:flex items-center gap-1.5 text-gold hover:text-gold-light text-[13px] font-medium transition-colors"
             >
               <Phone size={13} />
               (305) 218-3513
@@ -214,7 +214,7 @@ export default function Navbar() {
               {t("bookConsultation")}
             </Link>
             <button
-              className="lg:hidden text-white/90 hover:text-gold transition-colors p-1"
+              className="xl:hidden text-white/90 hover:text-gold transition-colors p-1"
               onClick={() => setMobileOpen(true)}
               aria-label={t("openMenu")}
             >
