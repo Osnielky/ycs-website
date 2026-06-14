@@ -39,9 +39,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       className={`${cormorant.variable} ${inter.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        <link rel="preload" as="image" href="/hero/1.webp" fetchPriority="high" />
-      </head>
+      <head />
       <body className="min-h-screen flex flex-col antialiased" suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <Navbar />

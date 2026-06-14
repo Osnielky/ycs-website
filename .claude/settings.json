@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e ' *)",
+      "Read(//c/Users/X/AppData/Local/Temp//**)",
+      "Bash(node -e *)",
+      "Bash(awk '{printf \"%.0f KB\\\\t%s\\\\n\",$1/1024,$2}')",
+      "Bash(mv -f public/hero/1.tmp.webp public/hero/1.webp)",
+      "Bash(mv -f public/hero/4.tmp.webp public/hero/4.webp)",
+      "Bash(mv -f public/clinic-bg.tmp.jpg public/clinic-bg.jpg)",
+      "Bash(rm -f public/doctor-bg.png)",
+      "Bash(rm -f public/hero/6.jpg)",
+      "Bash(awk '{printf \"doctor-bg.webp %.0f KB\\\\n\",$5/1024}')",
+      "Bash(awk '{s+=$1} END{printf \"total: %.1f MB across images\\\\n\", s/1048576}')"
+    ]
+  }
+}

@@ -13,7 +13,7 @@ export default async function DoctorSection() {
       {/* ── Operating room photo — left half background ── */}
       <div className="absolute inset-0 lg:w-[48%]">
         <Image
-          src="/doctor-bg.png"
+          src="/doctor-bg.webp"
           alt="Dr. Mario Reyes-Serrano performing cosmetic surgery in Miami"
           fill
           className="object-cover object-center"
