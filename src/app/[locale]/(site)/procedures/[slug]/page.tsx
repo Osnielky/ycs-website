@@ -6,6 +6,12 @@ import { Link } from "@/i18n/navigation";
 import { hreflangAlternatesForLocale } from "@/lib/seo";
 import { procedures } from "@/data/procedures";
 import CTABanner from "@/components/sections/CTABanner";
+import { getLanding, landingLabels } from "@/data/landings";
+import OfferBanner from "@/components/sections/landing/OfferBanner";
+import TransformationGallery from "@/components/sections/landing/TransformationGallery";
+import ProcessSections from "@/components/sections/landing/ProcessSections";
+import CandidacySection from "@/components/sections/landing/CandidacySection";
+import RecoveryTimeline from "@/components/sections/landing/RecoveryTimeline";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -73,6 +79,9 @@ export default async function ProcedureDetailPage({ params }: Props) {
   const description = locale === "es" && proc.es?.description ? proc.es.description : proc.description;
   const benefits = locale === "es" && proc.es?.benefits ? proc.es.benefits : proc.benefits;
 
+  const landing = getLanding(slug, locale);
+  const labels = landingLabels[locale] ?? landingLabels.en;
+
   const categoryLabel: Record<string, string> = {
     body: tSection("tabBody"),
     breast: tSection("tabBreast"),
@@ -104,7 +113,9 @@ export default async function ProcedureDetailPage({ params }: Props) {
       description,
       url: pageUrl,
       procedureType: "https://health-lifesci.schema.org/SurgicalProcedure",
-      followup: `Recovery time: ${proc.recovery}`,
+      followup: landing
+        ? `Recovery timeline: ${landing.timeline.map((s) => `${s.stage} — ${s.detail}`).join(" ")}`
+        : `Recovery time: ${proc.recovery}`,
       preparation: "A private consultation with a board-certified surgeon to assess candidacy, review goals, and create a personalized surgical plan.",
       howPerformed: description,
       recognizingAuthority: {
@@ -172,6 +183,11 @@ export default async function ProcedureDetailPage({ params }: Props) {
           <p className="text-gold text-xs tracking-[0.3em] uppercase font-medium">
             {categoryLabel[proc.category]}
           </p>
+          {landing?.offer && (
+            <span className="inline-block mt-3 mb-1 bg-gold/15 border border-gold/30 text-gold text-[11px] tracking-[0.2em] uppercase font-medium px-3 py-1 rounded-full">
+              {landing.offer.headline}
+            </span>
+          )}
           <h1 className="font-heading text-6xl md:text-7xl text-white font-light mt-2 mb-5">
             {name}
           </h1>
@@ -184,6 +200,22 @@ export default async function ProcedureDetailPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {landing?.offer && <OfferBanner offer={landing.offer} defaultCtaLabel={labels.defaultCta} />}
+
+      {landing && (
+        <>
+          <TransformationGallery
+            heading={landing.transformationsHeading}
+            intro={landing.transformationsIntro}
+            transformations={landing.transformations}
+            labels={labels}
+          />
+          <ProcessSections heading={landing.processHeading} sections={landing.process} />
+          <CandidacySection candidacy={landing.candidacy} ctaLabel={labels.defaultCta} phone={labels.phone} />
+          <RecoveryTimeline heading={landing.timelineHeading} timeline={landing.timeline} />
+        </>
+      )}
 
       {/* Main content */}
       <section className="py-24 bg-cream">
