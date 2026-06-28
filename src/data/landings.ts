@@ -30,6 +30,7 @@ export interface LandingTimelineStage {
 }
 
 export interface LandingLocaleContent {
+  heroImage?: string;
   intro: string;
   offer?: LandingOffer;
   transformationsHeading: string;
@@ -70,6 +71,7 @@ export const landingLabels: Record<
 };
 
 const FACELIFT_LANDING: LandingContent = {
+  heroImage: "/procedures/face_lift/face_lift_miami_Real_patientfl_hero_section.webp",
   intro:
     "A facelift — medically known as a rhytidectomy — is the gold standard for restoring a naturally youthful, rested look to the face and neck. At Your Cosmetic Surgery & SPA in Miami, our board-certified surgeons use advanced deep-plane techniques that reposition the deeper facial tissues, not just tighten skin, for results that look like you — only years younger. Below you can see real transformations, understand exactly how the procedure works step by step, and find out whether you qualify for a free consultation.",
   offer: {
@@ -172,6 +174,7 @@ const FACELIFT_LANDING: LandingContent = {
     },
   ],
   es: {
+    heroImage: "/procedures/face_lift/face_lift_miami_Real_patientfl_hero_section.webp",
     intro:
       "Un lifting facial — conocido médicamente como ritidectomía — es el estándar de oro para restaurar un aspecto naturalmente joven y descansado en el rostro y el cuello. En Your Cosmetic Surgery & SPA en Miami, nuestros cirujanos certificados utilizan técnicas avanzadas de plano profundo que reposicionan los tejidos faciales más profundos, no solo tensan la piel, para lograr resultados que se ven como usted — solo que años más joven. A continuación puede ver transformaciones reales, comprender exactamente cómo funciona el procedimiento paso a paso y descubrir si califica para una consulta gratuita.",
     offer: {
