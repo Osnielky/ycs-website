@@ -44,6 +44,8 @@ function ProcedureCard({
   const displayTagline = (locale === "es" && proc.es?.tagline) ? proc.es.tagline : proc.tagline;
   const displayDescription = (locale === "es" && proc.es?.description) ? proc.es.description : proc.description;
   const displayRecovery = (locale === "es" && proc.es?.recovery) ? proc.es.recovery : proc.recovery;
+  const imageAlt =
+    (locale === "es" && proc.es?.imageAlt) ? proc.es.imageAlt : (proc.imageAlt ?? displayName);
   // Try /procedures/{slug}.webp first; if missing fall back to hero image
   const webpSrc = `/procedures/${proc.slug}.webp`;
   const [src, setSrc] = useState(webpSrc);
@@ -64,9 +66,11 @@ function ProcedureCard({
         {!imgErr && (
           <Image
             src={src}
-            alt={proc.name}
+            alt={imageAlt}
             fill
-            className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+            className={`group-hover:scale-105 transition-transform duration-700 ease-out ${
+              proc.imageFit === "contain" && src === webpSrc ? "object-contain p-2" : "object-cover"
+            }`}
             style={{ objectPosition: proc.imagePosition ?? "center center" }}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             onError={handleError}

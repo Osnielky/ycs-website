@@ -10,12 +10,15 @@ export interface Procedure {
   icon: string;
   featured: boolean;
   imagePosition?: string;
+  imageFit?: "cover" | "contain";
+  imageAlt?: string;
   es?: {
     name: string;
     description: string;
     benefits: string[];
     tagline?: string;
     recovery?: string;
+    imageAlt?: string;
   };
 }
 
@@ -311,6 +314,9 @@ export const procedures: Procedure[] = [
     recovery: "2–3 weeks",
     icon: "◆",
     featured: true,
+    imageFit: "contain",
+    imageAlt:
+      "Before and after facelift (rhytidectomy) results in Miami — tighter jawline and youthful, natural contour at Your Cosmetic Surgery & SPA",
     es: {
       name: "Lifting Facial",
       tagline: "Retrocede el tiempo",
@@ -322,6 +328,8 @@ export const procedures: Procedure[] = [
         "Apariencia juvenil y descansada",
       ],
       recovery: "2–3 semanas",
+      imageAlt:
+        "Lifting facial (ritidectomía) antes y después en Miami — mandíbula más definida y contorno juvenil y natural en Your Cosmetic Surgery & SPA",
     },
   },
   {
@@ -507,16 +515,16 @@ export const procedures: Procedure[] = [
     },
   },
   {
-    id: "arm-thigh-lift",
-    slug: "arm-thigh-lift",
-    name: "Arm & Thigh Lift",
+    id: "arm-lift",
+    slug: "arm-lift",
+    name: "Arm Lift",
     category: "body",
     tagline: "Tighten and tone",
     description:
-      "An arm or thigh lift removes excess, sagging skin caused by weight loss or aging, restoring a firmer, more toned appearance to the upper arms and legs.",
+      "An arm lift (brachioplasty) removes excess, sagging skin caused by weight loss or aging, restoring a firmer, more toned appearance to the upper arms.",
     benefits: [
       "Removal of excess, drooping skin",
-      "Smoother, toned contours",
+      "Smoother, toned upper arms",
       "Improved comfort and mobility",
       "Long-lasting results with stable weight",
     ],
@@ -524,12 +532,42 @@ export const procedures: Procedure[] = [
     icon: "✦",
     featured: false,
     es: {
-      name: "Lifting de Brazos y Muslos",
+      name: "Lifting de Brazos",
       tagline: "Firma y tonifica",
-      description: "Un lifting de brazos o muslos elimina el exceso de piel flácida causada por la pérdida de peso o el envejecimiento, restaurando una apariencia más firme y tonificada.",
+      description: "Un lifting de brazos (braquioplastia) elimina el exceso de piel flácida causada por la pérdida de peso o el envejecimiento, restaurando una apariencia más firme y tonificada en la parte superior de los brazos.",
       benefits: [
         "Eliminación del exceso de piel colgante",
-        "Contornos más suaves y tonificados",
+        "Brazos más suaves y tonificados",
+        "Mejor comodidad y movilidad",
+        "Resultados duraderos con peso estable",
+      ],
+      recovery: "2–4 semanas",
+    },
+  },
+  {
+    id: "thigh-lift",
+    slug: "thigh-lift",
+    name: "Thigh Lift",
+    category: "body",
+    tagline: "Tighten and tone",
+    description:
+      "A thigh lift removes excess, sagging skin caused by weight loss or aging, restoring a firmer, more toned appearance to the upper legs.",
+    benefits: [
+      "Removal of excess, drooping skin",
+      "Smoother, toned thighs",
+      "Improved comfort and mobility",
+      "Long-lasting results with stable weight",
+    ],
+    recovery: "2–4 weeks",
+    icon: "✦",
+    featured: false,
+    es: {
+      name: "Lifting de Muslos",
+      tagline: "Firma y tonifica",
+      description: "Un lifting de muslos elimina el exceso de piel flácida causada por la pérdida de peso o el envejecimiento, restaurando una apariencia más firme y tonificada en la parte superior de las piernas.",
+      benefits: [
+        "Eliminación del exceso de piel colgante",
+        "Muslos más suaves y tonificados",
         "Mejor comodidad y movilidad",
         "Resultados duraderos con peso estable",
       ],

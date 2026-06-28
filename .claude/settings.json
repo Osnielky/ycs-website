@@ -11,7 +11,28 @@
       "Bash(rm -f public/doctor-bg.png)",
       "Bash(rm -f public/hero/6.jpg)",
       "Bash(awk '{printf \"doctor-bg.webp %.0f KB\\\\n\",$5/1024}')",
-      "Bash(awk '{s+=$1} END{printf \"total: %.1f MB across images\\\\n\", s/1048576}')"
+      "Bash(awk '{s+=$1} END{printf \"total: %.1f MB across images\\\\n\", s/1048576}')",
+      "Bash(cat \"$\\(git rev-parse --show-toplevel\\)/.superpowers/sdd/progress.md\")",
+      "Bash(ls \"C:/Users/X/.claude/plugins/cache/claude-plugins-official/superpowers/6.0.3/skills/subagent-driven-development/scripts/\")",
+      "Bash(git checkout *)",
+      "Bash(mkdir -p .superpowers/sdd)",
+      "Bash(echo '# SDD Progress — Procedure Landing Pages *)",
+      "Bash(npm run *)",
+      "Bash(echo \"dev server starting, pid $!\")",
+      "Bash(curl -sL http://localhost:3000/procedures/facelift)",
+      "Bash(grep -o -E \"Real Patient Transformations|Photo coming soon|How Your Facelift Works|See If You Qualify|Your Recovery, Week by Week|\\\\\\\\\\\\$1,000 Off Your Facelift|Deep-Plane Difference|facelift-1-before.webp\")",
+      "Bash(curl -sL http://localhost:3000/es/procedures/facelift)",
+      "Bash(curl -sL http://localhost:3000/procedures/rhinoplasty)",
+      "Bash(grep -q \"Control:\" \"C:/Users/X/AppData/Local/Temp/claude/d--Coding-ycs-website/7c6898b3-a03d-4452-80be-0a0b0238acc8/tasks/bgp6fathe.output\")",
+      "Bash(break)",
+      "Bash(curl -s http://localhost:3000/en/procedures/facelift -o /tmp/fl.html -w \"http=%{http_code} size=%{size_download}\\\\n\")",
+      "Read(//tmp/**)",
+      "Bash(curl -s -i http://localhost:3000/procedures/facelift)",
+      "Bash(curl -s -i http://localhost:3000/en/procedures/facelift)",
+      "Bash(curl -s -i http://localhost:3000/)",
+      "Read(//c/Users/X/.claude/plugins/cache/claude-plugins-official/superpowers/6.0.3/skills/requesting-code-review/**)",
+      "Bash(git rm *)",
+      "Bash(rm -f public/procedures/face_lift/face_lift_miami_Real_patientfl_hero_section.png)"
     ]
   }
 }

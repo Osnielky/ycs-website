@@ -168,60 +168,74 @@ export default async function ProcedureDetailPage({ params }: Props) {
       />
 
       {/* Hero */}
-      <section className={`relative bg-gradient-to-br ${gradientMap[proc.category]} pt-36 pb-24 overflow-hidden`}>
-        {landing?.heroImage && (
-          <>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={landing.heroImage}
-              alt={`${name} — real patient at Your Cosmetic Surgery & SPA, Miami`}
-              className="absolute inset-0 h-full w-full object-cover object-top"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-navy-dark via-navy-dark/85 to-navy-dark/30" />
-            <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/70 via-transparent to-transparent" />
-          </>
-        )}
-        <div className="absolute inset-0 hero-pattern opacity-40" />
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
-        <div className="relative z-10 max-w-4xl mx-auto px-6">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-white/40 text-sm mb-10">
-            <Link href="/" className="hover:text-white transition-colors">Home</Link>
-            <span aria-hidden="true">/</span>
-            <Link href="/procedures" className="hover:text-white transition-colors">Procedures</Link>
-            <span aria-hidden="true">/</span>
-            <span className="text-gold" aria-current="page">{name}</span>
-          </nav>
-
-          <p className="text-gold text-xs tracking-[0.3em] uppercase font-medium">
-            {categoryLabel[proc.category]}
-          </p>
-          {landing?.offer && (
-            <span className="inline-block mt-3 mb-1 bg-gold/15 border border-gold/30 text-gold text-[11px] tracking-[0.2em] uppercase font-medium px-3 py-1 rounded-full">
-              {landing.offer.headline}
-            </span>
-          )}
-          <h1 className="font-heading text-6xl md:text-7xl text-white font-light mt-2 mb-5">
-            {name}
-          </h1>
-          <p className="text-white/65 text-xl leading-relaxed max-w-2xl mb-6">
-            {description}
-          </p>
-          <div className="flex items-center gap-3 text-white/50 text-sm">
-            <Clock size={14} className="text-gold" />
-            <span>{t("recoveryLabel")} {proc.recovery}</span>
+      {landing?.heroImage ? (
+        /* Promo landing hero — image only, full-bleed, mobile-first.
+           Visible text lives in the image; an sr-only h1 preserves SEO/a11y. */
+        <section className="relative bg-cream flex justify-center overflow-hidden">
+          <h1 className="sr-only">{name} in Miami — Your Cosmetic Surgery &amp; SPA</h1>
+          <div className="relative">
+            <picture>
+              {landing.heroImageMobile && (
+                <source media="(max-width: 767px)" srcSet={landing.heroImageMobile} />
+              )}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={landing.heroImage}
+                alt={`${name} in Miami — Your Cosmetic Surgery & SPA`}
+                fetchPriority="high"
+                className="block h-auto w-auto max-w-full max-h-[34rem] lg:max-h-[40rem]"
+              />
+            </picture>
+            {/* Feather the banner edges into the cream margins (desktop only — mobile image is full-bleed) */}
+            <div aria-hidden className="pointer-events-none hidden md:block absolute inset-y-0 left-0 w-12 lg:w-20 bg-gradient-to-r from-cream via-cream/50 to-transparent" />
+            <div aria-hidden className="pointer-events-none hidden md:block absolute inset-y-0 right-0 w-12 lg:w-20 bg-gradient-to-l from-cream via-cream/50 to-transparent" />
           </div>
-        </div>
-      </section>
+          {/* Scrim behind the navbar so its light text stays legible over the cream hero */}
+          <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-navy-dark/75 via-navy-dark/35 to-transparent" />
+        </section>
+      ) : (
+        <section className={`relative bg-gradient-to-br ${gradientMap[proc.category]} pt-36 pb-24 overflow-hidden`}>
+          <div className="absolute inset-0 hero-pattern opacity-40" />
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
+          <div className="relative z-10 max-w-4xl mx-auto px-6">
+            <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-white/40 text-sm mb-10">
+              <Link href="/" className="hover:text-white transition-colors">Home</Link>
+              <span aria-hidden="true">/</span>
+              <Link href="/procedures" className="hover:text-white transition-colors">Procedures</Link>
+              <span aria-hidden="true">/</span>
+              <span className="text-gold" aria-current="page">{name}</span>
+            </nav>
 
-      {landing?.offer && <OfferBanner offer={landing.offer} defaultCtaLabel={labels.defaultCta} />}
+            <p className="text-gold text-xs tracking-[0.3em] uppercase font-medium">
+              {categoryLabel[proc.category]}
+            </p>
+            <h1 className="font-heading text-6xl md:text-7xl text-white font-light mt-2 mb-5">
+              {name}
+            </h1>
+            <p className="text-white/65 text-xl leading-relaxed max-w-2xl mb-6">
+              {description}
+            </p>
+            <div className="flex items-center gap-3 text-white/50 text-sm">
+              <Clock size={14} className="text-gold" />
+              <span>{t("recoveryLabel")} {proc.recovery}</span>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {landing?.offer && (
+        <OfferBanner offer={landing.offer} defaultCtaLabel={labels.defaultCta} procedureName={name} />
+      )}
 
       {landing && (
         <>
           <TransformationGallery
             heading={landing.transformationsHeading}
             intro={landing.transformationsIntro}
+            education={landing.education}
             transformations={landing.transformations}
             labels={labels}
+            procedureName={name}
           />
           <ProcessSections heading={landing.processHeading} sections={landing.process} />
           <CandidacySection candidacy={landing.candidacy} ctaLabel={labels.defaultCta} phone={labels.phone} />

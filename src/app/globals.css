@@ -113,3 +113,41 @@ h5 {
 .proc-medspa {
   background: linear-gradient(135deg, #3d2a1a 0%, #2e1a0d 100%);
 }
+
+/* Limited-time offer banner */
+.offer-banner {
+  background:
+    radial-gradient(120% 140% at 0% 0%, rgba(232, 207, 160, 0.9) 0%, transparent 55%),
+    linear-gradient(135deg, #e8cfa0 0%, #c9a46e 55%, #a87d45 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 10px 30px rgba(13, 27, 62, 0.18);
+}
+/* Moving sheen across the banner */
+.offer-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 65%
+  );
+  transform: translateX(-100%);
+  animation: offer-sheen 6s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes offer-sheen {
+  0%, 100% { transform: translateX(-120%); }
+  55%, 70% { transform: translateX(120%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .offer-banner::before { animation: none; display: none; }
+  .offer-pulse { animation: none; }
+}
+.offer-pulse {
+  animation: offer-pulse 2s ease-in-out infinite;
+}
+@keyframes offer-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.7); }
+}

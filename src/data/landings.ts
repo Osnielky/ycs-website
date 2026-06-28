@@ -12,6 +12,20 @@ export interface LandingTransformation {
   note?: string;
 }
 
+export interface LandingEducationType {
+  name: string;
+  description: string;
+}
+
+export interface LandingEducation {
+  title: string;
+  body: string;
+  combinedTitle: string;
+  combinedBody: string;
+  typesTitle: string;
+  types: LandingEducationType[];
+}
+
 export interface LandingProcessSection {
   heading: string;
   body: string;
@@ -31,10 +45,12 @@ export interface LandingTimelineStage {
 
 export interface LandingLocaleContent {
   heroImage?: string;
+  heroImageMobile?: string;
   intro: string;
   offer?: LandingOffer;
   transformationsHeading: string;
   transformationsIntro?: string;
+  education?: LandingEducation;
   transformations: LandingTransformation[];
   processHeading?: string;
   process: LandingProcessSection[];
@@ -72,6 +88,7 @@ export const landingLabels: Record<
 
 const FACELIFT_LANDING: LandingContent = {
   heroImage: "/procedures/face_lift/face_lift_miami_Real_patientfl_hero_section.webp",
+  heroImageMobile: "/procedures/face_lift/face_lift_miami_Real_patientfl_mobile.webp",
   intro:
     "A facelift — medically known as a rhytidectomy — is the gold standard for restoring a naturally youthful, rested look to the face and neck. At Your Cosmetic Surgery & SPA in Miami, our board-certified surgeons use advanced deep-plane techniques that reposition the deeper facial tissues, not just tighten skin, for results that look like you — only years younger. Below you can see real transformations, understand exactly how the procedure works step by step, and find out whether you qualify for a free consultation.",
   offer: {
@@ -82,6 +99,37 @@ const FACELIFT_LANDING: LandingContent = {
   transformationsHeading: "Real Patient Transformations",
   transformationsIntro:
     "Every face ages differently. These before, during, and after results show the natural, balanced rejuvenation our deep-plane technique delivers — never a pulled or windswept look.",
+  education: {
+    title: "What Is a Facelift?",
+    body:
+      "A facelift, medically known as a rhytidectomy, is a surgical procedure that restores a smoother, more youthful contour to the lower face and neck. Rather than simply stretching the skin, modern techniques lift and reposition the deeper muscle and connective-tissue layer (the SMAS), then re-drape the skin without tension. The result softens jowls, deepened folds, and loose neck skin while keeping your features unmistakably your own.",
+    combinedTitle: "What It Can Be Combined With",
+    combinedBody:
+      "A facelift is often paired with complementary procedures for a fully balanced rejuvenation. The most common combinations are a neck lift to redefine the jawline, eyelid surgery (blepharoplasty) to brighten tired eyes, a brow lift to raise a heavy forehead, and fat transfer or skin resurfacing to restore lost volume and refine skin quality. Your surgeon tailors the plan to your anatomy and goals during your consultation.",
+    typesTitle: "Different Facelift Options",
+    types: [
+      {
+        name: "Mini Facelift",
+        description:
+          "A more accelerated version of a traditional facelift that targets a smaller area — primarily the cheeks and jowls — with a shorter treatment time and faster recovery. Some areas, such as the forehead, are left untreated. It is an intricate procedure that demands the highest level of precision and technical expertise.",
+      },
+      {
+        name: "Mid-Facelift",
+        description:
+          "Targets the area between the lower eyelids and the mouth, addressing sagging cheeks, deep nasolabial folds, and other midface signs of aging. Less invasive than a full facelift but more extensive than a mini, it lifts the soft tissues of the cheeks to restore volume and definition, typically with a shorter recovery than a full lift.",
+      },
+      {
+        name: "Lower Facelift",
+        description:
+          "Tightens the jowls and eliminates a double chin for a defined jawline and a firmer, smoother neck. It offers lower cost and invasiveness than a full facelift, minimal scarring, and a meaningful reduction in the signs of aging along the jaw and neck.",
+      },
+      {
+        name: "Deep Plane Facelift",
+        description:
+          "The most comprehensive option, repositioning not only the skin but also the deeper tissues and muscles of the face for longer-lasting, more dramatic results that can last up to 10 years. Unlike a mini facelift, it addresses the entire face — forehead, mid-face, and neck.",
+      },
+    ],
+  },
   transformations: [
     {
       label: "Case 1 — Female, 58",
@@ -91,7 +139,7 @@ const FACELIFT_LANDING: LandingContent = {
       note: "Deep-plane facelift with neck lift. Result shown at 3 months.",
     },
     {
-      label: "Case 2 — Female, 64",
+      label: "Case 2 — Male, 64",
       before: "/before-after/facelift-2-before.webp",
       during: "/before-after/facelift-2-during.webp",
       after: "/before-after/facelift-2-after.webp",
@@ -175,6 +223,7 @@ const FACELIFT_LANDING: LandingContent = {
   ],
   es: {
     heroImage: "/procedures/face_lift/face_lift_miami_Real_patientfl_hero_section.webp",
+    heroImageMobile: "/procedures/face_lift/face_lift_miami_Real_patientfl_mobile.webp",
     intro:
       "Un lifting facial — conocido médicamente como ritidectomía — es el estándar de oro para restaurar un aspecto naturalmente joven y descansado en el rostro y el cuello. En Your Cosmetic Surgery & SPA en Miami, nuestros cirujanos certificados utilizan técnicas avanzadas de plano profundo que reposicionan los tejidos faciales más profundos, no solo tensan la piel, para lograr resultados que se ven como usted — solo que años más joven. A continuación puede ver transformaciones reales, comprender exactamente cómo funciona el procedimiento paso a paso y descubrir si califica para una consulta gratuita.",
     offer: {
@@ -185,6 +234,37 @@ const FACELIFT_LANDING: LandingContent = {
     transformationsHeading: "Transformaciones Reales de Pacientes",
     transformationsIntro:
       "Cada rostro envejece de forma diferente. Estos resultados de antes, durante y después muestran el rejuvenecimiento natural y equilibrado que ofrece nuestra técnica de plano profundo — nunca un aspecto estirado o artificial.",
+    education: {
+      title: "¿Qué Es un Lifting Facial?",
+      body:
+        "Un lifting facial, conocido médicamente como ritidectomía, es un procedimiento quirúrgico que restaura un contorno más suave y juvenil en la parte inferior del rostro y el cuello. En lugar de simplemente estirar la piel, las técnicas modernas elevan y reposicionan la capa profunda de músculo y tejido conectivo (el SMAS) y luego redistribuyen la piel sin tensión. El resultado suaviza la flacidez, los pliegues marcados y la piel suelta del cuello, manteniendo sus rasgos inconfundiblemente suyos.",
+      combinedTitle: "Con Qué Se Puede Combinar",
+      combinedBody:
+        "Un lifting facial suele combinarse con procedimientos complementarios para lograr un rejuvenecimiento totalmente equilibrado. Las combinaciones más comunes son un lifting de cuello para redefinir la mandíbula, cirugía de párpados (blefaroplastia) para iluminar la mirada, un lifting de cejas para elevar una frente pesada, y transferencia de grasa o tratamientos de la piel para restaurar el volumen y refinar su calidad. Su cirujano adapta el plan a su anatomía y objetivos durante la consulta.",
+      typesTitle: "Diferentes Opciones de Lifting Facial",
+      types: [
+        {
+          name: "Mini Lifting Facial",
+          description:
+            "Una versión más acelerada del lifting tradicional que trata un área más pequeña — principalmente las mejillas y la papada — con un tiempo de tratamiento más corto y una recuperación más rápida. Algunas zonas, como la frente, no se tratan. Es un procedimiento minucioso que exige el más alto nivel de precisión y experiencia técnica.",
+        },
+        {
+          name: "Lifting Facial Medio",
+          description:
+            "Trata el área entre los párpados inferiores y la boca, abordando las mejillas caídas, los pliegues nasolabiales profundos y otros signos de envejecimiento de la zona media. Menos invasivo que un lifting completo pero más extenso que un mini, eleva los tejidos blandos de las mejillas para restaurar el volumen y la definición, normalmente con una recuperación más corta que la de un lifting completo.",
+        },
+        {
+          name: "Lifting Facial Inferior",
+          description:
+            "Tensa la papada y elimina el mentón doble para lograr una mandíbula definida y un cuello más firme y suave. Ofrece menor costo e invasividad que un lifting completo, cicatrices mínimas y una reducción notable de los signos de envejecimiento en la mandíbula y el cuello.",
+        },
+        {
+          name: "Lifting Facial de Plano Profundo",
+          description:
+            "La opción más completa, que reposiciona no solo la piel sino también los tejidos y músculos profundos del rostro para obtener resultados más duraderos y notables que pueden durar hasta 10 años. A diferencia de un mini lifting, trata todo el rostro: frente, zona media y cuello.",
+        },
+      ],
+    },
     transformations: [
       {
         label: "Caso 1 — Mujer, 58",
@@ -194,7 +274,7 @@ const FACELIFT_LANDING: LandingContent = {
         note: "Lifting facial de plano profundo con lifting de cuello. Resultado a los 3 meses.",
       },
       {
-        label: "Caso 2 — Mujer, 64",
+        label: "Caso 2 — Hombre, 64",
         before: "/before-after/facelift-2-before.webp",
         during: "/before-after/facelift-2-during.webp",
         after: "/before-after/facelift-2-after.webp",

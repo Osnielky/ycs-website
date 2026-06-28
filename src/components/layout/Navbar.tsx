@@ -17,7 +17,8 @@ const procedureMenu = [
       { name: "Liposuction", slug: "liposuction" },
       { name: "Mommy Makeover", slug: "mommy-makeover" },
       { name: "Abdominal Etching", slug: "abdominal-etching" },
-      { name: "Arm & Thigh Lift", slug: "arm-thigh-lift" },
+      { name: "Arm Lift", slug: "arm-lift" },
+      { name: "Thigh Lift", slug: "thigh-lift" },
     ],
   },
   {
