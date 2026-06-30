@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -49,16 +50,33 @@ export default function ContactForm() {
 
   return (
     <>
-      {/* Hero */}
-      <section className="relative bg-navy pt-36 pb-24 overflow-hidden">
-        <div className="absolute inset-0 hero-pattern opacity-40" />
+      {/* Hero — full-bleed centered background image with text overlay and navy side gradients */}
+      <section className="relative bg-navy pt-32 pb-16 min-h-[760px] flex items-center justify-center overflow-hidden">
+        <Image
+          src="/hero/your_cosmetic_surgery_spa_miami_team.webp"
+          alt="The team at Your Cosmetic Surgery & SPA in Miami, FL"
+          fill
+          priority
+          quality={90}
+          sizes="100vw"
+          className="object-cover object-[center_30%]"
+          style={{
+            WebkitMaskImage:
+              "linear-gradient(to right, transparent 0%, black 18%, black 82%, transparent 100%)",
+            maskImage:
+              "linear-gradient(to right, transparent 0%, black 18%, black 82%, transparent 100%)",
+          }}
+        />
+        {/* Subtle center scrim so the overlaid text stays legible */}
+        <div aria-hidden className="absolute inset-0 bg-navy/45" />
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
+
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <span className="gold-divider mx-auto mb-6" />
-          <h1 className="font-heading text-6xl md:text-7xl text-white font-light mb-5">
+          <h1 className="font-heading text-6xl md:text-7xl text-white font-light mb-5 drop-shadow-[0_2px_12px_rgba(6,14,31,0.6)]">
             {t("heroTitle")}
           </h1>
-          <p className="text-white/60 text-xl leading-relaxed max-w-2xl mx-auto">
+          <p className="text-white/80 text-xl leading-relaxed max-w-2xl mx-auto drop-shadow-[0_1px_8px_rgba(6,14,31,0.6)]">
             {t("heroSubtitle")}
           </p>
         </div>
