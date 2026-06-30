@@ -43,6 +43,28 @@ export interface LandingTimelineStage {
   detail: string;
 }
 
+export interface LandingPricingTier {
+  name: string;
+  price: string; // display string, e.g. "Starting at $3,000"
+  priceValue: number; // numeric minimum, used for structured data
+  bestFor: string;
+}
+
+export interface LandingPricing {
+  heading: string;
+  intro: string;
+  tiers: LandingPricingTier[];
+  factorsTitle: string;
+  factors: string[];
+  financingNote?: string;
+  disclaimer: string;
+}
+
+export interface LandingFaq {
+  q: string;
+  a: string;
+}
+
 export interface LandingLocaleContent {
   heroImage?: string;
   heroImageMobile?: string;
@@ -54,9 +76,11 @@ export interface LandingLocaleContent {
   transformations: LandingTransformation[];
   processHeading?: string;
   process: LandingProcessSection[];
+  pricing?: LandingPricing;
   candidacy: LandingCandidacy;
   timelineHeading: string;
   timeline: LandingTimelineStage[];
+  faqs?: LandingFaq[];
 }
 
 export interface LandingContent extends LandingLocaleContent {
@@ -181,6 +205,49 @@ const FACELIFT_LANDING: LandingContent = {
         "A facelift turns back the clock roughly ten years, and because the deeper tissues are repositioned, the results are long-lasting — typically a decade or more. You will continue to age naturally, but you will always look younger than you would have without the procedure. Pairing your facelift with our medical-grade skincare and non-surgical treatments keeps your results looking fresh for years to come.",
     },
   ],
+  pricing: {
+    heading: "How Much Does a Facelift Cost in Miami?",
+    intro:
+      "At Your Cosmetic Surgery & SPA, facelift pricing is transparent and tailored to the technique that fits your face. Below are the starting prices for each facelift type in Miami. Your exact quote — including any combined procedures — is confirmed during your free consultation.",
+    tiers: [
+      {
+        name: "Mini Facelift",
+        price: "Starting at $3,000",
+        priceValue: 3000,
+        bestFor: "Early jowls and mild cheek sagging, with the fastest recovery.",
+      },
+      {
+        name: "Lower Facelift",
+        price: "Starting at $3,500",
+        priceValue: 3500,
+        bestFor: "A defined jawline and a firmer neck, with minimal scarring.",
+      },
+      {
+        name: "Mid-Facelift",
+        price: "Starting at $4,000",
+        priceValue: 4000,
+        bestFor: "Sagging cheeks and deep nasolabial folds in the midface.",
+      },
+      {
+        name: "Deep Plane Facelift",
+        price: "Starting at $5,000",
+        priceValue: 5000,
+        bestFor: "Comprehensive, longest-lasting rejuvenation of the full face and neck.",
+      },
+    ],
+    factorsTitle: "What Affects Your Facelift Price",
+    factors: [
+      "The facelift technique chosen and the number of areas treated",
+      "Procedures combined with your facelift, such as a neck lift, eyelid surgery, or fat transfer",
+      "Anesthesia and accredited surgical-facility fees",
+      "Surgeon time and the complexity of your individual anatomy",
+      "Pre-operative testing and post-operative care included in your plan",
+    ],
+    financingNote:
+      "Flexible financing and monthly payment plans are available, so you can move forward with a plan that fits your budget.",
+    disclaimer:
+      "Prices shown are starting points and may vary based on your personalized plan. Your final, all-inclusive quote is provided in writing at your free consultation — with no pressure and no obligation.",
+  },
   candidacy: {
     heading: "See If You Qualify — Free Consultation",
     intro:
@@ -219,6 +286,20 @@ const FACELIFT_LANDING: LandingContent = {
       stage: "3–6 Months",
       detail:
         "Final results settle in: a refreshed, naturally youthful face and neck. Incisions continue to mature until they are virtually undetectable.",
+    },
+  ],
+  faqs: [
+    {
+      q: "How much does a facelift cost in Miami?",
+      a: "At Your Cosmetic Surgery & SPA, facelifts start at $3,000 for a mini facelift, $3,500 for a lower facelift, $4,000 for a mid-facelift, and $5,000 for a deep plane facelift. Your final price depends on the technique chosen, any combined procedures, and your individual anatomy. You receive an exact, all-inclusive written quote at your free consultation.",
+    },
+    {
+      q: "Does the facelift price include anesthesia and facility fees?",
+      a: "Your personalized quote spells out exactly what is included, such as the surgeon's fee, anesthesia by a board-certified provider, and the accredited surgical-facility fee. Because every plan is different, we confirm your complete, all-inclusive price in writing at your free consultation so there are no surprises.",
+    },
+    {
+      q: "Do you offer financing for a facelift?",
+      a: "Yes. We offer flexible financing and monthly payment plans so you can move forward with the facelift that is right for you while keeping payments manageable. Our team reviews your options with you during your consultation.",
     },
   ],
   es: {
@@ -316,6 +397,49 @@ const FACELIFT_LANDING: LandingContent = {
           "Un lifting facial retrasa el reloj unos diez años y, como los tejidos profundos se reposicionan, los resultados son duraderos — normalmente una década o más. Seguirá envejeciendo de forma natural, pero siempre se verá más joven de lo que se vería sin el procedimiento. Combinar su lifting con nuestro cuidado de la piel de grado médico y tratamientos no quirúrgicos mantiene sus resultados frescos durante años.",
       },
     ],
+    pricing: {
+      heading: "¿Cuánto Cuesta un Lifting Facial en Miami?",
+      intro:
+        "En Your Cosmetic Surgery & SPA, el precio del lifting facial es transparente y se adapta a la técnica más adecuada para su rostro. A continuación se muestran los precios iniciales de cada tipo de lifting facial en Miami. Su cotización exacta — incluidos los procedimientos combinados — se confirma durante su consulta gratuita.",
+      tiers: [
+        {
+          name: "Mini Lifting Facial",
+          price: "Desde $3,000",
+          priceValue: 3000,
+          bestFor: "Papada incipiente y flacidez leve de las mejillas, con la recuperación más rápida.",
+        },
+        {
+          name: "Lifting Facial Inferior",
+          price: "Desde $3,500",
+          priceValue: 3500,
+          bestFor: "Una mandíbula definida y un cuello más firme, con cicatrices mínimas.",
+        },
+        {
+          name: "Lifting Facial Medio",
+          price: "Desde $4,000",
+          priceValue: 4000,
+          bestFor: "Mejillas caídas y pliegues nasolabiales profundos en la zona media.",
+        },
+        {
+          name: "Lifting Facial de Plano Profundo",
+          price: "Desde $5,000",
+          priceValue: 5000,
+          bestFor: "Rejuvenecimiento integral y más duradero de todo el rostro y el cuello.",
+        },
+      ],
+      factorsTitle: "Qué Influye en el Precio de su Lifting Facial",
+      factors: [
+        "La técnica de lifting elegida y la cantidad de áreas tratadas",
+        "Los procedimientos combinados con su lifting, como un lifting de cuello, cirugía de párpados o transferencia de grasa",
+        "Los honorarios de anestesia y de la instalación quirúrgica acreditada",
+        "El tiempo quirúrgico y la complejidad de su anatomía individual",
+        "Los estudios preoperatorios y el cuidado posoperatorio incluidos en su plan",
+      ],
+      financingNote:
+        "Ofrecemos financiamiento flexible y planes de pago mensuales para que pueda avanzar con un plan que se ajuste a su presupuesto.",
+      disclaimer:
+        "Los precios mostrados son puntos de partida y pueden variar según su plan personalizado. Su cotización final, todo incluido, se entrega por escrito en su consulta gratuita — sin presión y sin compromiso.",
+    },
     candidacy: {
       heading: "Descubra si Califica — Consulta Gratuita",
       intro:
@@ -354,6 +478,20 @@ const FACELIFT_LANDING: LandingContent = {
         stage: "3–6 Meses",
         detail:
           "Los resultados finales se asientan: un rostro y cuello renovados y naturalmente jóvenes. Las incisiones siguen madurando hasta volverse prácticamente indetectables.",
+      },
+    ],
+    faqs: [
+      {
+        q: "¿Cuánto cuesta un lifting facial en Miami?",
+        a: "En Your Cosmetic Surgery & SPA, los liftings faciales comienzan desde $3,000 para un mini lifting, $3,500 para un lifting inferior, $4,000 para un lifting medio y $5,000 para un lifting de plano profundo. Su precio final depende de la técnica elegida, los procedimientos combinados y su anatomía individual. Recibe una cotización exacta y por escrito en su consulta gratuita.",
+      },
+      {
+        q: "¿El precio del lifting facial incluye la anestesia y los honorarios de la instalación?",
+        a: "Su cotización personalizada detalla exactamente qué incluye, como los honorarios del cirujano, la anestesia por un proveedor certificado y los honorarios de la instalación quirúrgica acreditada. Como cada plan es diferente, confirmamos su precio completo, todo incluido, por escrito en su consulta gratuita para que no haya sorpresas.",
+      },
+      {
+        q: "¿Ofrecen financiamiento para un lifting facial?",
+        a: "Sí. Ofrecemos financiamiento flexible y planes de pago mensuales para que pueda avanzar con el lifting facial adecuado para usted manteniendo pagos manejables. Nuestro equipo revisa sus opciones con usted durante la consulta.",
       },
     ],
   },

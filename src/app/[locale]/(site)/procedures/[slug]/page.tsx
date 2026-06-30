@@ -10,6 +10,7 @@ import { getLanding, landingLabels } from "@/data/landings";
 import OfferBanner from "@/components/sections/landing/OfferBanner";
 import TransformationGallery from "@/components/sections/landing/TransformationGallery";
 import ProcessSections from "@/components/sections/landing/ProcessSections";
+import PricingSection from "@/components/sections/landing/PricingSection";
 import CandidacySection from "@/components/sections/landing/CandidacySection";
 import RecoveryTimeline from "@/components/sections/landing/RecoveryTimeline";
 
@@ -103,6 +104,7 @@ export default async function ProcedureDetailPage({ params }: Props) {
     { q: t("faqQ2"), a: t("faqA2") },
     { q: t("faqQ3"), a: t("faqA3") },
     { q: t("faqQ4"), a: t("faqA4") },
+    ...(landing?.faqs ?? []),
   ];
 
   const jsonLd = [
@@ -158,6 +160,45 @@ export default async function ProcedureDetailPage({ params }: Props) {
         { "@type": "ListItem", position: 3, name, item: pageUrl },
       ],
     },
+    ...(landing?.pricing
+      ? [
+          {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            serviceType: `${name} surgery`,
+            name: `${name} in Miami`,
+            url: pageUrl,
+            areaServed: { "@type": "City", name: "Miami", containedInPlace: "Florida" },
+            provider: {
+              "@type": "MedicalBusiness",
+              name: "Your Cosmetic Surgery & SPA",
+              url: "https://ycosmeticsurgery.com",
+              telephone: "+1-305-218-3513",
+            },
+            offers: {
+              "@type": "AggregateOffer",
+              priceCurrency: "USD",
+              lowPrice: Math.min(...landing.pricing.tiers.map((tier) => tier.priceValue)),
+              highPrice: Math.max(...landing.pricing.tiers.map((tier) => tier.priceValue)),
+              offerCount: landing.pricing.tiers.length,
+              offers: landing.pricing.tiers.map((tier) => ({
+                "@type": "Offer",
+                name: tier.name,
+                price: tier.priceValue,
+                priceCurrency: "USD",
+                priceSpecification: {
+                  "@type": "PriceSpecification",
+                  price: tier.priceValue,
+                  priceCurrency: "USD",
+                  valueAddedTaxIncluded: false,
+                },
+                availability: "https://schema.org/InStock",
+                url: pageUrl,
+              })),
+            },
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -238,6 +279,9 @@ export default async function ProcedureDetailPage({ params }: Props) {
             procedureName={name}
           />
           <ProcessSections heading={landing.processHeading} sections={landing.process} />
+          {landing.pricing && (
+            <PricingSection pricing={landing.pricing} ctaLabel={labels.defaultCta} />
+          )}
           <CandidacySection candidacy={landing.candidacy} ctaLabel={labels.defaultCta} phone={labels.phone} />
           <RecoveryTimeline heading={landing.timelineHeading} timeline={landing.timeline} />
         </>
