@@ -28,6 +28,7 @@ function ProcedureCard({
   learnMore,
   interested,
   recovery,
+  avgPriceLabel,
   categoryLabel,
   locale,
 }: {
@@ -37,6 +38,7 @@ function ProcedureCard({
   learnMore: string;
   interested: string;
   recovery: string;
+  avgPriceLabel: string;
   categoryLabel: Record<string, string>;
   locale: string;
 }) {
@@ -102,10 +104,20 @@ function ProcedureCard({
           {displayDescription}
         </p>
 
-        <div className="flex items-center gap-1.5 text-[#0d1b3e]/35 text-xs mb-5">
+        <div className="flex items-center gap-1.5 text-[#0d1b3e]/35 text-xs mb-3">
           <Clock size={11} />
           <span>{recovery}: {displayRecovery}</span>
         </div>
+
+        {proc.priceRange && (
+          <p className="text-[#0d1b3e] text-sm font-medium mb-5">
+            <span className="text-[#0d1b3e]/40 text-xs font-normal tracking-[0.14em] uppercase mr-2">
+              {avgPriceLabel}
+            </span>
+            ${proc.priceRange.min.toLocaleString("en-US")} – $
+            {proc.priceRange.max.toLocaleString("en-US")}
+          </p>
+        )}
 
         {/* Dual CTA */}
         <div className="grid grid-cols-2 gap-2.5">
@@ -194,6 +206,7 @@ export default function ProceduresSection() {
                 learnMore={t("learnMore")}
                 interested={t("interested")}
                 recovery={t("recovery")}
+                avgPriceLabel={t("avgPrice")}
                 categoryLabel={categoryLabel}
                 locale={locale}
               />

@@ -9,6 +9,8 @@ export interface Procedure {
   recovery: string;
   icon: string;
   featured: boolean;
+  /** Average price range at our clinic, in USD. Rendered on cards as "$min – $max". */
+  priceRange?: { min: number; max: number };
   imagePosition?: string;
   imageFit?: "cover" | "contain";
   imageAlt?: string;
@@ -41,6 +43,7 @@ export const procedures: Procedure[] = [
     recovery: "4–6 weeks",
     icon: "✦",
     featured: true,
+    priceRange: { min: 3500, max: 5500 },
     es: {
       name: "Abdominoplastia",
       tagline: "Recupera tu contorno",
@@ -52,36 +55,6 @@ export const procedures: Procedure[] = [
         "Resultados duraderos con estilo de vida saludable",
       ],
       recovery: "4–6 semanas",
-    },
-  },
-  {
-    id: "liposuction",
-    slug: "liposuction",
-    name: "Liposuction",
-    category: "body",
-    tagline: "Sculpt your silhouette",
-    description:
-      "Advanced liposuction techniques precisely remove stubborn fat deposits resistant to diet and exercise, reshaping and refining your natural contours.",
-    benefits: [
-      "Targeted fat reduction",
-      "Refined body contours",
-      "Improved body proportions",
-      "Minimally invasive techniques available",
-    ],
-    recovery: "2–4 weeks",
-    icon: "◆",
-    featured: true,
-    es: {
-      name: "Liposucción",
-      tagline: "Esculpe tu silueta",
-      description: "Las técnicas avanzadas de liposucción eliminan depósitos de grasa resistentes a la dieta y el ejercicio, remodelando y refinando sus contornos naturales.",
-      benefits: [
-        "Reducción de grasa localizada",
-        "Contornos corporales refinados",
-        "Mejora de las proporciones corporales",
-        "Técnicas mínimamente invasivas disponibles",
-      ],
-      recovery: "2–4 semanas",
     },
   },
   {
@@ -101,6 +74,7 @@ export const procedures: Procedure[] = [
     recovery: "3–6 weeks",
     icon: "❖",
     featured: true,
+    priceRange: { min: 3000, max: 4500 },
     imagePosition: "center bottom",
     es: {
       name: "Aumento de Glúteos (BBL)",
@@ -132,6 +106,7 @@ export const procedures: Procedure[] = [
     recovery: "4–8 weeks",
     icon: "✧",
     featured: false,
+    priceRange: { min: 5500, max: 10000 },
     es: {
       name: "Mommy Makeover",
       tagline: "Redescúbrete",
@@ -143,36 +118,6 @@ export const procedures: Procedure[] = [
         "Resultados dramáticos y transformadores",
       ],
       recovery: "4–8 semanas",
-    },
-  },
-  {
-    id: "body-contouring",
-    slug: "body-contouring",
-    name: "Body Contouring",
-    category: "body",
-    tagline: "Define your form",
-    description:
-      "After significant weight loss or as a standalone procedure, body contouring removes excess skin and tightens remaining tissue for a refined, confident appearance.",
-    benefits: [
-      "Removal of excess skin",
-      "Improved skin texture",
-      "Enhanced body proportions",
-      "Boosted confidence after weight loss",
-    ],
-    recovery: "4–6 weeks",
-    icon: "✦",
-    featured: false,
-    es: {
-      name: "Contorneado Corporal",
-      tagline: "Define tu figura",
-      description: "Después de una pérdida de peso significativa o como procedimiento independiente, el contorneado corporal elimina el exceso de piel y tensa el tejido restante para una apariencia refinada y segura.",
-      benefits: [
-        "Eliminación del exceso de piel",
-        "Mejora de la textura de la piel",
-        "Mejora de las proporciones corporales",
-        "Mayor confianza tras la pérdida de peso",
-      ],
-      recovery: "4–6 semanas",
     },
   },
   // Breast
@@ -193,6 +138,7 @@ export const procedures: Procedure[] = [
     recovery: "2–4 weeks",
     icon: "◈",
     featured: true,
+    priceRange: { min: 2800, max: 3800 },
     es: {
       name: "Aumento de Senos",
       tagline: "Belleza natural, amplificada",
@@ -223,6 +169,7 @@ export const procedures: Procedure[] = [
     recovery: "2–4 weeks",
     icon: "◇",
     featured: true,
+    priceRange: { min: 2500, max: 3500 },
     es: {
       name: "Levantamiento de Senos",
       tagline: "Restaura tu perfil",
@@ -253,6 +200,7 @@ export const procedures: Procedure[] = [
     recovery: "3–4 weeks",
     icon: "◉",
     featured: false,
+    priceRange: { min: 2500, max: 3500 },
     es: {
       name: "Reducción de Senos",
       tagline: "Comodidad y confianza",
@@ -284,6 +232,7 @@ export const procedures: Procedure[] = [
     recovery: "2–3 weeks visible, 1 year final",
     icon: "✦",
     featured: true,
+    priceRange: { min: 5000, max: 7000 },
     es: {
       name: "Rinoplastia",
       tagline: "Armonía en cada rasgo",
@@ -314,6 +263,7 @@ export const procedures: Procedure[] = [
     recovery: "2–3 weeks",
     icon: "◆",
     featured: true,
+    priceRange: { min: 3000, max: 5000 },
     imageFit: "contain",
     imageAlt:
       "Before and after facelift (rhytidectomy) results in Miami — tighter jawline and youthful, natural contour at Your Cosmetic Surgery & SPA",
@@ -349,6 +299,7 @@ export const procedures: Procedure[] = [
     recovery: "1–2 weeks",
     icon: "❖",
     featured: true,
+    priceRange: { min: 1500, max: 2500 },
     es: {
       name: "Cirugía de Párpados",
       tagline: "Ojos que cautivan",
@@ -379,6 +330,7 @@ export const procedures: Procedure[] = [
     recovery: "2–3 weeks",
     icon: "✧",
     featured: false,
+    priceRange: { min: 2800, max: 3800 },
     es: {
       name: "Lifting de Cuello",
       tagline: "Elegancia refinada",
@@ -410,6 +362,7 @@ export const procedures: Procedure[] = [
     recovery: "No downtime",
     icon: "◈",
     featured: true,
+    priceRange: { min: 300, max: 1200 },
     es: {
       name: "Botox y Rellenos",
       tagline: "Rejuvenece sin cirugía",
@@ -440,6 +393,7 @@ export const procedures: Procedure[] = [
     recovery: "3–7 days",
     icon: "◇",
     featured: true,
+    priceRange: { min: 500, max: 2500 },
     es: {
       name: "Resurfacing con Láser",
       tagline: "Revela una piel radiante",
@@ -470,6 +424,7 @@ export const procedures: Procedure[] = [
     recovery: "1–2 days",
     icon: "◉",
     featured: false,
+    priceRange: { min: 200, max: 700 },
     es: {
       name: "Microagujas",
       tagline: "Renueva desde adentro",
@@ -501,6 +456,7 @@ export const procedures: Procedure[] = [
     recovery: "2–4 weeks",
     icon: "◆",
     featured: true,
+    priceRange: { min: 2800, max: 3800 },
     es: {
       name: "Lipo 360",
       tagline: "Escultura de 360°",
@@ -531,6 +487,7 @@ export const procedures: Procedure[] = [
     recovery: "2–4 weeks",
     icon: "✦",
     featured: false,
+    priceRange: { min: 2500, max: 3000 },
     es: {
       name: "Lifting de Brazos",
       tagline: "Firma y tonifica",
@@ -561,6 +518,7 @@ export const procedures: Procedure[] = [
     recovery: "2–4 weeks",
     icon: "✦",
     featured: false,
+    priceRange: { min: 2500, max: 3500 },
     es: {
       name: "Lifting de Muslos",
       tagline: "Firma y tonifica",
@@ -591,6 +549,7 @@ export const procedures: Procedure[] = [
     recovery: "2–3 weeks",
     icon: "✧",
     featured: false,
+    priceRange: { min: 2500, max: 3500 },
     imagePosition: "center 60%",
     es: {
       name: "Marcación Abdominal",
@@ -623,6 +582,7 @@ export const procedures: Procedure[] = [
     recovery: "2–3 weeks",
     icon: "◈",
     featured: false,
+    priceRange: { min: 2500, max: 4000 },
     es: {
       name: "Ginecomastia",
       tagline: "Un pecho más plano y masculino",
@@ -654,6 +614,7 @@ export const procedures: Procedure[] = [
     recovery: "1–2 weeks",
     icon: "◇",
     featured: false,
+    priceRange: { min: 2000, max: 4000 },
     es: {
       name: "Otoplastia",
       tagline: "Orejas en equilibrio perfecto",
@@ -684,6 +645,7 @@ export const procedures: Procedure[] = [
     recovery: "1–2 weeks",
     icon: "◉",
     featured: false,
+    priceRange: { min: 1500, max: 2000 },
     es: {
       name: "Bichectomía",
       tagline: "Pómulos esculpidos",
