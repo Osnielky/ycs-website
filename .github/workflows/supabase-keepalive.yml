@@ -2,8 +2,10 @@ name: Supabase Keepalive
 
 on:
   schedule:
-    # Every Monday at 12:00 UTC — well within Supabase's 7-day pause window
-    - cron: "0 12 * * 1"
+    # Every Sunday at 10:00 AM US Eastern (UTC-4 during EDT).
+    # Cron runs in UTC only — no DST awareness. Once clocks fall back to EST
+    # in November, this will fire at 9:00 AM ET until updated to "0 15 * * 0".
+    - cron: "0 14 * * 0"
   workflow_dispatch: {}
 
 jobs:
