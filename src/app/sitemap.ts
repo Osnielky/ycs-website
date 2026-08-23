@@ -24,7 +24,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/es`,                 lastModified: new Date(), changeFrequency: "weekly",  priority: 1.0 },
     { url: `${baseUrl}/procedures`,         lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${baseUrl}/es/procedures`,      lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${baseUrl}/gallery`,            lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    {
+      url: `${baseUrl}/gallery`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+      images: [
+        `${baseUrl}/before-after/tummy-tuck-before-surgery-miami.webp`,
+        `${baseUrl}/before-after/tummy-tuck-after-surgery-miami.webp`,
+      ],
+    },
     { url: `${baseUrl}/es/gallery`,         lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: `${baseUrl}/about`,              lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: `${baseUrl}/es/about`,           lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },

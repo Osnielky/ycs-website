@@ -32,7 +32,16 @@
       "Bash(curl -s -i http://localhost:3000/)",
       "Read(//c/Users/X/.claude/plugins/cache/claude-plugins-official/superpowers/6.0.3/skills/requesting-code-review/**)",
       "Bash(git rm *)",
-      "Bash(rm -f public/procedures/face_lift/face_lift_miami_Real_patientfl_hero_section.png)"
+      "Bash(rm -f public/procedures/face_lift/face_lift_miami_Real_patientfl_hero_section.png)",
+      "Bash(git add *)",
+      "Bash(git restore *)",
+      "Bash(taskkill //F //IM msedge.exe //T)",
+      "Bash(node \"C:\\\\Users\\\\X\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--Coding-ycs-website\\\\7e9c1a39-1e0c-40bd-901f-fafd122b3d1a\\\\scratchpad\\\\cdp-sweep.mjs\" \"C:/Users/X/AppData/Local/Temp/claude/d--Coding-ycs-website/7e9c1a39-1e0c-40bd-901f-fafd122b3d1a/scratchpad/sweep\")",
+      "Bash(node \"C:\\\\Users\\\\X\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--Coding-ycs-website\\\\7e9c1a39-1e0c-40bd-901f-fafd122b3d1a\\\\scratchpad\\\\cdp-sweep2.mjs\" \"C:/Users/X/AppData/Local/Temp/claude/d--Coding-ycs-website/7e9c1a39-1e0c-40bd-901f-fafd122b3d1a/scratchpad/sweep2\")",
+      "Bash(node \"C:\\\\Users\\\\X\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--Coding-ycs-website\\\\7e9c1a39-1e0c-40bd-901f-fafd122b3d1a\\\\scratchpad\\\\cdp-sweep3.mjs\" \"C:/Users/X/AppData/Local/Temp/claude/d--Coding-ycs-website/7e9c1a39-1e0c-40bd-901f-fafd122b3d1a/scratchpad/sweep3\")",
+      "Bash(node \"C:\\\\Users\\\\X\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--Coding-ycs-website\\\\7e9c1a39-1e0c-40bd-901f-fafd122b3d1a\\\\scratchpad\\\\cdp-sweep3.mjs\" \"C:/Users/X/AppData/Local/Temp/claude/d--Coding-ycs-website/7e9c1a39-1e0c-40bd-901f-fafd122b3d1a/scratchpad/sweep4\")",
+      "Bash(xargs grep -l \"MetadataRoute\")",
+      "Bash(curl -s http://localhost:3000/sitemap.xml)"
     ]
   }
 }

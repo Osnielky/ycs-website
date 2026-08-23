@@ -56,6 +56,18 @@ const jsonLd = {
       { "@type": "ListItem", position: 2, name: "Gallery", item: "https://ycosmeticsurgery.com/gallery" },
     ],
   },
+  image: [
+    {
+      "@type": "ImageObject",
+      contentUrl: "https://ycosmeticsurgery.com/before-after/tummy-tuck-before-surgery-miami.webp",
+      caption: "Before tummy tuck surgery — abdominal profile showing excess skin and fat before abdominoplasty at Your Cosmetic Surgery & SPA, Miami",
+    },
+    {
+      "@type": "ImageObject",
+      contentUrl: "https://ycosmeticsurgery.com/before-after/tummy-tuck-after-surgery-miami.webp",
+      caption: "After tummy tuck surgery — flat, contoured abdomen result following abdominoplasty in Miami, FL",
+    },
+  ],
 };
 
 export default async function GalleryPage({ params }: Props) {

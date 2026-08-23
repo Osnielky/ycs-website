@@ -143,6 +143,24 @@ h5 {
 @media (prefers-reduced-motion: reduce) {
   .offer-banner::before { animation: none; display: none; }
   .offer-pulse { animation: none; }
+  .gallery-card-sweep-clip,
+  .gallery-card-sweep-x { animation: none; }
+}
+
+/* Before/after gallery card — slow auto-sweep reveal on hover */
+@keyframes gallery-card-sweep-clip {
+  0%, 100% { clip-path: inset(0 0 0 2%); }
+  50%      { clip-path: inset(0 0 0 98%); }
+}
+@keyframes gallery-card-sweep-x {
+  0%, 100% { left: 2%; }
+  50%      { left: 98%; }
+}
+.gallery-card-sweep-clip {
+  animation: gallery-card-sweep-clip 7s ease-in-out infinite;
+}
+.gallery-card-sweep-x {
+  animation: gallery-card-sweep-x 7s ease-in-out infinite;
 }
 .offer-pulse {
   animation: offer-pulse 2s ease-in-out infinite;

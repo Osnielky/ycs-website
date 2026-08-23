@@ -4,6 +4,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import Image from "next/image";
 
 interface CaseItem {
   id: number;
@@ -12,12 +13,21 @@ interface CaseItem {
   recovery: string;
   beforeBg: string;
   afterBg: string;
+  beforeImg?: string;
+  afterImg?: string;
+  beforeAlt?: string;
+  afterAlt?: string;
   featured: boolean;
   size: "large" | "medium" | "small";
 }
 
 const cases: CaseItem[] = [
-  { id: 1,  procedure: "Tummy Tuck",          category: "Body",   recovery: "4–6 weeks",    beforeBg: "from-[#9e9890] to-[#7a7268]", afterBg: "from-[#e8d5c0] to-[#c9a46e]", featured: true,  size: "large"  },
+  { id: 1,  procedure: "Tummy Tuck",          category: "Body",   recovery: "4–6 weeks",    beforeBg: "from-[#9e9890] to-[#7a7268]", afterBg: "from-[#e8d5c0] to-[#c9a46e]",
+    beforeImg: "/before-after/tummy-tuck-before-surgery-miami.webp",
+    afterImg:  "/before-after/tummy-tuck-after-surgery-miami.webp",
+    beforeAlt: "Before tummy tuck surgery — abdominal profile showing excess skin and fat before abdominoplasty at Your Cosmetic Surgery & SPA, Miami",
+    afterAlt:  "After tummy tuck surgery — flat, contoured abdomen result following abdominoplasty in Miami, FL",
+    featured: true,  size: "large"  },
   { id: 2,  procedure: "Breast Augmentation", category: "Breast", recovery: "2–4 weeks",    beforeBg: "from-[#9a9aa8] to-[#767488]", afterBg: "from-[#dce0e8] to-[#a4aec4]", featured: true,  size: "medium" },
   { id: 3,  procedure: "Rhinoplasty",         category: "Face",   recovery: "2–3 weeks",    beforeBg: "from-[#9aa09c] to-[#788078]", afterBg: "from-[#d4e8d8] to-[#98c4a0]", featured: true,  size: "medium" },
   { id: 4,  procedure: "Liposuction",         category: "Body",   recovery: "2–4 weeks",    beforeBg: "from-[#a09898] to-[#807070]", afterBg: "from-[#e0d8c8] to-[#c9a46e]", featured: false, size: "small"  },
@@ -45,11 +55,19 @@ const DOT_COLOR: Record<string, string> = {
 function DragSlider({
   beforeBg,
   afterBg,
+  beforeImg,
+  afterImg,
+  beforeAlt,
+  afterAlt,
   beforeLabel,
   afterLabel,
 }: {
   beforeBg: string;
   afterBg: string;
+  beforeImg?: string;
+  afterImg?: string;
+  beforeAlt?: string;
+  afterAlt?: string;
   beforeLabel: string;
   afterLabel: string;
   dragHint: string;
@@ -74,7 +92,16 @@ function DragSlider({
     >
       {/* Before */}
       <div className={`absolute inset-0 bg-gradient-to-br ${beforeBg}`}>
-        <span className="absolute bottom-3 left-3 bg-black/50 backdrop-blur-sm text-white text-[10px] font-bold tracking-[0.18em] uppercase px-2.5 py-1 rounded-sm">
+        {beforeImg && (
+          <Image
+            src={beforeImg}
+            alt={beforeAlt ?? `Before ${beforeLabel}`}
+            fill
+            sizes="(max-width: 768px) 100vw, 576px"
+            className="object-cover"
+          />
+        )}
+        <span className="absolute bottom-3 left-3 z-10 bg-black/50 backdrop-blur-sm text-white text-[10px] font-bold tracking-[0.18em] uppercase px-2.5 py-1 rounded-sm">
           {beforeLabel}
         </span>
       </div>
@@ -84,7 +111,16 @@ function DragSlider({
         className={`absolute inset-0 bg-gradient-to-br ${afterBg}`}
         style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
       >
-        <span className="absolute bottom-3 right-3 bg-[#c9a46e]/80 backdrop-blur-sm text-white text-[10px] font-bold tracking-[0.18em] uppercase px-2.5 py-1 rounded-sm">
+        {afterImg && (
+          <Image
+            src={afterImg}
+            alt={afterAlt ?? `After ${afterLabel}`}
+            fill
+            sizes="(max-width: 768px) 100vw, 576px"
+            className="object-cover"
+          />
+        )}
+        <span className="absolute bottom-3 right-3 z-10 bg-[#c9a46e]/80 backdrop-blur-sm text-white text-[10px] font-bold tracking-[0.18em] uppercase px-2.5 py-1 rounded-sm">
           {afterLabel}
         </span>
       </div>
@@ -142,22 +178,42 @@ function GalleryCard({
         {/* Image area */}
         <div className={`relative ${imgH} overflow-hidden`}>
           {/* Before */}
-          <div className={`absolute inset-0 bg-gradient-to-br ${item.beforeBg}`} />
+          <div className={`absolute inset-0 bg-gradient-to-br ${item.beforeBg}`}>
+            {item.beforeImg && (
+              <Image
+                src={item.beforeImg}
+                alt={item.beforeAlt ?? `Before ${item.procedure} at YCS Aesthetic Center, Miami`}
+                fill
+                sizes="(max-width: 768px) 50vw, 380px"
+                className="object-cover"
+              />
+            )}
+          </div>
 
-          {/* After — expands on hover */}
+          {/* After — slowly sweeps side to side on hover via clip-path (keeps the photo framing stable) */}
           <div
-            className={`absolute top-0 right-0 bottom-0 bg-gradient-to-bl ${item.afterBg} transition-[width] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]`}
-            style={{ width: hovered ? "65%" : "50%" }}
-          />
+            className={`absolute inset-0 bg-gradient-to-bl ${item.afterBg} transition-[clip-path] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${hovered ? "gallery-card-sweep-clip" : ""}`}
+            style={{ clipPath: "inset(0 0 0 50%)" }}
+          >
+            {item.afterImg && (
+              <Image
+                src={item.afterImg}
+                alt={item.afterAlt ?? `After ${item.procedure} results — YCS Aesthetic Center Hialeah`}
+                fill
+                sizes="(max-width: 768px) 50vw, 380px"
+                className="object-cover"
+              />
+            )}
+          </div>
 
           {/* Divider */}
           <div
-            className="absolute top-0 bottom-0 w-px bg-white/85 z-10 transition-[left] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
-            style={{ left: hovered ? "35%" : "50%" }}
+            className={`absolute top-0 bottom-0 w-px bg-white/85 z-10 transition-[left] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${hovered ? "gallery-card-sweep-x" : ""}`}
+            style={{ left: "50%" }}
           />
           <div
-            className="absolute top-1/2 z-10 -translate-y-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-white shadow-md flex items-center justify-center transition-[left] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
-            style={{ left: hovered ? "35%" : "50%" }}
+            className={`absolute top-1/2 z-10 -translate-y-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-white shadow-md flex items-center justify-center transition-[left] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${hovered ? "gallery-card-sweep-x" : ""}`}
+            style={{ left: "50%" }}
           >
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" className="w-3 h-3 text-[#0d1b3e]">
               <polyline points="5,3 2,8 5,13" />
@@ -279,6 +335,10 @@ function Lightbox({
           <DragSlider
             beforeBg={item.beforeBg}
             afterBg={item.afterBg}
+            beforeImg={item.beforeImg}
+            afterImg={item.afterImg}
+            beforeAlt={item.beforeAlt}
+            afterAlt={item.afterAlt}
             beforeLabel={beforeLabel}
             afterLabel={afterLabel}
             dragHint={dragHint}
@@ -364,10 +424,24 @@ export default function GalleryClient() {
     <>
       {/* ── Hero ── */}
       <section className="relative bg-[#0d1b3e] pt-36 pb-24 overflow-hidden">
-        <div className="absolute inset-0 hero-pattern opacity-25" />
+        <picture>
+          <source
+            media="(max-width: 767px)"
+            srcSet="/hero/miami-cosmetic-surgery-before-after-results-mobile.webp"
+          />
+          <img
+            src="/hero/miami-cosmetic-surgery-before-after-results.webp"
+            alt="Before and after cosmetic surgery results in Miami including facelift, rhinoplasty, tummy tuck and body contouring"
+            title="Miami Cosmetic Surgery Before and After Gallery"
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </picture>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0d1b3e]/50 via-[#0d1b3e]/20 to-[#0d1b3e]/80" />
         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#c9a46e]/50 to-transparent" />
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#c9a46e]/20 to-transparent" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[280px] bg-[#c9a46e]/6 blur-[100px] rounded-full pointer-events-none" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <div className="inline-flex items-center gap-2 bg-[#c9a46e]/12 border border-[#c9a46e]/25 rounded-full px-4 py-1.5 mb-8">

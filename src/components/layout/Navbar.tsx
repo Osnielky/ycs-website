@@ -1,11 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "./LanguageSwitcher";
 import Image from "next/image";
-import { Menu, X, Phone, ChevronDown } from "lucide-react";
+import { Menu, X, Phone, ChevronDown, ArrowRight, Waves, Heart, ScanFace, Flower2 } from "lucide-react";
+
+const categoryIcon: Record<string, ReactNode> = {
+  Body: <Waves size={15} />,
+  Breast: <Heart size={15} />,
+  Face: <ScanFace size={15} />,
+  MedSpa: <Flower2 size={15} />,
+};
 
 const procedureMenu = [
   {
@@ -134,49 +141,95 @@ export default function Navbar() {
 
               {/* Mega dropdown */}
               <div
-                className={`absolute top-full left-1/2 -translate-x-1/2 w-[680px] bg-white border-t-2 border-gold shadow-[0_20px_60px_rgba(13,27,62,0.15)] rounded-b-xl transition-all duration-200 origin-top ${
+                className={`absolute top-full left-1/2 -translate-x-1/2 pt-3 transition-all duration-200 origin-top ${
                   dropdownOpen
-                    ? "opacity-100 scale-y-100 pointer-events-auto"
-                    : "opacity-0 scale-y-95 pointer-events-none"
+                    ? "opacity-100 translate-y-0 pointer-events-auto"
+                    : "opacity-0 -translate-y-1.5 pointer-events-none"
                 }`}
               >
-                <div className="grid grid-cols-4 gap-0 p-6">
-                  {procedureMenu.map((col, i) => (
-                    <div
-                      key={col.category}
-                      className={`pr-5 ${i < 3 ? "border-r border-cream-dark" : ""}`}
-                    >
-                      <h4 className="font-heading text-navy text-[18px] font-semibold mb-3 pb-2 border-b border-gold/40">
-                        {catLabel[col.category] ?? col.category}
-                      </h4>
-                      <ul className="space-y-1">
-                        {col.items.map((item) => (
-                          <li key={item.slug}>
-                            <Link
-                              href={`/procedures/${item.slug}`}
-                              className="text-[13px] text-navy/65 hover:text-gold transition-colors block py-0.5"
-                            >
-                              {item.name}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
+                <div className="relative w-[860px] bg-white rounded-2xl shadow-[0_30px_80px_-20px_rgba(13,27,62,0.35)] overflow-hidden">
+                  {/* Caret */}
+                  <div className="absolute -top-[7px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-white border-t border-l border-gold/40 rotate-45" />
+                  {/* Top accent line */}
+                  <div className="h-[3px] bg-gradient-to-r from-gold/30 via-gold to-gold/30" />
+
+                  <div className="grid grid-cols-[repeat(4,1fr)_260px]">
+                    {procedureMenu.map((col, i) => (
+                      <div
+                        key={col.category}
+                        className={`px-6 py-7 ${i > 0 ? "border-l border-cream-dark/70" : ""}`}
+                      >
+                        <div className="flex items-center gap-2.5 mb-4">
+                          <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-gold shrink-0">
+                            {categoryIcon[col.category]}
+                          </span>
+                          <h4 className="font-heading text-navy text-[16px] font-semibold tracking-wide">
+                            {catLabel[col.category] ?? col.category}
+                          </h4>
+                        </div>
+                        <ul className="space-y-0.5">
+                          {col.items.map((item) => (
+                            <li key={item.slug}>
+                              <Link
+                                href={`/procedures/${item.slug}`}
+                                className="group/item flex items-center gap-2 -mx-2 px-2 py-1.5 rounded-lg text-[13px] text-navy/60 hover:text-navy hover:bg-cream transition-colors"
+                              >
+                                <span className="w-1 h-1 rounded-full bg-gold/0 group-hover/item:bg-gold transition-colors shrink-0" />
+                                {item.name}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+
+                    {/* Featured procedure */}
+                    <div className="relative bg-navy p-5 flex flex-col justify-end overflow-hidden">
+                      <Image
+                        src="/procedures/brazilian-butt-lift.webp"
+                        alt="Brazilian Butt Lift results"
+                        fill
+                        sizes="260px"
+                        className="object-cover object-center opacity-60"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/75 to-navy/20" />
+                      <span className="relative z-10 self-start inline-flex items-center bg-gold text-navy text-[9px] font-bold tracking-[0.15em] uppercase px-2.5 py-1 rounded-full mb-auto">
+                        {t("mostPopular")}
+                      </span>
+                      <div className="relative z-10">
+                        <p className="font-heading text-white text-[19px] font-light leading-tight mb-1">
+                          Brazilian Butt Lift
+                        </p>
+                        <p className="text-gold-light text-[12px] mb-3">
+                          Curves, elevated · From $3,000
+                        </p>
+                        <Link
+                          href="/procedures/brazilian-butt-lift"
+                          className="inline-flex items-center gap-1.5 text-white text-[11px] font-semibold tracking-widest uppercase hover:text-gold transition-colors"
+                        >
+                          {t("learnMore")} <ArrowRight size={12} />
+                        </Link>
+                      </div>
                     </div>
-                  ))}
-                </div>
-                <div className="px-6 py-3 bg-cream rounded-b-xl flex justify-between text-[12px]">
-                  <Link
-                    href="/procedures"
-                    className="text-navy/55 hover:text-navy transition-colors"
-                  >
-                    {t("viewAllProcedures")}
-                  </Link>
-                  <Link
-                    href="/gallery"
-                    className="text-navy/55 hover:text-navy transition-colors"
-                  >
-                    {t("beforeAfterGallery")}
-                  </Link>
+                  </div>
+
+                  {/* Footer bar */}
+                  <div className="flex items-center justify-between px-7 py-3.5 bg-cream border-t border-cream-dark/70">
+                    <Link
+                      href="/procedures"
+                      className="group/link inline-flex items-center gap-1.5 text-navy/55 hover:text-navy text-[12px] font-medium tracking-wide transition-colors"
+                    >
+                      {t("viewAllProcedures")}
+                      <ArrowRight size={12} className="transition-transform group-hover/link:translate-x-0.5" />
+                    </Link>
+                    <Link
+                      href="/gallery"
+                      className="group/link inline-flex items-center gap-1.5 text-navy/55 hover:text-navy text-[12px] font-medium tracking-wide transition-colors"
+                    >
+                      {t("beforeAfterGallery")}
+                      <ArrowRight size={12} className="transition-transform group-hover/link:translate-x-0.5" />
+                    </Link>
+                  </div>
                 </div>
               </div>
             </li>
