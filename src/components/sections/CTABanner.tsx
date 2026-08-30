@@ -18,6 +18,7 @@ function VideoCard({ video, comingSoon }: { video: VideoEntry; comingSoon: strin
         {video.tiktokId ? (
           <iframe
             src={`https://www.tiktok.com/embed/v2/${video.tiktokId}`}
+            title={`${video.name} — ${video.procedure} patient testimonial`}
             allow="encrypted-media"
             allowFullScreen
             loading="lazy"

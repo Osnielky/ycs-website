@@ -7,10 +7,15 @@ const nextConfig: NextConfig = {
   output: "standalone",
   images: {
     formats: ["image/avif", "image/webp"],
-    qualities: [75, 90],
+    qualities: [75, 80, 90],
     minimumCacheTTL: 60 * 60 * 24 * 365,
   },
   compress: true,
+  poweredByHeader: false,
+  // Tree-shake barrel imports so unused icons / helpers never reach the bundle.
+  experimental: {
+    optimizePackageImports: ["lucide-react", "next-intl"],
+  },
 };
 
 export default withNextIntl(nextConfig);

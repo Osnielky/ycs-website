@@ -18,7 +18,7 @@ export default async function DoctorSection() {
           fill
           className="object-cover object-center"
           sizes="(max-width: 1024px) 100vw, 48vw"
-          quality={90}
+          quality={80}
         />
         {/* Gradient fade right → blends into dark panel */}
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-navy-dark/30 to-navy-dark" />

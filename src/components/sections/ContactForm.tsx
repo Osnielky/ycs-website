@@ -57,7 +57,7 @@ export default function ContactForm() {
           alt="The team at Your Cosmetic Surgery & SPA in Miami, FL"
           fill
           priority
-          quality={90}
+          quality={80}
           sizes="100vw"
           className="object-cover object-[center_30%]"
           style={{
