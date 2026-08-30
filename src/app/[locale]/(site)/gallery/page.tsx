@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
-import { hreflangAlternatesForLocale } from "@/lib/seo";
+import { setRequestLocale, getTranslations } from "next-intl/server";
+import { alternatesFor, openGraph } from "@/lib/seo";
 import GalleryClient from "@/components/sections/GalleryClient";
 import CTABanner from "@/components/sections/CTABanner";
 
@@ -14,26 +14,24 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "galleryPage" });
+  const title = t("metaTitle");
+  const description = t("metaDescription");
   return {
-    title: "Before & After Gallery | Cosmetic Surgery Results Miami",
-    description:
-      "Browse real patient before and after photos from Your Cosmetic Surgery & SPA in Miami — BBL, Lipo 360, tummy tuck, breast augmentation, rhinoplasty, facelift & more. All images used with patient consent.",
-    alternates: {
-      canonical:
-        locale === "en"
-          ? "https://ycosmeticsurgery.com/gallery"
-          : "https://ycosmeticsurgery.com/es/gallery",
-      languages: hreflangAlternatesForLocale("gallery", locale),
-    },
-    openGraph: {
-      title: "Before & After Gallery | Your Cosmetic Surgery & SPA Miami",
-      description:
-        "See real patient transformations from our board-certified surgeons. Before and after photos for BBL, liposuction, breast augmentation, rhinoplasty, facelift, and more.",
-      url:
-        locale === "en"
-          ? "https://ycosmeticsurgery.com/gallery"
-          : "https://ycosmeticsurgery.com/es/gallery",
-    },
+    title,
+    description,
+    alternates: alternatesFor("/gallery", locale),
+    openGraph: openGraph({
+      path: "/gallery",
+      locale,
+      title,
+      description,
+      image: "/api/og?title=Before+%26+After+Gallery",
+      imageAlt:
+        locale === "es"
+          ? "Resultados de cirugía estética antes y después en Your Cosmetic Surgery & SPA, Miami"
+          : "Before and after cosmetic surgery results at Your Cosmetic Surgery & SPA, Miami",
+    }),
   };
 }
 

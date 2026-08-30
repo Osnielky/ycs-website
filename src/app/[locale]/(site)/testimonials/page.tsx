@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Star, Quote } from "lucide-react";
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { hreflangAlternatesForLocale } from "@/lib/seo";
+import { alternatesFor, openGraph } from "@/lib/seo";
 import { testimonials } from "@/data/procedures";
 import CTABanner from "@/components/sections/CTABanner";
 
@@ -15,26 +15,24 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "testimonialsPage" });
+  const title = t("metaTitle");
+  const description = t("metaDescription");
   return {
-    title: "Patient Testimonials | Real Results in Miami, FL",
-    description:
-      "Read what real patients say about Your Cosmetic Surgery & SPA in Miami. 500+ verified reviews with a 4.9 average rating. BBL, tummy tuck, breast augmentation, rhinoplasty & more — see why South Florida trusts us.",
-    alternates: {
-      canonical:
-        locale === "en"
-          ? "https://ycosmeticsurgery.com/testimonials"
-          : "https://ycosmeticsurgery.com/es/testimonials",
-      languages: hreflangAlternatesForLocale("testimonials", locale),
-    },
-    openGraph: {
-      title: "Patient Testimonials | Your Cosmetic Surgery & SPA Miami",
-      description:
-        "500+ verified reviews, 4.9 average rating across Google, RealSelf, Healthgrades, and Vitals. Read real patient stories from our cosmetic surgery patients in Miami.",
-      url:
-        locale === "en"
-          ? "https://ycosmeticsurgery.com/testimonials"
-          : "https://ycosmeticsurgery.com/es/testimonials",
-    },
+    title,
+    description,
+    alternates: alternatesFor("/testimonials", locale),
+    openGraph: openGraph({
+      path: "/testimonials",
+      locale,
+      title,
+      description,
+      image: "/api/og?title=Patient+Testimonials",
+      imageAlt:
+        locale === "es"
+          ? "Reseñas de pacientes de Your Cosmetic Surgery & SPA, Miami"
+          : "Patient reviews for Your Cosmetic Surgery & SPA, Miami",
+    }),
   };
 }
 

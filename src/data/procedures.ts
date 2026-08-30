@@ -519,6 +519,8 @@ export const procedures: Procedure[] = [
     icon: "✦",
     featured: false,
     priceRange: { min: 2500, max: 3500 },
+    imageAlt:
+      "Before and after thigh lift results in Miami — firmer, smoother, more toned upper legs after loose skin removal at Your Cosmetic Surgery & SPA",
     es: {
       name: "Lifting de Muslos",
       tagline: "Firma y tonifica",
@@ -530,6 +532,8 @@ export const procedures: Procedure[] = [
         "Resultados duraderos con peso estable",
       ],
       recovery: "2–4 semanas",
+      imageAlt:
+        "Lifting de muslos antes y después en Miami — parte superior de las piernas más firme, suave y tonificada tras eliminar la piel flácida en Your Cosmetic Surgery & SPA",
     },
   },
   {
@@ -646,9 +650,13 @@ export const procedures: Procedure[] = [
     icon: "◉",
     featured: false,
     priceRange: { min: 1500, max: 2000 },
+    imageAlt:
+      "Before and after bichectomy (buccal fat removal) results in Miami — slimmer mid-face and more defined cheekbones at Your Cosmetic Surgery & SPA",
     es: {
       name: "Bichectomía",
       tagline: "Pómulos esculpidos",
+      imageAlt:
+        "Bichectomía (extracción de bolas de Bichat) antes y después en Miami — rostro más delgado y pómulos más definidos en Your Cosmetic Surgery & SPA",
       description: "La extracción de grasa bucal reduce la plenitud en las mejillas eliminando la bolsa de grasa bucal, creando un contorno facial más delgado y definido con pómulos prominentes.",
       benefits: [
         "Perfil facial más delgado",

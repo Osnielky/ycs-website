@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import Hero from "@/components/sections/Hero";
 import StatsBar from "@/components/sections/StatsBar";
-import { hreflangAlternatesForLocale } from "@/lib/seo";
+import { alternatesFor, openGraph } from "@/lib/seo";
 
 // Below-fold sections: defer JS parsing until needed
 const ProceduresSection  = dynamic(() => import("@/components/sections/ProceduresSection"));
@@ -22,17 +22,15 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "homePage" });
+  const title = t("metaTitle");
+  const description = t("metaDescription");
   return {
-    title:
-      "Your Cosmetic Surgery & SPA | Trusted Plastic Surgeons in Miami, FL",
-    description:
-      "Your Cosmetic Surgery & SPA in Hialeah, Miami — board-certified surgeons with 20+ years of experience. BBL, Lipo 360, tummy tuck, breast augmentation, rhinoplasty & more. Free consultation. Flexible financing.",
-    alternates: {
-      canonical: locale === "en"
-        ? "https://ycosmeticsurgery.com/"
-        : "https://ycosmeticsurgery.com/es/",
-      languages: hreflangAlternatesForLocale("", locale).languages,
-    },
+    // Home title already leads with the brand — skip the "%s | …" template.
+    title: { absolute: title },
+    description,
+    alternates: alternatesFor("", locale),
+    openGraph: openGraph({ path: "", locale, title, description }),
   };
 }
 

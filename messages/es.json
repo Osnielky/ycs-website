@@ -139,11 +139,17 @@
       "Otro"
     ]
   },
+  "homePage": {
+    "metaTitle": "Your Cosmetic Surgery & SPA | Cirujanos Plásticos de Confianza en Miami, FL",
+    "metaDescription": "Your Cosmetic Surgery & SPA en Hialeah, Miami — cirujanos certificados con más de 20 años de experiencia. BBL, Lipo 360, abdominoplastia, aumento de senos, rinoplastia y más. Consulta gratuita. Financiamiento flexible."
+  },
   "proceduresPage": {
     "heroTitle": "Nuestros Procedimientos",
     "heroSubtitle": "Desde transformaciones quirúrgicas hasta mejoras no invasivas — cada procedimiento está diseñado en torno a sus objetivos y anatomía únicos.",
     "learnMore": "Saber Más",
-    "recovery": "Recuperación"
+    "recovery": "Recuperación",
+    "metaTitle": "Todos los Procedimientos | Cirugía Estética en Miami, Hialeah FL",
+    "metaDescription": "Explore todos los procedimientos de cirugía estética en Your Cosmetic Surgery & SPA en Miami — BBL, Lipo 360, abdominoplastia, aumento de senos, rinoplastia, lifting facial, bichectomía y más. Cirujanos certificados. Financiamiento flexible."
   },
   "procedureDetail": {
     "whatToExpect": "Qué Esperar",
@@ -194,7 +200,9 @@
     "milestone2012": "Superó 1,000 procedimientos exitosos con una tasa de satisfacción del paciente del 98%.",
     "milestone2016": "Amplió los servicios para incluir tratamientos MedSpa de vanguardia junto con procedimientos quirúrgicos.",
     "milestone2020": "Reconocida entre los Mejores Centros de Cirugía Cosmética del Sur de Florida.",
-    "milestone2024": "Más de 5,000 transformaciones y contando — cada una una historia única de confianza renovada."
+    "milestone2024": "Más de 5,000 transformaciones y contando — cada una una historia única de confianza renovada.",
+    "metaTitle": "Nosotros | Cirujanos Plásticos Certificados en Miami",
+    "metaDescription": "Conozca al equipo de Your Cosmetic Surgery & SPA — el Dr. Mario Reyes-Serrano y nuestros cirujanos plásticos certificados con más de 20 años de experiencia en Miami y Hialeah, FL. Resultados naturales y atención cercana."
   },
   "contactPage": {
     "heroTitle": "Contáctenos",
@@ -243,12 +251,16 @@
       "Resurfacing con Láser",
       "Microagujas",
       "Otro / No estoy seguro/a"
-    ]
+    ],
+    "metaTitle": "Contáctenos | Agende una Consulta Gratuita en Miami, FL",
+    "metaDescription": "Contacte a Your Cosmetic Surgery & SPA en Hialeah, FL. Llame al (305) 218-3513 o complete el formulario para agendar una consulta de cirugía estética gratuita y privada. Atendemos Miami, Hialeah y todo el sur de Florida."
   },
   "testimonialsPage": {
     "heroTitle": "Testimonios de Pacientes",
     "heroSubtitle": "Historias reales de pacientes reales que confiaron en nosotros para su transformación.",
-    "reviewsLabel": "reseñas"
+    "reviewsLabel": "reseñas",
+    "metaTitle": "Testimonios de Pacientes | Resultados Reales en Miami, FL",
+    "metaDescription": "Lea lo que dicen pacientes reales sobre Your Cosmetic Surgery & SPA en Miami. Más de 500 reseñas verificadas con calificación promedio de 4.9. BBL, abdominoplastia, aumento de senos, rinoplastia y más — descubra por qué el sur de Florida confía en nosotros."
   },
   "galleryPage": {
     "heroTitle": "Galería Antes y Después",
@@ -273,7 +285,9 @@
     "ctaButton": "Reserve su Consulta Gratis",
     "resultSuffix": "resultado",
     "resultsSuffix": "resultados",
-    "noResults": "Sin resultados en esta categoría todavía."
+    "noResults": "Sin resultados en esta categoría todavía.",
+    "metaTitle": "Galería Antes y Después | Resultados de Cirugía Estética en Miami",
+    "metaDescription": "Vea fotos reales de pacientes antes y después en Your Cosmetic Surgery & SPA en Miami — BBL, Lipo 360, abdominoplastia, aumento de senos, rinoplastia, lifting facial y más. Todas las imágenes se usan con consentimiento del paciente."
   },
   "proceduresSection": {
     "heading": "Nuestros Procedimientos",

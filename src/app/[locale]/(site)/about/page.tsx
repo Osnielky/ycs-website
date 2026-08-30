@@ -3,7 +3,7 @@ import Image from "next/image";
 import { ShieldCheck, Award, GraduationCap, Heart } from "lucide-react";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { hreflangAlternatesForLocale } from "@/lib/seo";
+import { alternatesFor, openGraph } from "@/lib/seo";
 import CTABanner from "@/components/sections/CTABanner";
 
 interface Props {
@@ -16,27 +16,24 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "aboutPage" });
+  const title = t("metaTitle");
+  const description = t("metaDescription");
   return {
-    title: "About Us | Board-Certified Plastic Surgeons in Miami",
-    description:
-      "Meet the Your Cosmetic Surgery & SPA team — Dr. Mario Reyes-Serrano and our board-certified plastic surgeons with 20+ years of experience in Miami and Hialeah, FL. Natural results, compassionate care.",
-    alternates: {
-      canonical:
-        locale === "en"
-          ? "https://ycosmeticsurgery.com/about"
-          : "https://ycosmeticsurgery.com/es/about",
-      languages: hreflangAlternatesForLocale("about", locale),
-    },
-    openGraph: {
-      title: "About Your Cosmetic Surgery & SPA | Miami, FL",
-      description:
-        "Board-certified plastic surgeons with 20+ years of experience. AAAHC-accredited facility in Hialeah. Over 5,000 transformations and counting.",
-      url:
-        locale === "en"
-          ? "https://ycosmeticsurgery.com/about"
-          : "https://ycosmeticsurgery.com/es/about",
-      images: [{ url: "/api/og?title=About+Us", width: 1200, height: 630, alt: "Your Cosmetic Surgery & SPA Miami team" }],
-    },
+    title,
+    description,
+    alternates: alternatesFor("/about", locale),
+    openGraph: openGraph({
+      path: "/about",
+      locale,
+      title,
+      description,
+      image: "/api/og?title=About+Us",
+      imageAlt:
+        locale === "es"
+          ? "Equipo de Your Cosmetic Surgery & SPA, Miami"
+          : "Your Cosmetic Surgery & SPA Miami team",
+    }),
   };
 }
 
@@ -47,7 +44,7 @@ const jsonLd = {
   name: "Your Cosmetic Surgery & SPA",
   alternateName: "YCS Aesthetic Center",
   url: "https://ycosmeticsurgery.com",
-  logo: "https://ycosmeticsurgery.com/Logo.jpg",
+  logo: "https://ycosmeticsurgery.com/logo.png",
   telephone: "+13052183513",
   email: "info@ycosmeticsurgery.com",
   foundingDate: "2004",

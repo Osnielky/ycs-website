@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import { notFound } from "next/navigation";
 import { Clock, CheckCircle, ArrowLeft, ArrowRight } from "lucide-react";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { hreflangAlternatesForLocale } from "@/lib/seo";
+import { alternatesFor, openGraph, ogImage } from "@/lib/seo";
 import { procedures } from "@/data/procedures";
 import CTABanner from "@/components/sections/CTABanner";
 import { getLanding, landingLabels } from "@/data/landings";
@@ -29,34 +31,35 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
   const proc = procedures.find((p) => p.slug === slug);
   if (!proc) return {};
-  const name = locale === "es" && proc.es?.name ? proc.es.name : proc.name;
-  const description = locale === "es" && proc.es?.description ? proc.es.description : proc.description;
+  const es = locale === "es";
+  const name = es && proc.es?.name ? proc.es.name : proc.name;
+  const description = es && proc.es?.description ? proc.es.description : proc.description;
+
+  const metaDescription = es
+    ? `${description} ${name} en Miami con cirujanos certificados y más de 20 años de experiencia. Consulta gratuita — atendemos Hialeah y todo el sur de Florida. Llame al (305) 218-3513.`
+    : `${description} ${name} in Miami by board-certified surgeons with 20+ years of experience. Free consultation — serving Hialeah and all of South Florida. Call (305) 218-3513.`;
+  const ogDescription = es
+    ? `${description} Cirujanos certificados, consulta gratuita, financiamiento flexible. Hialeah, FL.`
+    : `${description} Board-certified surgeons, free consultation, flexible financing. Hialeah, FL.`;
+
   return {
-    title: `${name} Miami | Your Cosmetic Surgery & SPA`,
-    description: `${description} ${name} in Miami by board-certified surgeons with 20+ years of experience. Free consultation — serving Hialeah and all of South Florida. Call (305) 218-3513.`,
-    alternates: {
-      canonical:
-        locale === "en"
-          ? `https://ycosmeticsurgery.com/procedures/${proc.slug}`
-          : `https://ycosmeticsurgery.com/es/procedures/${proc.slug}`,
-      languages: hreflangAlternatesForLocale(`procedures/${proc.slug}`, locale),
-    },
-    openGraph: {
-      title: `${name} in Miami | Your Cosmetic Surgery & SPA`,
-      description: `${description} Board-certified surgeons, free consultation, flexible financing. Hialeah, FL.`,
-      url:
-        locale === "en"
-          ? `https://ycosmeticsurgery.com/procedures/${proc.slug}`
-          : `https://ycosmeticsurgery.com/es/procedures/${proc.slug}`,
-      images: [
-        {
-          url: `/api/og?title=${encodeURIComponent(name + " Miami")}`,
-          width: 1200,
-          height: 630,
-          alt: `${name} results at Your Cosmetic Surgery & SPA, Miami`,
-        },
-      ],
-    },
+    // Brand suffix is appended by the root "%s | …" title template.
+    title: es ? `${name} en Miami, FL` : `${name} in Miami, FL`,
+    description: metaDescription,
+    alternates: alternatesFor(`/procedures/${proc.slug}`, locale),
+    openGraph: openGraph({
+      type: "article",
+      path: `/procedures/${proc.slug}`,
+      locale,
+      title: es
+        ? `${name} en Miami | Your Cosmetic Surgery & SPA`
+        : `${name} in Miami | Your Cosmetic Surgery & SPA`,
+      description: ogDescription,
+      image: ogImage(`${name} Miami`),
+      imageAlt: es
+        ? `Resultados de ${name} en Your Cosmetic Surgery & SPA, Miami`
+        : `${name} results at Your Cosmetic Surgery & SPA, Miami`,
+    }),
   };
 }
 
@@ -99,6 +102,15 @@ export default async function ProcedureDetailPage({ params }: Props) {
       ? `https://ycosmeticsurgery.com/procedures/${proc.slug}`
       : `https://ycosmeticsurgery.com/es/procedures/${proc.slug}`;
 
+  // Structured-data image: promo hero → real card photo → branded OG card.
+  const cardPhoto = `/procedures/${proc.slug}.webp`;
+  const hasCardPhoto = existsSync(join(process.cwd(), "public", cardPhoto));
+  const procImage = landing?.heroImage
+    ? `https://ycosmeticsurgery.com${landing.heroImage}`
+    : hasCardPhoto
+      ? `https://ycosmeticsurgery.com${cardPhoto}`
+      : `https://ycosmeticsurgery.com${ogImage(`${name} Miami`)}`;
+
   const faqs = [
     { q: t("faqQ1"), a: t("faqA1") },
     { q: t("faqQ2"), a: t("faqA2") },
@@ -114,6 +126,7 @@ export default async function ProcedureDetailPage({ params }: Props) {
       name,
       description,
       url: pageUrl,
+      image: procImage,
       procedureType: "https://health-lifesci.schema.org/SurgicalProcedure",
       followup: landing
         ? `Recovery timeline: ${landing.timeline.map((s) => `${s.stage} — ${s.detail}`).join(" ")}`

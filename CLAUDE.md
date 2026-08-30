@@ -54,9 +54,18 @@ RESEND_API_KEY=
 CLINIC_EMAIL=
 ```
 
+### SEO
+
+Per-page metadata is assembled in each route's `generateMetadata` via helpers in `src/lib/seo.ts`:
+`alternatesFor(path, locale)` (canonical + en/es/x-default hreflang), `openGraph({...})` (full OG block — Next does **not** merge a nested `openGraph`, so every page must emit the complete set), `ogImage(title)`, `canonicalUrl`, `languageAlternates`.
+Page `<title>` / `description` for the static pages come from the `metaTitle` / `metaDescription` keys in `messages/{en,es}.json` (namespaces `homePage`, `aboutPage`, `contactPage`, `proceduresPage`, `testimonialsPage`, `galleryPage`); procedure pages build theirs from `src/data/procedures.ts`.
+`src/app/sitemap.ts` and `robots.ts` are generated; the sitemap auto-includes any `public/procedures/{slug}.webp` and `public/before-after/{slug}-{before,after}-surgery-miami.webp` that exist.
+`npm run generate:assets` rebuilds favicon/PWA icons + the static `og-image.png` from `public/logo.svg`.
+Set `GOOGLE_SITE_VERIFICATION` in the environment to emit the Search Console verification tag.
+
 ### Adding a new procedure
 
-Add an entry to the `procedures` array in `src/data/procedures.ts`. The procedures page, home page tabs, and individual procedure detail page (`/procedures/[slug]`) all derive from that array automatically — no other files need changing.
+Add an entry to the `procedures` array in `src/data/procedures.ts`. The procedures page, home page tabs, and individual procedure detail page (`/procedures/[slug]`) all derive from that array automatically — no other files need changing. Drop a `public/procedures/{slug}.webp` (1080×1080) for its card image and, optionally, `public/before-after/{slug}-before-surgery-miami.webp` + `-after-surgery-miami.webp` for the gallery/sitemap.
 
 ### lucide-react version note
 

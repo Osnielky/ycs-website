@@ -10,22 +10,22 @@ import ConsultationModal from "@/components/sections/ConsultationModal";
 const caseImages = [
   {
     id: 1,
-    beforeImg: "/before-after/tummy-tuck-before.webp",
-    afterImg:  "/before-after/tummy-tuck-after.webp",
+    beforeImg: "/before-after/tummy-tuck-before-surgery-miami.webp",
+    afterImg:  "/before-after/tummy-tuck-after-surgery-miami.webp",
     beforeBg:  "from-[#c4bfb8] to-[#a89f96]",
     afterBg:   "from-[#e8d5c0] to-[#d4b896]",
   },
   {
     id: 2,
-    beforeImg: "/before-after/breast-aug-before.jpg",
-    afterImg:  "/before-after/breast-aug-after.jpg",
+    beforeImg: "/before-after/breast-augmentation-before-surgery-miami.webp",
+    afterImg:  "/before-after/breast-augmentation-after-surgery-miami.webp",
     beforeBg:  "from-[#c0bdc4] to-[#9a96a8]",
     afterBg:   "from-[#dce0e8] to-[#b4bccc]",
   },
   {
     id: 3,
-    beforeImg: "/before-after/rhinoplasty-before.jpg",
-    afterImg:  "/before-after/rhinoplasty-after.jpg",
+    beforeImg: "/before-after/rhinoplasty-before-surgery-miami.webp",
+    afterImg:  "/before-after/rhinoplasty-after-surgery-miami.webp",
     beforeBg:  "from-[#bdc4c0] to-[#96a89a]",
     afterBg:   "from-[#d4e8d8] to-[#a8ccb0]",
   },
@@ -62,7 +62,7 @@ function BeforeAfterCard({
           {!beforeErr && (
             <Image
               src={c.beforeImg}
-              alt={`Before ${c.procedure} at YCS Aesthetic Center, Miami`}
+              alt={`Before ${c.procedure} — patient result at Your Cosmetic Surgery & SPA, Miami`}
               fill
               className="object-cover object-center"
               sizes="(max-width: 768px) 50vw, 17vw"
@@ -79,7 +79,7 @@ function BeforeAfterCard({
           {!afterErr && (
             <Image
               src={c.afterImg}
-              alt={`After ${c.procedure} results — YCS Aesthetic Center Hialeah`}
+              alt={`After ${c.procedure} results — Your Cosmetic Surgery & SPA, Hialeah, Miami`}
               fill
               className="object-cover object-center"
               sizes="(max-width: 768px) 50vw, 17vw"

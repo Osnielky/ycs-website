@@ -139,11 +139,17 @@
       "Other"
     ]
   },
+  "homePage": {
+    "metaTitle": "Your Cosmetic Surgery & SPA | Trusted Plastic Surgeons in Miami, FL",
+    "metaDescription": "Your Cosmetic Surgery & SPA in Hialeah, Miami — board-certified surgeons with 20+ years of experience. BBL, Lipo 360, tummy tuck, breast augmentation, rhinoplasty & more. Free consultation. Flexible financing."
+  },
   "proceduresPage": {
     "heroTitle": "Our Procedures",
     "heroSubtitle": "From surgical transformation to non-invasive enhancements — every procedure is designed around your unique goals and anatomy.",
     "learnMore": "Learn More",
-    "recovery": "Recovery"
+    "recovery": "Recovery",
+    "metaTitle": "All Procedures | Cosmetic Surgery Miami, Hialeah FL",
+    "metaDescription": "Explore all cosmetic surgery procedures at Your Cosmetic Surgery & SPA in Miami — BBL, Lipo 360, tummy tuck, breast augmentation, rhinoplasty, facelift, bichectomy & more. Board-certified surgeons. Flexible financing."
   },
   "procedureDetail": {
     "whatToExpect": "What to Expect",
@@ -194,7 +200,9 @@
     "milestone2012": "Surpassed 1,000 successful procedures with a 98% patient satisfaction rate.",
     "milestone2016": "Expanded services to include cutting-edge MedSpa treatments alongside surgical procedures.",
     "milestone2020": "Recognized among the Top Cosmetic Surgery Centers in South Florida.",
-    "milestone2024": "Over 5,000 transformations and counting — each one a unique story of renewed confidence."
+    "milestone2024": "Over 5,000 transformations and counting — each one a unique story of renewed confidence.",
+    "metaTitle": "About Us | Board-Certified Plastic Surgeons in Miami",
+    "metaDescription": "Meet the Your Cosmetic Surgery & SPA team — Dr. Mario Reyes-Serrano and our board-certified plastic surgeons with 20+ years of experience in Miami and Hialeah, FL. Natural results, compassionate care."
   },
   "contactPage": {
     "heroTitle": "Contact Us",
@@ -243,12 +251,16 @@
       "Laser Resurfacing",
       "Microneedling",
       "Other / Not sure"
-    ]
+    ],
+    "metaTitle": "Contact Us | Book a Free Consultation in Miami, FL",
+    "metaDescription": "Contact Your Cosmetic Surgery & SPA in Hialeah, FL. Call (305) 218-3513 or fill out our form to schedule a free, private cosmetic surgery consultation. Serving Miami, Hialeah, and all of South Florida."
   },
   "testimonialsPage": {
     "heroTitle": "Patient Testimonials",
     "heroSubtitle": "Real stories from real patients who trusted us with their transformation.",
-    "reviewsLabel": "reviews"
+    "reviewsLabel": "reviews",
+    "metaTitle": "Patient Testimonials | Real Results in Miami, FL",
+    "metaDescription": "Read what real patients say about Your Cosmetic Surgery & SPA in Miami. 500+ verified reviews with a 4.9 average rating. BBL, tummy tuck, breast augmentation, rhinoplasty & more — see why South Florida trusts us."
   },
   "galleryPage": {
     "heroTitle": "Before & After Gallery",
@@ -273,7 +285,9 @@
     "ctaButton": "Book Your Free Consultation",
     "resultSuffix": "result",
     "resultsSuffix": "results",
-    "noResults": "No results in this category yet."
+    "noResults": "No results in this category yet.",
+    "metaTitle": "Before & After Gallery | Cosmetic Surgery Results Miami",
+    "metaDescription": "Browse real patient before and after photos from Your Cosmetic Surgery & SPA in Miami — BBL, Lipo 360, tummy tuck, breast augmentation, rhinoplasty, facelift & more. All images used with patient consent."
   },
   "proceduresSection": {
     "heading": "Our Procedures",

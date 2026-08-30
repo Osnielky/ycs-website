@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
-import { hreflangAlternatesForLocale } from "@/lib/seo";
+import { setRequestLocale, getTranslations } from "next-intl/server";
+import { alternatesFor, openGraph } from "@/lib/seo";
 import ContactForm from "@/components/sections/ContactForm";
 
 interface Props {
@@ -13,26 +13,24 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "contactPage" });
+  const title = t("metaTitle");
+  const description = t("metaDescription");
   return {
-    title: "Contact Us | Book a Free Consultation in Miami, FL",
-    description:
-      "Contact Your Cosmetic Surgery & SPA in Hialeah, FL. Call (305) 218-3513 or fill out our form to schedule a free, private cosmetic surgery consultation. Serving Miami, Hialeah, and all of South Florida.",
-    alternates: {
-      canonical:
-        locale === "en"
-          ? "https://ycosmeticsurgery.com/contact"
-          : "https://ycosmeticsurgery.com/es/contact",
-      languages: hreflangAlternatesForLocale("contact", locale),
-    },
-    openGraph: {
-      title: "Contact Us | Your Cosmetic Surgery & SPA Miami",
-      description:
-        "Book your free consultation with our board-certified plastic surgeons. Located in Hialeah, FL — serving all of South Florida.",
-      url:
-        locale === "en"
-          ? "https://ycosmeticsurgery.com/contact"
-          : "https://ycosmeticsurgery.com/es/contact",
-    },
+    title,
+    description,
+    alternates: alternatesFor("/contact", locale),
+    openGraph: openGraph({
+      path: "/contact",
+      locale,
+      title,
+      description,
+      image: "/api/og?title=Contact+Us",
+      imageAlt:
+        locale === "es"
+          ? "Contacte a Your Cosmetic Surgery & SPA, Hialeah, Miami"
+          : "Contact Your Cosmetic Surgery & SPA, Hialeah, Miami",
+    }),
   };
 }
 

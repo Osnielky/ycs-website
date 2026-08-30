@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ArrowRight, Clock } from "lucide-react";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { hreflangAlternatesForLocale } from "@/lib/seo";
+import { alternatesFor, openGraph } from "@/lib/seo";
 import { procedures } from "@/data/procedures";
 import CTABanner from "@/components/sections/CTABanner";
 
@@ -16,26 +16,24 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "proceduresPage" });
+  const title = t("metaTitle");
+  const description = t("metaDescription");
   return {
-    title: "All Procedures | Cosmetic Surgery Miami, Hialeah FL",
-    description:
-      "Explore all cosmetic surgery procedures at Your Cosmetic Surgery & SPA in Miami — BBL, Lipo 360, tummy tuck, breast augmentation, rhinoplasty, facelift, bichectomy & more. Board-certified surgeons. Flexible financing.",
-    alternates: {
-      canonical:
-        locale === "en"
-          ? "https://ycosmeticsurgery.com/procedures"
-          : "https://ycosmeticsurgery.com/es/procedures",
-      languages: hreflangAlternatesForLocale("procedures", locale),
-    },
-    openGraph: {
-      title: "All Procedures | Your Cosmetic Surgery & SPA Miami",
-      description:
-        "Browse our full menu of surgical and non-surgical cosmetic procedures — body contouring, breast, face, and MedSpa. Board-certified surgeons in Hialeah, FL.",
-      url:
-        locale === "en"
-          ? "https://ycosmeticsurgery.com/procedures"
-          : "https://ycosmeticsurgery.com/es/procedures",
-    },
+    title,
+    description,
+    alternates: alternatesFor("/procedures", locale),
+    openGraph: openGraph({
+      path: "/procedures",
+      locale,
+      title,
+      description,
+      image: "/api/og?title=All+Procedures",
+      imageAlt:
+        locale === "es"
+          ? "Procedimientos de cirugía estética en Your Cosmetic Surgery & SPA, Miami"
+          : "Cosmetic surgery procedures at Your Cosmetic Surgery & SPA, Miami",
+    }),
   };
 }
 
@@ -48,28 +46,29 @@ const gradientMap: Record<string, string> = {
   medspa: "from-[#3d2a1a] to-[#2e1a0d]",
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  name: "Cosmetic Surgery & MedSpa Procedures — Your Cosmetic Surgery & SPA",
-  description:
-    "Complete list of cosmetic surgery and medical spa procedures offered at Your Cosmetic Surgery & SPA in Hialeah, FL, serving Miami and South Florida.",
-  url: "https://ycosmeticsurgery.com/procedures",
-  numberOfItems: procedures.length,
-  itemListElement: procedures.map((proc, idx) => ({
-    "@type": "ListItem",
-    position: idx + 1,
-    name: proc.name,
-    url: `https://ycosmeticsurgery.com/procedures/${proc.slug}`,
-    description: proc.tagline,
-  })),
-};
-
 export default async function ProceduresPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("proceduresPage");
   const tSection = await getTranslations("proceduresSection");
+
+  const localePrefix = locale === "es" ? "/es" : "";
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Cosmetic Surgery & MedSpa Procedures — Your Cosmetic Surgery & SPA",
+    description:
+      "Complete list of cosmetic surgery and medical spa procedures offered at Your Cosmetic Surgery & SPA in Hialeah, FL, serving Miami and South Florida.",
+    url: `https://ycosmeticsurgery.com${localePrefix}/procedures`,
+    numberOfItems: procedures.length,
+    itemListElement: procedures.map((proc, idx) => ({
+      "@type": "ListItem",
+      position: idx + 1,
+      name: locale === "es" && proc.es?.name ? proc.es.name : proc.name,
+      url: `https://ycosmeticsurgery.com${localePrefix}/procedures/${proc.slug}`,
+      description: proc.tagline,
+    })),
+  };
 
   const categoryLabels: Record<string, string> = {
     body: tSection("tabBody"),
