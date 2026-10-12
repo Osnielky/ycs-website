@@ -31,35 +31,46 @@ export async function POST(req: NextRequest) {
 
     const lead = parsed.data;
 
-    const { error } = await getSupabase().from("leads").insert([{
-      name: lead.name,
-      phone: lead.phone,
-      email: lead.email ?? null,
-      procedure: lead.procedure ?? null,
-      message: lead.message ?? null,
-      sms_consent: lead.smsConsent ?? false,
-      created_at: new Date().toISOString(),
-    }]);
-
-    if (error) {
-      console.error("[YCS Lead] Supabase error:", error.message);
-      return NextResponse.json({ error: "Failed to save lead" }, { status: 500 });
+    let saved = false;
+    try {
+      const { error } = await getSupabase().from("leads").insert([{
+        name: lead.name,
+        phone: lead.phone,
+        email: lead.email ?? null,
+        procedure: lead.procedure ?? null,
+        message: lead.message ?? null,
+        sms_consent: lead.smsConsent ?? false,
+        created_at: new Date().toISOString(),
+      }]);
+      if (error) console.error("[YCS Lead] Supabase error:", error.message);
+      else saved = true;
+    } catch (err) {
+      console.error("[YCS Lead] Supabase unreachable:", err);
     }
 
-    console.log("[YCS Lead saved]", lead.name, lead.phone);
+    if (saved) console.log("[YCS Lead saved]", lead.name, lead.phone);
 
-    // Fire-and-forget — never blocks the response
-    sendLeadEmail({
-      name:      lead.name,
-      phone:     lead.phone,
-      email:     lead.email,
-      procedure: lead.procedure,
-      message:   lead.message,
-    }).then(() => {
+    // Email is sent regardless of the DB result so a database outage can't
+    // silently drop leads. Awaited so Cloud Run doesn't cut it off post-response.
+    let emailed = false;
+    try {
+      await sendLeadEmail({
+        name:      lead.name,
+        phone:     lead.phone,
+        email:     lead.email,
+        procedure: lead.procedure,
+        message:   lead.message,
+      });
+      emailed = true;
       console.log("[YCS Email] Lead notification sent for:", lead.name);
-    }).catch((err) => {
+    } catch (err) {
       console.error("[YCS Email] Lead notification FAILED for:", lead.name, err);
-    });
+    }
+
+    if (!saved && !emailed) {
+      console.error("[YCS Lead] LOST — not saved or emailed:", JSON.stringify(lead));
+      return NextResponse.json({ error: "Failed to save lead" }, { status: 500 });
+    }
 
     return NextResponse.json({ success: true });
 

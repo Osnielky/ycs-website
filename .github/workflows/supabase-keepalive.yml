@@ -2,10 +2,10 @@ name: Supabase Keepalive
 
 on:
   schedule:
-    # Every Sunday at 10:00 AM US Eastern (UTC-4 during EDT).
-    # Cron runs in UTC only — no DST awareness. Once clocks fall back to EST
-    # in November, this will fire at 9:00 AM ET until updated to "0 15 * * 0".
-    - cron: "0 14 * * 0"
+    # Daily at 14:00 UTC. Supabase pauses free projects after 7 days of
+    # inactivity; a weekly ping left no margin — GitHub delayed one run by
+    # ~1.5h and the project paused (Oct 2026). Daily gives 6 days of slack.
+    - cron: "0 14 * * *"
   workflow_dispatch: {}
 
 jobs:

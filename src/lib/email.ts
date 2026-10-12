@@ -83,7 +83,7 @@ export async function sendLeadEmail(lead: {
   procedure?: string;
   message?: string;
 }) {
-  if (!process.env.RESEND_API_KEY) return;
+  if (!process.env.RESEND_API_KEY) throw new Error("RESEND_API_KEY not set");
 
   const subject = `New Lead: ${lead.name}${lead.procedure ? ` — ${lead.procedure}` : ""}`;
 
@@ -100,14 +100,14 @@ export async function sendLeadEmail(lead: {
       row("Time",      new Date().toLocaleString("en-US", { timeZone: "America/New_York", dateStyle: "full", timeStyle: "short" })),
     )}`;
 
-  await getResend().emails.send({
+  // Throws on failure so the leads route knows whether the lead reached anyone.
+  const { error } = await getResend().emails.send({
     from:    FROM,
     to:      getTo(),
     subject,
     html:    base(subject, body),
-  }).catch((err: unknown) => {
-    console.error("[YCS Email] Lead notification failed:", err);
   });
+  if (error) throw new Error(`Resend: ${error.message}`);
 }
 
 // ── Appointment notification ───────────────────────────────────────────────
