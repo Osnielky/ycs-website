@@ -34,9 +34,9 @@ function VideoCard({ video, comingSoon }: { video: VideoEntry; comingSoon: strin
             </div>
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
               <div className="w-16 h-16 rounded-full border-2 border-white/20 flex items-center justify-center bg-white/8">
-                <Play size={22} className="text-white/30 fill-white/30 ml-1" />
+                <Play size={22} className="text-white/65 fill-white/30 ml-1" />
               </div>
-              <span className="text-white/30 text-[11px] tracking-widest uppercase">{comingSoon}</span>
+              <span className="text-white/65 text-[11px] tracking-widest uppercase">{comingSoon}</span>
             </div>
           </>
         )}
@@ -100,7 +100,7 @@ export default async function CTABanner() {
           <h2 className="font-heading text-5xl md:text-6xl text-white font-light mb-4">
             {t("sectionTitle")}
           </h2>
-          <p className="text-white/50 text-lg max-w-xl mx-auto">
+          <p className="text-white/65 text-lg max-w-xl mx-auto">
             {t("sectionSubtitle")}
           </p>
         </div>

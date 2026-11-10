@@ -48,7 +48,7 @@ export default function TrustSignals() {
           <h2 className="font-heading text-5xl md:text-6xl text-navy font-light mb-4">
             Why Miami Chooses Us
           </h2>
-          <p className="text-navy/55 text-lg max-w-2xl mx-auto">
+          <p className="text-navy/70 text-lg max-w-2xl mx-auto">
             Board-certified surgeons with 20+ years of experience, an
             accredited facility in Hialeah, and an unwavering commitment to
             natural, beautiful results across South Florida.
@@ -68,14 +68,14 @@ export default function TrustSignals() {
               <h3 className="font-heading text-navy text-xl mb-2 font-semibold">
                 {cred.title}
               </h3>
-              <p className="text-navy/55 text-sm leading-relaxed">{cred.desc}</p>
+              <p className="text-navy/70 text-sm leading-relaxed">{cred.desc}</p>
             </div>
           ))}
         </div>
 
         {/* Rating badges */}
         <div className="bg-white rounded-2xl p-8 border border-cream-dark mb-10">
-          <p className="text-center text-navy/40 text-xs tracking-widest uppercase mb-6">
+          <p className="text-center text-navy/70 text-xs tracking-widest uppercase mb-6">
             Patient Satisfaction Ratings
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -97,7 +97,7 @@ export default function TrustSignals() {
                   ))}
                 </div>
                 <p className="text-navy font-semibold text-sm">{r.platform}</p>
-                <p className="text-navy/40 text-xs">{r.reviews}</p>
+                <p className="text-navy/70 text-xs">{r.reviews}</p>
               </div>
             ))}
           </div>
@@ -111,8 +111,8 @@ export default function TrustSignals() {
           <div className="text-center md:text-left">
             <p className="text-gold text-xs tracking-[0.3em] uppercase mb-1">Lead Surgeon</p>
             <h3 className="font-heading text-3xl text-white mb-1">Dr. Mario Reyes-Serrano</h3>
-            <p className="text-white/55 text-sm mb-3">Board-Certified Plastic Surgeon · 20+ Years of Experience</p>
-            <p className="text-white/45 text-sm leading-relaxed max-w-2xl">
+            <p className="text-white/65 text-sm mb-3">Board-Certified Plastic Surgeon · 20+ Years of Experience</p>
+            <p className="text-white/65 text-sm leading-relaxed max-w-2xl">
               One of South Florida&apos;s most trusted cosmetic surgeons, Dr. Reyes-Serrano
               brings over two decades of expertise to every procedure. His philosophy
               centers on natural results tailored to each patient&apos;s unique anatomy and goals.
@@ -122,14 +122,14 @@ export default function TrustSignals() {
 
         {/* As seen in */}
         <div className="text-center">
-          <p className="text-navy/35 text-xs tracking-widest uppercase mb-6">
+          <p className="text-navy/70 text-xs tracking-widest uppercase mb-6">
             Featured In
           </p>
           <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
             {mediaLogos.map((logo) => (
               <span
                 key={logo.name}
-                className={`${logo.style} text-navy/30 hover:text-navy/60 transition-colors cursor-default`}
+                className={`${logo.style} text-navy/70 hover:text-navy/70 transition-colors cursor-default`}
               >
                 {logo.name}
               </span>

@@ -20,7 +20,7 @@ export default function RecoveryTimeline({ heading, timeline }: RecoveryTimeline
             <li key={stage.stage} className="relative pl-8">
               <span className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-gold ring-4 ring-white" />
               <p className="font-heading text-xl text-navy mb-1">{stage.stage}</p>
-              <p className="text-navy/65 text-sm leading-relaxed">{stage.detail}</p>
+              <p className="text-navy/70 text-sm leading-relaxed">{stage.detail}</p>
             </li>
           ))}
         </ol>

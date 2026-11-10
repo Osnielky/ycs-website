@@ -5,7 +5,10 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import ConsultationModal from "@/components/sections/ConsultationModal";
+import dynamic from "next/dynamic";
+
+// Loaded on first open — keeps the modal (and its form code) out of the initial bundle
+const ConsultationModal = dynamic(() => import("@/components/sections/ConsultationModal"), { ssr: false });
 
 const caseImages = [
   {
@@ -101,22 +104,22 @@ function BeforeAfterCard({
       {/* Copy + CTA */}
       <div className="p-6 flex flex-col flex-1">
         <div className="flex items-center gap-2 mb-2">
-          <span className="text-xs text-[#c9a46e] font-semibold tracking-widest uppercase">
+          <span className="text-xs text-gold-deep font-semibold tracking-widest uppercase">
             {c.category}
           </span>
           <span className="w-1 h-1 bg-[#0d1b3e]/20 rounded-full" />
-          <span className="text-xs text-[#0d1b3e]/40 tracking-wider uppercase">
+          <span className="text-xs text-[#0d1b3e]/70 tracking-wider uppercase">
             {c.procedure}
           </span>
         </div>
-        <p className="text-[#0d1b3e]/60 text-sm leading-relaxed mb-5 flex-1">
+        <p className="text-[#0d1b3e]/70 text-sm leading-relaxed mb-5 flex-1">
           {c.description}
         </p>
 
         {/* CTA button */}
         <button
           onClick={onInterested}
-          className="w-full text-center border border-[#0d1b3e]/15 hover:border-[#c9a46e] hover:bg-[#c9a46e] text-[#0d1b3e] hover:text-white text-[11px] font-bold tracking-[0.14em] uppercase py-3 rounded-lg transition-all duration-200"
+          className="w-full text-center border border-[#0d1b3e]/15 hover:border-[#c9a46e] hover:bg-[#c9a46e] text-[#0d1b3e] hover:text-navy-dark text-[11px] font-bold tracking-[0.14em] uppercase py-3 rounded-lg transition duration-200"
         >
           {interestedLabel}
         </button>
@@ -150,7 +153,7 @@ export default function BeforeAfterSection() {
             <h2 className="font-heading text-5xl md:text-6xl text-[#0d1b3e] font-light mb-4">
               {t("heading")}
             </h2>
-            <p className="text-[#0d1b3e]/55 text-lg max-w-2xl mx-auto leading-relaxed">
+            <p className="text-[#0d1b3e]/70 text-lg max-w-2xl mx-auto leading-relaxed">
               {t("subheading")}
             </p>
           </div>
@@ -173,7 +176,7 @@ export default function BeforeAfterSection() {
           <div className="text-center">
             <Link
               href="/gallery"
-              className="inline-flex items-center gap-2 bg-[#0d1b3e] hover:bg-[#1a2d5a] text-white text-sm font-semibold tracking-[0.12em] uppercase px-8 py-3.5 rounded-full transition-all duration-200 hover:shadow-[0_4px_20px_rgba(13,27,62,0.25)]"
+              className="inline-flex items-center gap-2 bg-[#0d1b3e] hover:bg-[#1a2d5a] text-white text-sm font-semibold tracking-[0.12em] uppercase px-8 py-3.5 rounded-full transition duration-200 hover:shadow-[0_4px_20px_rgba(13,27,62,0.25)]"
             >
               {t("viewGallery")} <ArrowRight size={14} />
             </Link>

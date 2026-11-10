@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 import type { LandingOffer } from "@/data/landings";
-import ConsultationModal from "@/components/sections/ConsultationModal";
+import dynamic from "next/dynamic";
+
+// Loaded on first open — keeps the modal (and its form code) out of the initial bundle
+const ConsultationModal = dynamic(() => import("@/components/sections/ConsultationModal"), { ssr: false });
 
 interface OfferBannerProps {
   offer: LandingOffer;
@@ -22,7 +25,7 @@ export default function OfferBanner({ offer, defaultCtaLabel, procedureName }: O
         type="button"
         onClick={() => setDismissed(true)}
         aria-label="Dismiss offer"
-        className="absolute top-3 right-3 z-10 grid h-7 w-7 place-items-center rounded-full text-navy/50 transition-colors hover:bg-navy/10 hover:text-navy"
+        className="absolute top-3 right-3 z-10 grid h-7 w-7 place-items-center rounded-full text-navy/70 transition-colors hover:bg-navy/10 hover:text-navy"
       >
         <span className="text-xl leading-none">&times;</span>
       </button>
@@ -74,7 +77,7 @@ export default function OfferBanner({ offer, defaultCtaLabel, procedureName }: O
         <button
           type="button"
           onClick={() => setFormOpen(true)}
-          className="group inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-navy px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.15em] text-white shadow-lg transition-all hover:-translate-y-0.5 hover:bg-navy-dark hover:shadow-xl md:w-auto md:py-3"
+          className="group inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-navy px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.15em] text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-navy-dark hover:shadow-xl md:w-auto md:py-3"
         >
           {offer.ctaLabel ?? defaultCtaLabel}
           <svg

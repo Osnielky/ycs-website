@@ -47,7 +47,7 @@ export default async function DoctorSection() {
             </h2>
 
             {/* Subtitle */}
-            <p className="text-white/60 text-xs tracking-[0.3em] uppercase font-sans mb-6">
+            <p className="text-white/65 text-xs tracking-[0.3em] uppercase font-sans mb-6">
               {t("subtitle")}
             </p>
 
@@ -100,13 +100,13 @@ export default async function DoctorSection() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href="/about"
-                className="inline-flex items-center justify-center border border-white/40 hover:border-gold text-white hover:text-gold text-xs font-bold tracking-[0.2em] uppercase px-8 py-4 transition-all duration-200"
+                className="inline-flex items-center justify-center border border-white/40 hover:border-gold text-white hover:text-gold text-xs font-bold tracking-[0.2em] uppercase px-8 py-4 transition duration-200"
               >
                 {t("learnMore")}
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center bg-gold hover:bg-gold-dark text-white text-xs font-bold tracking-[0.2em] uppercase px-8 py-4 transition-all duration-200 hover:shadow-[0_8px_30px_rgba(201,164,110,0.4)]"
+                className="inline-flex items-center justify-center bg-gold hover:bg-gold-dark text-navy-dark text-xs font-bold tracking-[0.2em] uppercase px-8 py-4 transition duration-200 hover:shadow-[0_8px_30px_rgba(201,164,110,0.4)]"
               >
                 {t("bookConsultation")}
               </Link>

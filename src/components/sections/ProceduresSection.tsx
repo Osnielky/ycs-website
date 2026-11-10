@@ -6,7 +6,13 @@ import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { ArrowRight, Clock } from "lucide-react";
 import { procedures, type Procedure } from "@/data/procedures";
-import ConsultationModal from "@/components/sections/ConsultationModal";
+import dynamic from "next/dynamic";
+
+// Loaded on first open — keeps the modal (and its form code) out of the initial bundle
+const ConsultationModal = dynamic(() => import("@/components/sections/ConsultationModal"), { ssr: false });
+import { useQueryParamState } from "@/hooks/useQueryParamState";
+
+const TAB_KEYS = ["body", "breast", "face", "medspa"] as const;
 
 // Hero images cycled as procedure card visuals
 const heroImages = [
@@ -94,24 +100,24 @@ function ProcedureCard({
 
       {/* ── Content ── */}
       <div className="p-6 flex flex-col flex-1">
-        <p className="text-[#c9a46e] text-[10px] tracking-[0.22em] uppercase font-semibold mb-1">
+        <p className="text-gold-deep text-[10px] tracking-[0.22em] uppercase font-semibold mb-1">
           {displayTagline}
         </p>
         <h3 className="font-heading text-[#0d1b3e] text-[1.45rem] font-light leading-snug mb-3">
           {displayName}
         </h3>
-        <p className="text-[#0d1b3e]/55 text-sm leading-relaxed line-clamp-2 flex-1 mb-4">
+        <p className="text-[#0d1b3e]/70 text-sm leading-relaxed line-clamp-2 flex-1 mb-4">
           {displayDescription}
         </p>
 
-        <div className="flex items-center gap-1.5 text-[#0d1b3e]/35 text-xs mb-3">
+        <div className="flex items-center gap-1.5 text-[#0d1b3e]/70 text-xs mb-3">
           <Clock size={11} />
           <span>{recovery}: {displayRecovery}</span>
         </div>
 
         {proc.priceRange && (
           <p className="text-[#0d1b3e] text-sm font-medium mb-5">
-            <span className="text-[#0d1b3e]/40 text-xs font-normal tracking-[0.14em] uppercase mr-2">
+            <span className="text-[#0d1b3e]/70 text-xs font-normal tracking-[0.14em] uppercase mr-2">
               {avgPriceLabel}
             </span>
             ${proc.priceRange.min.toLocaleString("en-US")} – $
@@ -123,13 +129,15 @@ function ProcedureCard({
         <div className="grid grid-cols-2 gap-2.5">
           <Link
             href={`/procedures/${proc.slug}`}
-            className="text-center text-[10px] font-bold tracking-[0.14em] uppercase py-3 rounded-lg border border-[#0d1b3e]/18 text-[#0d1b3e] hover:bg-[#0d1b3e] hover:text-white hover:border-[#0d1b3e] transition-all duration-200"
+            className="text-center text-[10px] font-bold tracking-[0.14em] uppercase py-3 rounded-lg border border-[#0d1b3e]/18 text-[#0d1b3e] hover:bg-[#0d1b3e] hover:text-white hover:border-[#0d1b3e] transition duration-200"
           >
             {learnMore}
+            <span className="sr-only">: {displayName}</span>
           </Link>
           <button
+            type="button"
             onClick={onInterested}
-            className="text-center text-[10px] font-bold tracking-[0.14em] uppercase py-3 rounded-lg bg-[#c9a46e] text-white hover:bg-[#a87d45] transition-all duration-200 hover:shadow-[0_4px_16px_rgba(201,164,110,0.4)]"
+            className="text-center text-[10px] font-bold tracking-[0.14em] uppercase py-3 rounded-lg bg-[#c9a46e] text-navy-dark hover:bg-[#a87d45] transition duration-200 hover:shadow-[0_4px_16px_rgba(201,164,110,0.4)]"
           >
             {interested}
           </button>
@@ -142,7 +150,8 @@ function ProcedureCard({
 export default function ProceduresSection() {
   const t = useTranslations("proceduresSection");
   const locale = useLocale();
-  const [active, setActive] = useState<string>("body");
+  // Selected tab lives in the URL (?procedures=face) so it can be linked to
+  const [active, setActive] = useQueryParamState("procedures", TAB_KEYS, "body");
   const [activeProcedure, setActiveProcedure] = useState<string | null>(null);
 
   const tabs = [
@@ -171,22 +180,24 @@ export default function ProceduresSection() {
             <h2 className="font-heading text-5xl md:text-6xl text-navy font-light mb-4">
               {t("heading")}
             </h2>
-            <p className="text-navy/55 text-lg max-w-2xl mx-auto leading-relaxed">
+            <p className="text-navy/70 text-lg max-w-2xl mx-auto leading-relaxed">
               {t("subheading")}
             </p>
           </div>
 
           {/* Tabs */}
           <div className="flex justify-center mb-10">
-            <div className="inline-flex bg-cream-dark rounded-full p-1.5 gap-1">
+            <div role="group" aria-label={t("heading")} className="inline-flex max-w-full bg-cream-dark rounded-full p-1 sm:p-1.5 gap-0.5 sm:gap-1">
               {tabs.map((tab) => (
                 <button
                   key={tab.key}
+                  type="button"
+                  aria-pressed={active === tab.key}
                   onClick={() => setActive(tab.key)}
-                  className={`px-6 py-2 rounded-full text-sm font-medium tracking-wider uppercase transition-all duration-200 ${
+                  className={`px-3 sm:px-6 py-2 rounded-full text-[11px] sm:text-sm font-medium tracking-wide sm:tracking-wider uppercase whitespace-nowrap transition-colors duration-200 ${
                     active === tab.key
                       ? "bg-navy text-white shadow-sm"
-                      : "text-navy/55 hover:text-navy"
+                      : "text-navy/70 hover:text-navy"
                   }`}
                 >
                   {tab.label}
@@ -217,7 +228,7 @@ export default function ProceduresSection() {
           <div className="text-center mt-14">
             <Link
               href="/procedures"
-              className="inline-flex items-center gap-2 border-2 border-navy text-navy hover:bg-navy hover:text-white text-sm font-semibold tracking-[0.12em] uppercase px-8 py-3.5 rounded-full transition-all duration-200"
+              className="inline-flex items-center gap-2 border-2 border-navy text-navy hover:bg-navy hover:text-white text-sm font-semibold tracking-[0.12em] uppercase px-8 py-3.5 rounded-full transition duration-200"
             >
               {t("viewAll")} <ArrowRight size={14} />
             </Link>

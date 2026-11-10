@@ -15,7 +15,7 @@ export default function CandidacySection({ candidacy, ctaLabel, phone }: Candida
       <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
         <span className="gold-divider mx-auto mb-5" />
         <h2 className="font-heading text-4xl md:text-5xl text-white font-light mb-5">{candidacy.heading}</h2>
-        <p className="text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">{candidacy.intro}</p>
+        <p className="text-white/65 leading-relaxed mb-10 max-w-2xl mx-auto">{candidacy.intro}</p>
 
         <ul className="text-left max-w-xl mx-auto space-y-3 mb-10">
           {candidacy.qualifies.map((q) => (
@@ -28,11 +28,11 @@ export default function CandidacySection({ candidacy, ctaLabel, phone }: Candida
 
         <Link
           href="/contact"
-          className="inline-block bg-gold hover:bg-gold-dark text-white font-semibold text-sm tracking-[0.1em] uppercase px-8 py-4 rounded-lg transition-colors"
+          className="inline-block bg-gold hover:bg-gold-dark text-navy-dark font-semibold text-sm tracking-[0.1em] uppercase px-8 py-4 rounded-lg transition-colors"
         >
           {ctaLabel}
         </Link>
-        <p className="mt-4 text-white/40 text-sm">
+        <p className="mt-4 text-white/65 text-sm">
           <a href="tel:+13052183513" className="text-gold hover:underline">
             {phone}
           </a>

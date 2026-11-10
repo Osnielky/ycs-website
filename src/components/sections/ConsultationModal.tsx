@@ -1,10 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useRef, type ReactNode } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import * as z from "zod/mini"; // tree-shakable build: the full "zod" entry adds ~300 KB to the client bundle
 import { X, Phone, Calendar, CheckCircle, Clock, ChevronLeft } from "lucide-react";
+import { useFocusTrap } from "@/hooks/useFocusTrap";
 
 type Step = "choose" | "form" | "success";
 type ApptType = "asap" | "scheduled";
@@ -14,30 +16,29 @@ const TIME_SLOTS = [
   "1:00 PM",  "2:00 PM",  "3:00 PM",  "4:00 PM", "5:00 PM",
 ];
 
-function getTomorrowISO() {
+// YYYY-MM-DD in the visitor's own timezone (toISOString() would give the UTC date,
+// which is already "tomorrow" during the Miami evening).
+function localISODate(daysFromToday: number) {
   const d = new Date();
-  d.setDate(d.getDate() + 1);
-  return d.toISOString().split("T")[0];
+  d.setDate(d.getDate() + daysFromToday);
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${d.getFullYear()}-${month}-${day}`;
 }
 
-function getMaxDateISO() {
-  const d = new Date();
-  d.setDate(d.getDate() + 30);
-  return d.toISOString().split("T")[0];
-}
-
-function formatDate(iso: string) {
+function formatDate(iso: string, locale: string) {
   if (!iso) return "";
-  return new Date(iso + "T12:00:00").toLocaleDateString("en-US", {
+  return new Intl.DateTimeFormat(locale, {
     weekday: "long", month: "long", day: "numeric",
-  });
+  }).format(new Date(iso + "T12:00:00"));
 }
 
-const schema = z.object({
-  name:  z.string().min(2, "Please enter your name"),
-  phone: z.string().min(7, "Please enter a valid phone number"),
-});
-type FormData = z.infer<typeof schema>;
+type FormData = { name: string; phone: string };
+
+const INPUT_CLASS =
+  "w-full bg-[#faf9f7] border border-[#f0ece6] focus:border-[#c9a46e] rounded-lg px-4 py-3 text-[#0d1b3e] placeholder-[#0d1b3e]/30 text-sm outline-none focus-visible:ring-2 focus-visible:ring-[#c9a46e]/60 transition-colors";
+const LABEL_CLASS =
+  "block text-[10px] font-bold text-[#0d1b3e]/70 uppercase tracking-widest mb-1.5";
 
 interface Props {
   procedure: string;
@@ -45,6 +46,19 @@ interface Props {
 }
 
 export default function ConsultationModal({ procedure, onClose }: Props) {
+  const t = useTranslations("consultationModal");
+  const locale = useLocale();
+  const panelRef = useRef<HTMLDivElement>(null);
+  useFocusTrap(panelRef);
+
+  const schema = useMemo(
+    () =>
+      z.object({
+        name:  z.string().check(z.minLength(2, t("nameError"))),
+        phone: z.string().check(z.minLength(7, t("phoneError"))),
+      }),
+    [t]
+  );
   const [step,          setStep]          = useState<Step>("choose");
   const [apptType,      setApptType]      = useState<ApptType>("asap");
   const [selectedDate,  setSelectedDate]  = useState("");
@@ -67,6 +81,8 @@ export default function ConsultationModal({ procedure, onClose }: Props) {
     };
   }, [onClose]);
 
+  const bold = (chunks: ReactNode) => <strong className="text-[#0d1b3e]">{chunks}</strong>;
+
   function choose(type: ApptType) {
     setApptType(type);
     setStep("form");
@@ -74,11 +90,11 @@ export default function ConsultationModal({ procedure, onClose }: Props) {
 
   async function onSubmit(data: FormData) {
     if (apptType === "scheduled" && !selectedDate) {
-      setServerError("Please select a date.");
+      setServerError(t("dateError"));
       return;
     }
     if (apptType === "scheduled" && !selectedTime) {
-      setServerError("Please select a time slot.");
+      setServerError(t("timeError"));
       return;
     }
 
@@ -101,34 +117,40 @@ export default function ConsultationModal({ procedure, onClose }: Props) {
 
       if (!res.ok) {
         const json = await res.json().catch(() => ({}));
-        throw new Error(json.error ?? "Something went wrong");
+        throw new Error(typeof json.error === "string" ? json.error : t("genericError"));
       }
 
       setStep("success");
     } catch (err: unknown) {
-      setServerError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+      setServerError(err instanceof Error && err.message ? err.message : t("genericError"));
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      onClick={onClose}
-    >
-      {/* Backdrop */}
-      <div className="absolute inset-0 bg-[#060e1f]/92 backdrop-blur-sm" />
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      {/* Backdrop — click to dismiss (Escape and the Close button cover keyboard) */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-[#060e1f]/92 backdrop-blur-sm"
+        onClick={onClose}
+      />
 
       {/* Modal panel */}
       <div
-        className="relative z-10 w-full max-w-[440px] bg-white rounded-2xl shadow-[0_32px_80px_rgba(0,0,0,0.45)] overflow-hidden"
-        onClick={(e) => e.stopPropagation()}
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="consult-title"
+        tabIndex={-1}
+        className="relative z-10 w-full max-w-[440px] max-h-[calc(100dvh-2rem)] overflow-y-auto overscroll-contain bg-white rounded-2xl shadow-[0_32px_80px_rgba(0,0,0,0.45)] focus:outline-none"
       >
         {/* Close */}
         <button
+          type="button"
           onClick={onClose}
-          aria-label="Close"
+          aria-label={t("close")}
           className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-[#0d1b3e]/8 hover:bg-[#0d1b3e]/15 text-[#0d1b3e] transition-colors"
         >
           <X size={14} />
@@ -138,20 +160,21 @@ export default function ConsultationModal({ procedure, onClose }: Props) {
         {step === "choose" && (
           <div className="p-8">
             <span className="gold-divider mb-5" />
-            <p className="text-[#c9a46e] text-[11px] tracking-[0.22em] uppercase font-semibold mb-1">
-              Interested in
+            <p className="text-gold-deep text-[11px] tracking-[0.22em] uppercase font-semibold mb-1">
+              {t("interestedIn")}
             </p>
-            <h3 className="font-heading text-[#0d1b3e] text-[1.75rem] font-light leading-tight mb-2">
+            <h3 id="consult-title" className="font-heading text-[#0d1b3e] text-[1.75rem] font-light leading-tight mb-2">
               {procedure}
             </h3>
-            <p className="text-[#0d1b3e]/50 text-sm mb-8 leading-relaxed">
-              How would you like to connect with our patient care team?
+            <p className="text-[#0d1b3e]/70 text-sm mb-8 leading-relaxed">
+              {t("chooseQuestion")}
             </p>
 
             {/* Option A — ASAP */}
             <button
+              type="button"
               onClick={() => choose("asap")}
-              className="w-full text-left rounded-xl border-2 border-[#0d1b3e]/10 hover:border-[#c9a46e] p-5 mb-4 transition-all duration-200 group hover:shadow-[0_4px_20px_rgba(201,164,110,0.15)]"
+              className="w-full text-left rounded-xl border-2 border-[#0d1b3e]/10 hover:border-[#c9a46e] p-5 mb-4 transition duration-200 group hover:shadow-[0_4px_20px_rgba(201,164,110,0.15)]"
             >
               <div className="flex items-start gap-4">
                 <div className="w-11 h-11 rounded-full bg-[#0d1b3e] group-hover:bg-[#c9a46e] flex items-center justify-center shrink-0 transition-colors duration-200">
@@ -159,10 +182,10 @@ export default function ConsultationModal({ procedure, onClose }: Props) {
                 </div>
                 <div>
                   <p className="text-[#0d1b3e] font-semibold text-[15px] mb-1">
-                    Talk to a Coordinator Now
+                    {t("asapTitle")}
                   </p>
-                  <p className="text-[#0d1b3e]/50 text-sm leading-relaxed">
-                    A patient coordinator will call you within minutes to answer your questions.
+                  <p className="text-[#0d1b3e]/70 text-sm leading-relaxed">
+                    {t("asapDesc")}
                   </p>
                 </div>
               </div>
@@ -170,8 +193,9 @@ export default function ConsultationModal({ procedure, onClose }: Props) {
 
             {/* Option B — Scheduled */}
             <button
+              type="button"
               onClick={() => choose("scheduled")}
-              className="w-full text-left rounded-xl border-2 border-[#0d1b3e]/10 hover:border-[#c9a46e] p-5 transition-all duration-200 group hover:shadow-[0_4px_20px_rgba(201,164,110,0.15)]"
+              className="w-full text-left rounded-xl border-2 border-[#0d1b3e]/10 hover:border-[#c9a46e] p-5 transition duration-200 group hover:shadow-[0_4px_20px_rgba(201,164,110,0.15)]"
             >
               <div className="flex items-start gap-4">
                 <div className="w-11 h-11 rounded-full bg-[#0d1b3e] group-hover:bg-[#c9a46e] flex items-center justify-center shrink-0 transition-colors duration-200">
@@ -179,10 +203,10 @@ export default function ConsultationModal({ procedure, onClose }: Props) {
                 </div>
                 <div>
                   <p className="text-[#0d1b3e] font-semibold text-[15px] mb-1">
-                    Schedule a Virtual Appointment
+                    {t("scheduledTitle")}
                   </p>
-                  <p className="text-[#0d1b3e]/50 text-sm leading-relaxed">
-                    Pick a date and time — we&apos;ll call you for a personalized consultation.
+                  <p className="text-[#0d1b3e]/70 text-sm leading-relaxed">
+                    {t("scheduledDesc")}
                   </p>
                 </div>
               </div>
@@ -196,10 +220,11 @@ export default function ConsultationModal({ procedure, onClose }: Props) {
             {/* Navy header */}
             <div className="bg-[#0d1b3e] px-7 py-6">
               <button
+                type="button"
                 onClick={() => setStep("choose")}
-                className="flex items-center gap-1 text-white/40 hover:text-[#c9a46e] text-[11px] tracking-wider uppercase transition-colors mb-4"
+                className="flex items-center gap-1 text-white/65 hover:text-[#c9a46e] text-[11px] tracking-wider uppercase transition-colors mb-4"
               >
-                <ChevronLeft size={12} /> Back
+                <ChevronLeft size={12} /> {t("back")}
               </button>
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-full bg-[#c9a46e]/20 border border-[#c9a46e]/30 flex items-center justify-center shrink-0">
@@ -212,42 +237,50 @@ export default function ConsultationModal({ procedure, onClose }: Props) {
                   <p className="text-[#c9a46e] text-[10px] tracking-[0.2em] uppercase font-semibold">
                     {procedure}
                   </p>
-                  <p className="text-white font-heading text-xl font-light">
-                    {apptType === "asap" ? "Call Me Now" : "Schedule My Appointment"}
-                  </p>
+                  <h3 id="consult-title" className="text-white font-heading text-xl font-light">
+                    {apptType === "asap" ? t("asapHeading") : t("scheduledHeading")}
+                  </h3>
                 </div>
               </div>
             </div>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="p-7 space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="p-7 space-y-4" noValidate>
               {/* Name */}
               <div>
-                <label className="block text-[10px] font-bold text-[#0d1b3e]/55 uppercase tracking-widest mb-1.5">
-                  Full Name *
+                <label htmlFor="consult-name" className={LABEL_CLASS}>
+                  {t("nameLabel")}
                 </label>
                 <input
                   {...register("name")}
-                  placeholder="Jane Doe"
-                  className="w-full bg-[#faf9f7] border border-[#f0ece6] focus:border-[#c9a46e] rounded-lg px-4 py-3 text-[#0d1b3e] placeholder-[#0d1b3e]/30 text-sm outline-none transition-colors"
+                  id="consult-name"
+                  autoComplete="name"
+                  aria-invalid={!!errors.name}
+                  aria-describedby={errors.name ? "consult-name-error" : undefined}
+                  placeholder={t("namePlaceholder")}
+                  className={INPUT_CLASS}
                 />
                 {errors.name && (
-                  <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
+                  <p id="consult-name-error" role="alert" className="text-red-600 text-xs mt-1">{errors.name.message}</p>
                 )}
               </div>
 
               {/* Phone */}
               <div>
-                <label className="block text-[10px] font-bold text-[#0d1b3e]/55 uppercase tracking-widest mb-1.5">
-                  Phone Number *
+                <label htmlFor="consult-phone" className={LABEL_CLASS}>
+                  {t("phoneLabel")}
                 </label>
                 <input
                   {...register("phone")}
-                  placeholder="(305) 000-0000"
+                  id="consult-phone"
+                  autoComplete="tel"
+                  aria-invalid={!!errors.phone}
+                  aria-describedby={errors.phone ? "consult-phone-error" : undefined}
+                  placeholder={t("phonePlaceholder")}
                   type="tel"
-                  className="w-full bg-[#faf9f7] border border-[#f0ece6] focus:border-[#c9a46e] rounded-lg px-4 py-3 text-[#0d1b3e] placeholder-[#0d1b3e]/30 text-sm outline-none transition-colors"
+                  className={INPUT_CLASS}
                 />
                 {errors.phone && (
-                  <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>
+                  <p id="consult-phone-error" role="alert" className="text-red-600 text-xs mt-1">{errors.phone.message}</p>
                 )}
               </div>
 
@@ -255,33 +288,36 @@ export default function ConsultationModal({ procedure, onClose }: Props) {
               {apptType === "scheduled" && (
                 <>
                   <div>
-                    <label className="block text-[10px] font-bold text-[#0d1b3e]/55 uppercase tracking-widest mb-1.5">
-                      Preferred Date *
+                    <label htmlFor="consult-date" className={LABEL_CLASS}>
+                      {t("dateLabel")}
                     </label>
                     <input
+                      id="consult-date"
+                      name="scheduled_date"
                       type="date"
                       value={selectedDate}
                       onChange={(e) => setSelectedDate(e.target.value)}
-                      min={getTomorrowISO()}
-                      max={getMaxDateISO()}
-                      className="w-full bg-[#faf9f7] border border-[#f0ece6] focus:border-[#c9a46e] rounded-lg px-4 py-3 text-[#0d1b3e] text-sm outline-none transition-colors"
+                      min={localISODate(1)}
+                      max={localISODate(30)}
+                      className={INPUT_CLASS}
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-[10px] font-bold text-[#0d1b3e]/55 uppercase tracking-widest mb-2">
-                      Preferred Time *
-                    </label>
+                  <div role="group" aria-labelledby="consult-time-label">
+                    <p id="consult-time-label" className={`${LABEL_CLASS} mb-2`}>
+                      {t("timeLabel")}
+                    </p>
                     <div className="grid grid-cols-3 gap-2">
                       {TIME_SLOTS.map((slot) => (
                         <button
                           key={slot}
                           type="button"
+                          aria-pressed={selectedTime === slot}
                           onClick={() => setSelectedTime(slot)}
-                          className={`text-[11px] font-medium py-2.5 rounded-lg border transition-all duration-150 ${
+                          className={`text-[11px] font-medium tabular-nums py-2.5 rounded-lg border transition-colors duration-150 ${
                             selectedTime === slot
                               ? "bg-[#0d1b3e] text-white border-[#0d1b3e]"
-                              : "bg-[#faf9f7] border-[#f0ece6] text-[#0d1b3e]/60 hover:border-[#0d1b3e]/40 hover:text-[#0d1b3e]"
+                              : "bg-[#faf9f7] border-[#f0ece6] text-[#0d1b3e]/70 hover:border-[#0d1b3e]/40 hover:text-[#0d1b3e]"
                           }`}
                         >
                           {slot}
@@ -293,7 +329,7 @@ export default function ConsultationModal({ procedure, onClose }: Props) {
               )}
 
               {serverError && (
-                <p className="text-red-500 text-sm text-center bg-red-50 rounded-lg py-2 px-3">
+                <p role="alert" className="text-red-700 text-sm text-center bg-red-50 rounded-lg py-2 px-3">
                   {serverError}
                 </p>
               )}
@@ -301,18 +337,18 @@ export default function ConsultationModal({ procedure, onClose }: Props) {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-[#c9a46e] hover:bg-[#a87d45] text-white font-bold text-[11px] tracking-[0.18em] uppercase py-4 rounded-lg transition-all duration-200 hover:shadow-[0_4px_20px_rgba(201,164,110,0.45)] disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full bg-[#c9a46e] hover:bg-[#a87d45] text-navy-dark font-bold text-[11px] tracking-[0.18em] uppercase py-4 rounded-lg transition duration-200 hover:shadow-[0_4px_20px_rgba(201,164,110,0.45)] disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {loading
-                  ? "Submitting…"
+                  ? t("submitting")
                   : apptType === "asap"
-                    ? "Request My Call"
-                    : "Confirm My Appointment"
+                    ? t("submitAsap")
+                    : t("submitScheduled")
                 }
               </button>
 
-              <p className="text-[#0d1b3e]/30 text-[10px] text-center leading-relaxed">
-                Your information is private and never shared. By submitting you consent to being contacted by our team.
+              <p className="text-[#0d1b3e]/70 text-[10px] text-center leading-relaxed">
+                {t("privacy")}
               </p>
             </form>
           </>
@@ -320,52 +356,56 @@ export default function ConsultationModal({ procedure, onClose }: Props) {
 
         {/* ─── Step 3: Success ─────────────────────────────────────── */}
         {step === "success" && (
-          <div className="p-8 text-center">
+          <div className="p-8 text-center" role="status">
             <div className="w-16 h-16 bg-[#c9a46e]/12 border-2 border-[#c9a46e] rounded-full flex items-center justify-center mx-auto mb-5">
               <CheckCircle size={28} className="text-[#c9a46e]" />
             </div>
 
-            <h3 className="font-heading text-[#0d1b3e] text-[1.75rem] font-light mb-3">
-              You&apos;re all set!
+            <h3 id="consult-title" className="font-heading text-[#0d1b3e] text-[1.75rem] font-light mb-3">
+              {t("successTitle")}
             </h3>
 
             {apptType === "asap" ? (
-              <p className="text-[#0d1b3e]/55 leading-relaxed mb-6 text-sm">
-                A patient coordinator will call you <strong className="text-[#0d1b3e]">within minutes</strong> to discuss your {procedure} options and answer any questions you have.
+              <p className="text-[#0d1b3e]/70 leading-relaxed mb-6 text-sm">
+                {t.rich("successAsap", { procedure, b: bold })}
               </p>
             ) : (
-              <p className="text-[#0d1b3e]/55 leading-relaxed mb-6 text-sm">
-                Your virtual appointment is confirmed. We&apos;ll call you on{" "}
-                <strong className="text-[#0d1b3e]">{formatDate(selectedDate)}</strong> at{" "}
-                <strong className="text-[#0d1b3e]">{selectedTime}</strong> to discuss your {procedure} goals.
+              <p className="text-[#0d1b3e]/70 leading-relaxed mb-6 text-sm">
+                {t.rich("successScheduled", {
+                  procedure,
+                  date: formatDate(selectedDate, locale),
+                  time: selectedTime,
+                  b: bold,
+                })}
               </p>
             )}
 
             {/* Summary card */}
             <div className="bg-[#faf9f7] rounded-xl p-4 mb-6 text-left space-y-2.5 border border-[#f0ece6]">
-              <div className="flex items-center gap-2.5 text-[#0d1b3e]/60 text-sm">
+              <div className="flex items-center gap-2.5 text-[#0d1b3e]/70 text-sm">
                 {apptType === "asap"
                   ? <Phone size={13} className="text-[#c9a46e] shrink-0" />
                   : <Calendar size={13} className="text-[#c9a46e] shrink-0" />
                 }
                 <span>
                   {apptType === "asap"
-                    ? "Calling you shortly"
-                    : `${formatDate(selectedDate)} · ${selectedTime}`
+                    ? t("callingShortly")
+                    : `${formatDate(selectedDate, locale)} · ${selectedTime}`
                   }
                 </span>
               </div>
-              <div className="flex items-center gap-2.5 text-[#0d1b3e]/60 text-sm">
+              <div className="flex items-center gap-2.5 text-[#0d1b3e]/70 text-sm">
                 <Clock size={13} className="text-[#c9a46e] shrink-0" />
                 <span>{procedure}</span>
               </div>
             </div>
 
             <button
+              type="button"
               onClick={onClose}
               className="w-full bg-[#0d1b3e] hover:bg-[#060e1f] text-white font-bold text-[11px] tracking-[0.18em] uppercase py-4 rounded-lg transition-colors"
             >
-              Close
+              {t("close")}
             </button>
           </div>
         )}

@@ -17,7 +17,12 @@
     "face": "Face",
     "medspa": "MedSpa",
     "langEn": "EN",
-    "langEs": "ES"
+    "langEs": "ES",
+    "closeMenu": "Close menu",
+    "menuLabel": "Site menu",
+    "skipToContent": "Skip to main content",
+    "featuredTagline": "Curves, elevated · From $3,000",
+    "tagline": "Aesthetic Center"
   },
   "hero": {
     "badge": "4.9 · 500+ Verified Patient Reviews · Miami, FL",
@@ -51,7 +56,11 @@
       "Mommy Makeover",
       "Botox & Fillers",
       "Other / Not sure"
-    ]
+    ],
+    "formError": "We couldn't send your request. Please try again or call us at (305) 218-3513.",
+    "goToSlide": "Show slide {n}",
+    "pauseSlideshow": "Pause slideshow",
+    "playSlideshow": "Play slideshow"
   },
   "stats": {
     "yearsExperience": "Years of Experience",
@@ -137,7 +146,8 @@
       "Rhinoplasty",
       "Mommy Makeover",
       "Other"
-    ]
+    ],
+    "submitError": "We couldn't send your request. Please try again or call us at (305) 218-3513."
   },
   "homePage": {
     "metaTitle": "Your Cosmetic Surgery & SPA | Trusted Plastic Surgeons in Miami, FL",
@@ -253,7 +263,8 @@
       "Other / Not sure"
     ],
     "metaTitle": "Contact Us | Book a Free Consultation in Miami, FL",
-    "metaDescription": "Contact Your Cosmetic Surgery & SPA in Hialeah, FL. Call (305) 218-3513 or fill out our form to schedule a free, private cosmetic surgery consultation. Serving Miami, Hialeah, and all of South Florida."
+    "metaDescription": "Contact Your Cosmetic Surgery & SPA in Hialeah, FL. Call (305) 218-3513 or fill out our form to schedule a free, private cosmetic surgery consultation. Serving Miami, Hialeah, and all of South Florida.",
+    "submitError": "We couldn't send your message. Please try again or call us at (305) 218-3513."
   },
   "testimonialsPage": {
     "heroTitle": "Patient Testimonials",
@@ -287,7 +298,13 @@
     "resultsSuffix": "results",
     "noResults": "No results in this category yet.",
     "metaTitle": "Before & After Gallery | Cosmetic Surgery Results Miami",
-    "metaDescription": "Browse real patient before and after photos from Your Cosmetic Surgery & SPA in Miami — BBL, Lipo 360, tummy tuck, breast augmentation, rhinoplasty, facelift & more. All images used with patient consent."
+    "metaDescription": "Browse real patient before and after photos from Your Cosmetic Surgery & SPA in Miami — BBL, Lipo 360, tummy tuck, breast augmentation, rhinoplasty, facelift & more. All images used with patient consent.",
+    "heroTitleAccent": "Gallery",
+    "close": "Close",
+    "previous": "Previous result",
+    "next": "Next result",
+    "lightboxLabel": "Before and after: {procedure}",
+    "heroTitleLead": "Before & After"
   },
   "proceduresSection": {
     "heading": "Our Procedures",
@@ -329,6 +346,38 @@
     "platforms": "Google · RealSelf · Healthgrades",
     "prevLabel": "Previous testimonial",
     "nextLabel": "Next testimonial",
-    "goToReview": "Go to review {n}"
+    "goToReview": "Go to review {n}",
+    "ratingLabel": "Rated {rating} out of 5"
+  },
+  "consultationModal": {
+    "close": "Close",
+    "interestedIn": "Interested in",
+    "chooseQuestion": "How would you like to connect with our patient care team?",
+    "asapTitle": "Talk to a Coordinator Now",
+    "asapDesc": "A patient coordinator will call you within minutes to answer your questions.",
+    "scheduledTitle": "Schedule a Virtual Appointment",
+    "scheduledDesc": "Pick a date and time — we’ll call you for a personalized consultation.",
+    "back": "Back",
+    "asapHeading": "Call Me Now",
+    "scheduledHeading": "Schedule My Appointment",
+    "nameLabel": "Full Name *",
+    "namePlaceholder": "Jane Doe",
+    "phoneLabel": "Phone Number *",
+    "phonePlaceholder": "(305) 000-0000",
+    "dateLabel": "Preferred Date *",
+    "timeLabel": "Preferred Time *",
+    "nameError": "Please enter your name",
+    "phoneError": "Please enter a valid phone number",
+    "dateError": "Please select a date.",
+    "timeError": "Please select a time slot.",
+    "genericError": "Something went wrong. Please try again or call us at (305) 218-3513.",
+    "submitting": "Submitting…",
+    "submitAsap": "Request My Call",
+    "submitScheduled": "Confirm My Appointment",
+    "privacy": "Your information is private and never shared. By submitting you consent to being contacted by our team.",
+    "successTitle": "You’re all set!",
+    "successAsap": "A patient coordinator will call you <b>within minutes</b> to discuss your {procedure} options and answer any questions you have.",
+    "successScheduled": "Your virtual appointment is confirmed. We’ll call you on <b>{date}</b> at <b>{time}</b> to discuss your {procedure} goals.",
+    "callingShortly": "Calling you shortly"
   }
 }

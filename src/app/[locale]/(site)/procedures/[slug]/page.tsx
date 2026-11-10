@@ -230,12 +230,19 @@ export default async function ProcedureDetailPage({ params }: Props) {
           <div className="relative">
             <picture>
               {landing.heroImageMobile && (
-                <source media="(max-width: 767px)" srcSet={landing.heroImageMobile} />
+                <source
+                  media="(max-width: 767px)"
+                  srcSet={landing.heroImageMobile}
+                  width={landing.heroImageMobileSize?.width}
+                  height={landing.heroImageMobileSize?.height}
+                />
               )}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={landing.heroImage}
                 alt={`${name} in Miami — Your Cosmetic Surgery & SPA`}
+                width={landing.heroImageSize?.width}
+                height={landing.heroImageSize?.height}
                 fetchPriority="high"
                 className="block h-auto w-auto max-w-full max-h-[34rem] lg:max-h-[40rem]"
               />
@@ -252,7 +259,7 @@ export default async function ProcedureDetailPage({ params }: Props) {
           <div className="absolute inset-0 hero-pattern opacity-40" />
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
           <div className="relative z-10 max-w-4xl mx-auto px-6">
-            <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-white/40 text-sm mb-10">
+            <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-white/65 text-sm mb-10">
               <Link href="/" className="hover:text-white transition-colors">Home</Link>
               <span aria-hidden="true">/</span>
               <Link href="/procedures" className="hover:text-white transition-colors">Procedures</Link>
@@ -269,7 +276,7 @@ export default async function ProcedureDetailPage({ params }: Props) {
             <p className="text-white/65 text-xl leading-relaxed max-w-2xl mb-6">
               {description}
             </p>
-            <div className="flex items-center gap-3 text-white/50 text-sm">
+            <div className="flex items-center gap-3 text-white/65 text-sm">
               <Clock size={14} className="text-gold" />
               <span>{t("recoveryLabel")} {proc.recovery}</span>
             </div>
@@ -335,9 +342,9 @@ export default async function ProcedureDetailPage({ params }: Props) {
                   >
                     <summary className="flex items-center justify-between p-5 cursor-pointer text-navy font-medium list-none">
                       <span>{faq.q}</span>
-                      <span className="text-gold transition-transform group-open:rotate-45 text-xl leading-none">+</span>
+                      <span className="text-gold-deep transition-transform group-open:rotate-45 text-xl leading-none">+</span>
                     </summary>
-                    <div className="px-5 pb-5 text-navy/60 text-sm leading-relaxed border-t border-cream-dark pt-4">
+                    <div className="px-5 pb-5 text-navy/70 text-sm leading-relaxed border-t border-cream-dark pt-4">
                       {faq.a}
                     </div>
                   </details>
@@ -353,12 +360,12 @@ export default async function ProcedureDetailPage({ params }: Props) {
               <h3 className="font-heading text-white text-2xl mb-2">
                 {t("readyToLearn")}
               </h3>
-              <p className="text-white/55 text-sm leading-relaxed mb-6">
+              <p className="text-white/65 text-sm leading-relaxed mb-6">
                 {t("sidebarSubtitle")}
               </p>
               <Link
                 href="/contact"
-                className="block w-full text-center bg-gold hover:bg-gold-dark text-white font-semibold text-sm tracking-[0.1em] uppercase py-3.5 rounded-lg transition-colors mb-3"
+                className="block w-full text-center bg-gold hover:bg-gold-dark text-navy-dark font-semibold text-sm tracking-[0.1em] uppercase py-3.5 rounded-lg transition-colors mb-3"
               >
                 {t("bookConsultation")}
               </Link>
@@ -371,7 +378,7 @@ export default async function ProcedureDetailPage({ params }: Props) {
 
               <ul className="mt-6 space-y-2">
                 {[t("trustBoardCertified"), t("trustAccredited"), t("trustNaturalResults"), t("trustSupport")].map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-white/40 text-xs">
+                  <li key={item} className="flex items-center gap-2 text-white/65 text-xs">
                     <span className="w-1 h-1 rounded-full bg-gold shrink-0" />
                     {item}
                   </li>
@@ -400,9 +407,9 @@ export default async function ProcedureDetailPage({ params }: Props) {
                   >
                     <div>
                       <p className="font-heading text-navy text-xl mb-1">{relName}</p>
-                      <p className="text-navy/45 text-xs tracking-wider">{r.tagline}</p>
+                      <p className="text-navy/70 text-xs tracking-wider">{r.tagline}</p>
                     </div>
-                    <ArrowRight size={16} className="text-navy/30 group-hover:text-gold transition-colors" />
+                    <ArrowRight size={16} className="text-navy/70 group-hover:text-gold transition-colors" />
                   </Link>
                 );
               })}
@@ -410,7 +417,7 @@ export default async function ProcedureDetailPage({ params }: Props) {
             <div className="mt-6">
               <Link
                 href="/procedures"
-                className="inline-flex items-center gap-2 text-navy/50 hover:text-navy text-sm transition-colors"
+                className="inline-flex items-center gap-2 text-navy/70 hover:text-navy text-sm transition-colors"
               >
                 <ArrowLeft size={14} />
                 {t("backToAll")}

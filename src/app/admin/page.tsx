@@ -129,7 +129,7 @@ export default async function AdminDashboard() {
                   <span className="text-navy text-xs font-semibold">{d.count > 0 ? d.count : ""}</span>
                   <div className="w-full bg-gray-100 rounded-t-sm overflow-hidden" style={{ height: "80px" }}>
                     <div
-                      className="w-full bg-navy rounded-t-sm transition-all"
+                      className="w-full bg-navy rounded-t-sm transition-[height]"
                       style={{ height: `${(d.count / maxDay) * 80}px`, marginTop: `${80 - (d.count / maxDay) * 80}px` }}
                     />
                   </div>
@@ -169,7 +169,7 @@ export default async function AdminDashboard() {
                     <td className="px-6 py-4 text-navy">
                       <a href={`tel:${l.phone}`} className="hover:text-gold transition-colors">{l.phone}</a>
                     </td>
-                    <td className="px-6 py-4 text-navy/60">{l.email ?? "—"}</td>
+                    <td className="px-6 py-4 text-navy/70">{l.email ?? "—"}</td>
                     <td className="px-6 py-4">
                       {l.procedure ? (
                         <span className="bg-gold/10 text-gold-dark text-xs font-medium px-2 py-0.5 rounded-full">

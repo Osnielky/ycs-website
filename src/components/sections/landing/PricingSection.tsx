@@ -27,8 +27,8 @@ export default function PricingSection({ pricing, ctaLabel }: PricingSectionProp
               className="flex flex-col bg-cream border border-cream-dark rounded-2xl p-6 card-hover"
             >
               <h3 className="font-heading text-2xl text-navy mb-2">{tier.name}</h3>
-              <p className="text-gold font-semibold text-lg mb-4">{tier.price}</p>
-              <p className="text-navy/60 text-sm leading-relaxed mt-auto">{tier.bestFor}</p>
+              <p className="text-gold-deep font-semibold text-lg mb-4">{tier.price}</p>
+              <p className="text-navy/70 text-sm leading-relaxed mt-auto">{tier.bestFor}</p>
             </div>
           ))}
         </div>
@@ -57,7 +57,7 @@ export default function PricingSection({ pricing, ctaLabel }: PricingSectionProp
             )}
             <Link
               href="/contact"
-              className="inline-block bg-gold hover:bg-gold-dark text-white font-semibold text-sm tracking-[0.1em] uppercase px-8 py-4 rounded-lg transition-colors"
+              className="inline-block bg-gold hover:bg-gold-dark text-navy-dark font-semibold text-sm tracking-[0.1em] uppercase px-8 py-4 rounded-lg transition-colors"
             >
               {ctaLabel}
             </Link>
@@ -65,7 +65,7 @@ export default function PricingSection({ pricing, ctaLabel }: PricingSectionProp
         </div>
 
         {/* Disclaimer */}
-        <p className="text-navy/45 text-xs leading-relaxed mt-10 max-w-3xl">
+        <p className="text-navy/70 text-xs leading-relaxed mt-10 max-w-3xl">
           {pricing.disclaimer}
         </p>
       </div>

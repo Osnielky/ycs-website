@@ -15,18 +15,23 @@ export default function AdminLogin() {
     setLoading(true);
     setError("");
 
-    const res = await fetch("/api/admin/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
+    try {
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
 
-    if (res.ok) {
-      router.push("/admin");
-    } else {
-      setError("Invalid username or password.");
+      if (res.ok) {
+        router.push("/admin");
+      } else {
+        setError("Invalid username or password. Check both fields and try again.");
+      }
+    } catch {
+      setError("Couldn’t reach the server. Check your connection and try again.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   return (
@@ -41,32 +46,40 @@ export default function AdminLogin() {
 
         <form onSubmit={handleSubmit} className="bg-white/5 border border-white/10 rounded-2xl p-8 space-y-4">
           <div>
-            <label className="text-white/50 text-xs tracking-widest uppercase block mb-1.5">Username</label>
+            <label htmlFor="admin-username" className="text-white/65 text-xs tracking-widest uppercase block mb-1.5">Username</label>
             <input
+              id="admin-username"
+              name="username"
               type="text"
+              autoComplete="username"
+              autoCapitalize="none"
+              spellCheck={false}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full bg-white/10 border border-white/20 focus:border-gold rounded-lg px-4 py-3 text-white text-sm outline-none transition-colors"
+              className="w-full bg-white/10 border border-white/20 focus:border-gold rounded-lg px-4 py-3 text-white text-sm outline-none focus-visible:ring-2 focus-visible:ring-gold/60 transition-colors"
               required
             />
           </div>
           <div>
-            <label className="text-white/50 text-xs tracking-widest uppercase block mb-1.5">Password</label>
+            <label htmlFor="admin-password" className="text-white/65 text-xs tracking-widest uppercase block mb-1.5">Password</label>
             <input
+              id="admin-password"
+              name="password"
               type="password"
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-white/10 border border-white/20 focus:border-gold rounded-lg px-4 py-3 text-white text-sm outline-none transition-colors"
+              className="w-full bg-white/10 border border-white/20 focus:border-gold rounded-lg px-4 py-3 text-white text-sm outline-none focus-visible:ring-2 focus-visible:ring-gold/60 transition-colors"
               required
             />
           </div>
 
-          {error && <p className="text-red-400 text-xs">{error}</p>}
+          {error && <p role="alert" className="text-red-400 text-xs">{error}</p>}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gold hover:bg-gold-dark text-white font-semibold text-sm tracking-[0.1em] uppercase py-3 rounded-lg transition-all duration-200 disabled:opacity-60 mt-2"
+            className="w-full bg-gold hover:bg-gold-dark text-navy-dark font-semibold text-sm tracking-[0.1em] uppercase py-3 rounded-lg transition-colors duration-200 disabled:opacity-60 mt-2"
           >
             {loading ? "Signing in…" : "Sign In"}
           </button>

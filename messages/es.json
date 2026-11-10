@@ -17,7 +17,12 @@
     "face": "Rostro",
     "medspa": "MedSpa",
     "langEn": "EN",
-    "langEs": "ES"
+    "langEs": "ES",
+    "closeMenu": "Cerrar menú",
+    "menuLabel": "Menú del sitio",
+    "skipToContent": "Saltar al contenido principal",
+    "featuredTagline": "Curvas realzadas · Desde $3,000",
+    "tagline": "Aesthetic Center"
   },
   "hero": {
     "badge": "4.9 · Más de 500 Reseñas Verificadas · Miami, FL",
@@ -51,7 +56,11 @@
       "Mommy Makeover",
       "Botox y Rellenos",
       "Otro / No estoy seguro/a"
-    ]
+    ],
+    "formError": "No pudimos enviar su solicitud. Inténtelo de nuevo o llámenos al (305) 218-3513.",
+    "goToSlide": "Mostrar imagen {n}",
+    "pauseSlideshow": "Pausar presentación",
+    "playSlideshow": "Reproducir presentación"
   },
   "stats": {
     "yearsExperience": "Años de Experiencia",
@@ -137,7 +146,8 @@
       "Rinoplastia",
       "Mommy Makeover",
       "Otro"
-    ]
+    ],
+    "submitError": "No pudimos enviar su solicitud. Inténtelo de nuevo o llámenos al (305) 218-3513."
   },
   "homePage": {
     "metaTitle": "Your Cosmetic Surgery & SPA | Cirujanos Plásticos de Confianza en Miami, FL",
@@ -253,7 +263,8 @@
       "Otro / No estoy seguro/a"
     ],
     "metaTitle": "Contáctenos | Agende una Consulta Gratuita en Miami, FL",
-    "metaDescription": "Contacte a Your Cosmetic Surgery & SPA en Hialeah, FL. Llame al (305) 218-3513 o complete el formulario para agendar una consulta de cirugía estética gratuita y privada. Atendemos Miami, Hialeah y todo el sur de Florida."
+    "metaDescription": "Contacte a Your Cosmetic Surgery & SPA en Hialeah, FL. Llame al (305) 218-3513 o complete el formulario para agendar una consulta de cirugía estética gratuita y privada. Atendemos Miami, Hialeah y todo el sur de Florida.",
+    "submitError": "No pudimos enviar su mensaje. Inténtelo de nuevo o llámenos al (305) 218-3513."
   },
   "testimonialsPage": {
     "heroTitle": "Testimonios de Pacientes",
@@ -287,7 +298,13 @@
     "resultsSuffix": "resultados",
     "noResults": "Sin resultados en esta categoría todavía.",
     "metaTitle": "Galería Antes y Después | Resultados de Cirugía Estética en Miami",
-    "metaDescription": "Vea fotos reales de pacientes antes y después en Your Cosmetic Surgery & SPA en Miami — BBL, Lipo 360, abdominoplastia, aumento de senos, rinoplastia, lifting facial y más. Todas las imágenes se usan con consentimiento del paciente."
+    "metaDescription": "Vea fotos reales de pacientes antes y después en Your Cosmetic Surgery & SPA en Miami — BBL, Lipo 360, abdominoplastia, aumento de senos, rinoplastia, lifting facial y más. Todas las imágenes se usan con consentimiento del paciente.",
+    "heroTitleAccent": "Galería",
+    "close": "Cerrar",
+    "previous": "Resultado anterior",
+    "next": "Siguiente resultado",
+    "lightboxLabel": "Antes y después: {procedure}",
+    "heroTitleLead": "Antes y Después"
   },
   "proceduresSection": {
     "heading": "Nuestros Procedimientos",
@@ -329,6 +346,38 @@
     "platforms": "Google · RealSelf · Healthgrades",
     "prevLabel": "Testimonio anterior",
     "nextLabel": "Siguiente testimonio",
-    "goToReview": "Ir a la reseña {n}"
+    "goToReview": "Ir a la reseña {n}",
+    "ratingLabel": "Calificación: {rating} de 5"
+  },
+  "consultationModal": {
+    "close": "Cerrar",
+    "interestedIn": "Interesado/a en",
+    "chooseQuestion": "¿Cómo le gustaría comunicarse con nuestro equipo de atención al paciente?",
+    "asapTitle": "Hablar con un Coordinador Ahora",
+    "asapDesc": "Un coordinador de pacientes le llamará en minutos para responder sus preguntas.",
+    "scheduledTitle": "Programar una Cita Virtual",
+    "scheduledDesc": "Elija fecha y hora — le llamaremos para una consulta personalizada.",
+    "back": "Atrás",
+    "asapHeading": "Llámenme Ahora",
+    "scheduledHeading": "Programar Mi Cita",
+    "nameLabel": "Nombre Completo *",
+    "namePlaceholder": "María Pérez",
+    "phoneLabel": "Número de Teléfono *",
+    "phonePlaceholder": "(305) 000-0000",
+    "dateLabel": "Fecha Preferida *",
+    "timeLabel": "Hora Preferida *",
+    "nameError": "Por favor ingrese su nombre",
+    "phoneError": "Por favor ingrese un número de teléfono válido",
+    "dateError": "Por favor seleccione una fecha.",
+    "timeError": "Por favor seleccione un horario.",
+    "genericError": "Algo salió mal. Inténtelo de nuevo o llámenos al (305) 218-3513.",
+    "submitting": "Enviando…",
+    "submitAsap": "Solicitar Mi Llamada",
+    "submitScheduled": "Confirmar Mi Cita",
+    "privacy": "Su información es privada y nunca se comparte. Al enviar, acepta ser contactado/a por nuestro equipo.",
+    "successTitle": "¡Todo listo!",
+    "successAsap": "Un coordinador de pacientes le llamará <b>en minutos</b> para hablar sobre sus opciones de {procedure} y responder sus preguntas.",
+    "successScheduled": "Su cita virtual está confirmada. Le llamaremos el <b>{date}</b> a las <b>{time}</b> para hablar sobre sus objetivos de {procedure}.",
+    "callingShortly": "Le llamaremos en breve"
   }
 }

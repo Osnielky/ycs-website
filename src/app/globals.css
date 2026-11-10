@@ -7,6 +7,8 @@
   --color-gold: #c9a46e;
   --color-gold-light: #e8cfa0;
   --color-gold-dark: #a87d45;
+  /* Gold for text on light surfaces: 5.7:1 on white, 4.8:1 on cream-dark (plain gold is 2.3:1) */
+  --color-gold-deep: #85602e;
   --color-cream: #faf9f7;
   --color-cream-dark: #f0ece6;
 
@@ -15,7 +17,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: rgba(201, 164, 110, 0.25);
   /* Firefox scrollbar styling */
   scrollbar-width: thin;
   scrollbar-color: #c9a46e #f0ece6;
@@ -35,6 +37,38 @@ h3,
 h4,
 h5 {
   font-family: var(--font-cormorant), Georgia, serif;
+  text-wrap: balance;
+}
+
+/* Smooth in-page scrolling only for visitors who have not asked for reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Anchored sections and the skip-link target clear the fixed navbar */
+[id] {
+  scroll-margin-top: 7rem;
+}
+
+@layer base {
+  /* One consistent keyboard focus ring; utilities can still override it */
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+
+  /* Removes the double-tap-to-zoom delay on touch devices */
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  label,
+  summary {
+    touch-action: manipulation;
+  }
 }
 
 ::selection {
@@ -145,6 +179,16 @@ h5 {
   .offer-pulse { animation: none; }
   .gallery-card-sweep-clip,
   .gallery-card-sweep-x { animation: none; }
+
+  /* Everything else: no looping animation, near-instant transitions */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .card-hover:hover { transform: none; }
 }
 
 /* Before/after gallery card — slow auto-sweep reveal on hover */
@@ -152,9 +196,10 @@ h5 {
   0%, 100% { clip-path: inset(0 0 0 2%); }
   50%      { clip-path: inset(0 0 0 98%); }
 }
+/* Applied to a full-width wrapper so the divider moves with transform, not `left` */
 @keyframes gallery-card-sweep-x {
-  0%, 100% { left: 2%; }
-  50%      { left: 98%; }
+  0%, 100% { transform: translateX(-48%); }
+  50%      { transform: translateX(48%); }
 }
 .gallery-card-sweep-clip {
   animation: gallery-card-sweep-clip 7s ease-in-out infinite;

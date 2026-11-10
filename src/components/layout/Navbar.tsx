@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect, type ReactNode } from "react";
+import { useState, useEffect, useRef, type ReactNode } from "react";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "./LanguageSwitcher";
 import Image from "next/image";
+import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { Menu, X, Phone, ChevronDown, ArrowRight, Waves, Heart, ScanFace, Flower2 } from "lucide-react";
 
 const categoryIcon: Record<string, ReactNode> = {
@@ -64,6 +65,8 @@ export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileProc, setMobileProc] = useState(false);
   const t = useTranslations("nav");
+  const mobilePanelRef = useRef<HTMLDivElement>(null);
+  useFocusTrap(mobilePanelRef, mobileOpen);
   const catLabel: Record<string, string> = {
     Body: t("body"),
     Breast: t("breast"),
@@ -77,23 +80,29 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close mobile menu on route change
+  // Lock page scroll and allow Escape to close while the mobile menu is open
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    if (!mobileOpen) return;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
     };
   }, [mobileOpen]);
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "navbar-scrolled" : "navbar-top"}`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-shadow duration-500 ${scrolled ? "navbar-scrolled" : "navbar-top"}`}
       >
         {/* Subtle radial spotlight from top-center */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_120%_at_50%_-20%,rgba(59,130,246,0.35),transparent)]" />
+        <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_80%_120%_at_50%_-20%,rgba(59,130,246,0.35),transparent)]" />
         {/* Gold shimmer line at bottom — only visible when scrolled */}
-        <div className={`absolute bottom-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-gold to-transparent transition-opacity duration-500 ${scrolled ? "opacity-60" : "opacity-0"}`} />
+        <div aria-hidden="true" className={`absolute bottom-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-gold to-transparent transition-opacity duration-500 ${scrolled ? "opacity-60" : "opacity-0"}`} />
 
         {/* Main navbar */}
         <nav className="relative max-w-7xl mx-auto px-8 py-7 flex items-center justify-between">
@@ -102,7 +111,7 @@ export default function Navbar() {
             <div className="relative shrink-0">
               {/* Outer glow ring */}
               <div className="absolute inset-0 rounded-full bg-gold/20 blur-md scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="w-20 h-20 rounded-full ring-2 ring-gold/40 overflow-hidden shadow-[0_0_24px_rgba(21,101,216,0.6),0_0_8px_rgba(201,164,110,0.3)] group-hover:ring-gold/70 transition-all duration-300">
+              <div className="w-20 h-20 rounded-full ring-2 ring-gold/40 overflow-hidden shadow-[0_0_24px_rgba(21,101,216,0.6),0_0_8px_rgba(201,164,110,0.3)] group-hover:ring-gold/70 transition-shadow duration-300">
                 <Image
                   src="/Logo.jpg"
                   alt="Your Cosmetic Surgery & SPA"
@@ -114,11 +123,11 @@ export default function Navbar() {
               </div>
             </div>
             <div className="flex flex-col leading-none">
-              <span className="font-heading text-[26px] text-white font-light tracking-[0.25em] leading-none group-hover:text-gold-light transition-colors duration-300">
+              <span translate="no" className="font-heading text-[26px] text-white font-light tracking-[0.25em] leading-none group-hover:text-gold-light transition-colors duration-300">
                 YCS
               </span>
-              <span className="text-[9px] text-gold/75 tracking-[0.5em] uppercase leading-none mt-[6px]">
-                Aesthetic Center
+              <span translate="no" className="text-[9px] text-gold/75 tracking-[0.5em] uppercase leading-none mt-[6px]">
+                {t("tagline")}
               </span>
             </div>
           </Link>
@@ -130,8 +139,22 @@ export default function Navbar() {
               className="relative"
               onMouseEnter={() => setDropdownOpen(true)}
               onMouseLeave={() => setDropdownOpen(false)}
+              onBlur={(e) => {
+                // Close once keyboard focus leaves the whole menu
+                if (!e.currentTarget.contains(e.relatedTarget)) setDropdownOpen(false);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") setDropdownOpen(false);
+              }}
             >
-              <button className="flex items-center gap-1 text-white/85 hover:text-gold text-[13px] font-medium tracking-widest uppercase transition-colors py-2">
+              <button
+                type="button"
+                aria-expanded={dropdownOpen}
+                aria-controls="procedures-menu"
+                // Keyboard activation (detail 0) toggles; a mouse click keeps the hover-opened menu open
+                onClick={(e) => setDropdownOpen(e.detail === 0 ? !dropdownOpen : true)}
+                className="flex items-center gap-1 text-white/85 hover:text-gold text-[13px] font-medium tracking-widest uppercase transition-colors py-2"
+              >
                 {t("procedures")}
                 <ChevronDown
                   size={13}
@@ -141,10 +164,11 @@ export default function Navbar() {
 
               {/* Mega dropdown */}
               <div
-                className={`absolute top-full left-1/2 -translate-x-1/2 pt-3 transition-all duration-200 origin-top ${
+                id="procedures-menu"
+                className={`absolute top-full left-1/2 -translate-x-1/2 pt-3 transition-[opacity,translate,visibility] duration-200 origin-top ${
                   dropdownOpen
-                    ? "opacity-100 translate-y-0 pointer-events-auto"
-                    : "opacity-0 -translate-y-1.5 pointer-events-none"
+                    ? "visible opacity-100 translate-y-0 pointer-events-auto"
+                    : "invisible opacity-0 -translate-y-1.5 pointer-events-none"
                 }`}
               >
                 <div className="relative w-[860px] bg-white rounded-2xl shadow-[0_30px_80px_-20px_rgba(13,27,62,0.35)] overflow-hidden">
@@ -163,16 +187,16 @@ export default function Navbar() {
                           <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-gold shrink-0">
                             {categoryIcon[col.category]}
                           </span>
-                          <h4 className="font-heading text-navy text-[16px] font-semibold tracking-wide">
+                          <p className="font-heading text-navy text-[16px] font-semibold tracking-wide">
                             {catLabel[col.category] ?? col.category}
-                          </h4>
+                          </p>
                         </div>
                         <ul className="space-y-0.5">
                           {col.items.map((item) => (
                             <li key={item.slug}>
                               <Link
                                 href={`/procedures/${item.slug}`}
-                                className="group/item flex items-center gap-2 -mx-2 px-2 py-1.5 rounded-lg text-[13px] text-navy/60 hover:text-navy hover:bg-cream transition-colors"
+                                className="group/item flex items-center gap-2 -mx-2 px-2 py-1.5 rounded-lg text-[13px] text-navy/70 hover:text-navy hover:bg-cream transition-colors"
                               >
                                 <span className="w-1 h-1 rounded-full bg-gold/0 group-hover/item:bg-gold transition-colors shrink-0" />
                                 {item.name}
@@ -201,13 +225,14 @@ export default function Navbar() {
                           Brazilian Butt Lift
                         </p>
                         <p className="text-gold-light text-[12px] mb-3">
-                          Curves, elevated · From $3,000
+                          {t("featuredTagline")}
                         </p>
                         <Link
                           href="/procedures/brazilian-butt-lift"
                           className="inline-flex items-center gap-1.5 text-white text-[11px] font-semibold tracking-widest uppercase hover:text-gold transition-colors"
                         >
-                          {t("learnMore")} <ArrowRight size={12} />
+                          {t("learnMore")}
+                          <span className="sr-only">: Brazilian Butt Lift</span> <ArrowRight size={12} />
                         </Link>
                       </div>
                     </div>
@@ -217,14 +242,14 @@ export default function Navbar() {
                   <div className="flex items-center justify-between px-7 py-3.5 bg-cream border-t border-cream-dark/70">
                     <Link
                       href="/procedures"
-                      className="group/link inline-flex items-center gap-1.5 text-navy/55 hover:text-navy text-[12px] font-medium tracking-wide transition-colors"
+                      className="group/link inline-flex items-center gap-1.5 text-navy/70 hover:text-navy text-[12px] font-medium tracking-wide transition-colors"
                     >
                       {t("viewAllProcedures")}
                       <ArrowRight size={12} className="transition-transform group-hover/link:translate-x-0.5" />
                     </Link>
                     <Link
                       href="/gallery"
-                      className="group/link inline-flex items-center gap-1.5 text-navy/55 hover:text-navy text-[12px] font-medium tracking-wide transition-colors"
+                      className="group/link inline-flex items-center gap-1.5 text-navy/70 hover:text-navy text-[12px] font-medium tracking-wide transition-colors"
                     >
                       {t("beforeAfterGallery")}
                       <ArrowRight size={12} className="transition-transform group-hover/link:translate-x-0.5" />
@@ -263,14 +288,17 @@ export default function Navbar() {
             </a>
             <Link
               href="/contact"
-              className="hidden md:inline-flex items-center whitespace-nowrap bg-gold hover:bg-gold-dark text-white text-[12px] font-semibold tracking-[0.15em] uppercase px-6 py-2.5 rounded-full transition-all duration-200 hover:scale-105 hover:shadow-[0_4px_20px_rgba(201,164,110,0.4)]"
+              className="hidden md:inline-flex items-center whitespace-nowrap bg-gold hover:bg-gold-dark text-navy-dark text-[12px] font-semibold tracking-[0.15em] uppercase px-6 py-2.5 rounded-full transition duration-200 hover:scale-105 hover:shadow-[0_4px_20px_rgba(201,164,110,0.4)]"
             >
               {t("bookConsultation")}
             </Link>
             <button
-              className="xl:hidden text-white/90 hover:text-gold transition-colors p-1"
+              type="button"
+              className="xl:hidden text-white/90 hover:text-gold transition-colors p-2 -m-1"
               onClick={() => setMobileOpen(true)}
               aria-label={t("openMenu")}
+              aria-haspopup="dialog"
+              aria-expanded={mobileOpen}
             >
               <Menu size={22} />
             </button>
@@ -279,13 +307,16 @@ export default function Navbar() {
       </header>
 
       {/* ── Mobile overlay ── */}
+      {/* `inert` keeps the off-screen panel out of the tab order and away from screen readers while closed */}
       <div
-        className={`fixed inset-0 z-[60] transition-all duration-300 ${
+        inert={!mobileOpen}
+        className={`fixed inset-0 z-[60] ${
           mobileOpen ? "pointer-events-auto" : "pointer-events-none"
         }`}
       >
         {/* Backdrop */}
         <div
+          aria-hidden="true"
           className={`absolute inset-0 bg-navy-dark/60 transition-opacity duration-300 ${
             mobileOpen ? "opacity-100" : "opacity-0"
           }`}
@@ -294,33 +325,43 @@ export default function Navbar() {
 
         {/* Slide panel */}
         <div
-          className={`absolute top-0 right-0 h-full w-full max-w-sm bg-navy flex flex-col transition-transform duration-300 ${
+          ref={mobilePanelRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label={t("menuLabel")}
+          tabIndex={-1}
+          className={`absolute top-0 right-0 h-full w-full max-w-sm bg-navy flex flex-col transition-transform duration-300 focus:outline-none ${
             mobileOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
           {/* Panel header */}
           <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
             <div className="flex flex-col leading-none">
-              <span className="font-heading text-2xl text-white font-light tracking-[0.25em]">
+              <span translate="no" className="font-heading text-2xl text-white font-light tracking-[0.25em]">
                 YCS
               </span>
-              <span className="text-[9px] text-gold tracking-[0.4em] uppercase mt-1">
-                Aesthetic Center
+              <span translate="no" className="text-[9px] text-gold tracking-[0.4em] uppercase mt-1">
+                {t("tagline")}
               </span>
             </div>
             <button
-              className="text-white/70 hover:text-white transition-colors"
+              type="button"
+              className="text-white/70 hover:text-white transition-colors p-2 -m-2"
               onClick={() => setMobileOpen(false)}
+              aria-label={t("closeMenu")}
             >
               <X size={22} />
             </button>
           </div>
 
           {/* Scrollable nav */}
-          <nav className="flex-1 overflow-y-auto px-6 py-5 space-y-0">
+          <nav aria-label={t("menuLabel")} className="flex-1 overflow-y-auto overscroll-contain px-6 py-5 space-y-0">
             {/* Procedures accordion */}
             <button
-              className="w-full flex items-center justify-between py-3.5 text-white text-lg font-heading border-b border-white/10"
+              type="button"
+              aria-expanded={mobileProc}
+              aria-controls="mobile-procedures"
+              className="w-full flex items-center justify-between py-3.5 text-white text-lg font-heading border-b border-white/10 hover:text-gold transition-colors"
               onClick={() => setMobileProc(!mobileProc)}
             >
               {t("procedures")}
@@ -330,7 +371,7 @@ export default function Navbar() {
               />
             </button>
             {mobileProc && (
-              <div className="pl-2 pb-3">
+              <div id="mobile-procedures" className="pl-2 pb-3">
                 {procedureMenu.map((col) => (
                   <div key={col.category} className="mt-4">
                     <p className="text-gold text-[10px] tracking-[0.3em] uppercase font-semibold mb-2">
@@ -340,7 +381,7 @@ export default function Navbar() {
                       <Link
                         key={item.slug}
                         href={`/procedures/${item.slug}`}
-                        className="block py-1.5 text-white/70 hover:text-gold text-sm border-l-2 border-white/10 hover:border-gold pl-3 transition-all"
+                        className="block py-1.5 text-white/70 hover:text-gold text-sm border-l-2 border-white/10 hover:border-gold pl-3 transition-colors"
                         onClick={() => setMobileOpen(false)}
                       >
                         {item.name}
@@ -369,13 +410,13 @@ export default function Navbar() {
           </nav>
 
           {/* Panel footer */}
-          <div className="px-6 py-6 border-t border-white/10 space-y-3">
+          <div className="px-6 py-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] border-t border-white/10 space-y-3">
             <div className="flex justify-center mb-2">
               <LanguageSwitcher />
             </div>
             <Link
               href="/contact"
-              className="block w-full text-center bg-gold hover:bg-gold-dark text-white py-3.5 rounded-full text-sm font-semibold tracking-[0.15em] uppercase transition-colors"
+              className="block w-full text-center bg-gold hover:bg-gold-dark text-navy-dark py-3.5 rounded-full text-sm font-semibold tracking-[0.15em] uppercase transition-colors"
               onClick={() => setMobileOpen(false)}
             >
               {t("bookFreeConsultation")}

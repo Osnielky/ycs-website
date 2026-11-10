@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { testimonials } from "@/data/procedures";
 import type { GoogleReview, ReviewsResponse } from "@/app/api/google-reviews/route";
@@ -30,14 +30,22 @@ const fallbackReviews: GoogleReview[] = testimonials.map((t) => ({
   text: t.text,
 }));
 
-function ReviewCard({ review, active }: { review: GoogleReview; active: boolean }) {
+function ReviewCard({
+  review,
+  active,
+  ratingLabel,
+}: {
+  review: GoogleReview;
+  active: boolean;
+  ratingLabel: string;
+}) {
   const initial = review.author_name.charAt(0).toUpperCase();
   const [imgError, setImgError] = useState(false);
   const showPhoto = !!review.profile_photo_url && !imgError;
 
   return (
     <div
-      className={`bg-white/6 border rounded-2xl p-5 flex flex-col transition-all duration-300 ${
+      className={`bg-white/6 border rounded-2xl p-5 flex flex-col transition-[background-color,border-color,opacity] duration-300 ${
         active ? "border-gold/35 bg-white/10" : "border-white/10 opacity-80"
       }`}
     >
@@ -53,14 +61,18 @@ function ReviewCard({ review, active }: { review: GoogleReview; active: boolean 
         >
           {showPhoto ? (
             <img
-              src={review.profile_photo_url}
-              alt={review.author_name}
+              src={review.profile_photo_url.replace(/=s\d+(?=-|$)/, "=s88")}
+              alt=""
+              width={44}
+              height={44}
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover"
               onError={() => setImgError(true)}
               referrerPolicy="no-referrer"
             />
           ) : (
-            <span className="text-white font-bold text-base font-sans">{initial}</span>
+            <span aria-hidden="true" className="text-white font-bold text-base font-sans">{initial}</span>
           )}
         </div>
 
@@ -69,19 +81,19 @@ function ReviewCard({ review, active }: { review: GoogleReview; active: boolean 
           <p className="text-white font-semibold text-sm font-sans truncate">
             {review.author_name}
           </p>
-          <div className="flex gap-0.5 my-0.5">
-            {[...Array(review.rating)].map((_, i) => (
+          <div role="img" aria-label={ratingLabel} className="flex gap-0.5 my-0.5">
+            {[...Array(Math.max(0, Math.round(review.rating)))].map((_, i) => (
               <Star key={i} size={11} className="fill-gold text-gold" />
             ))}
           </div>
           {review.relative_time_description && (
-            <p className="text-white/35 text-xs font-sans">{review.relative_time_description}</p>
+            <p className="text-white/65 text-xs font-sans">{review.relative_time_description}</p>
           )}
         </div>
 
         {/* Google verified badge */}
         {review.profile_photo_url && (
-          <div className="flex-shrink-0 text-xs font-sans text-white/40 flex items-center gap-1">
+          <div className="flex-shrink-0 text-xs font-sans text-white/65 flex items-center gap-1">
             <GoogleLogo size={14} />
           </div>
         )}
@@ -101,6 +113,7 @@ function GoogleLogo({ size = 16 }: { size?: number }) {
       width={size}
       height={size}
       viewBox="0 0 24 24"
+      role="img"
       aria-label="Google"
     >
       <path
@@ -125,6 +138,10 @@ function GoogleLogo({ size = 16 }: { size?: number }) {
 
 export default function TestimonialsSection() {
   const t = useTranslations("testimonials");
+  const locale = useLocale();
+  // Explicit locale so server and client format numbers identically
+  const ratingFormat = new Intl.NumberFormat(locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const countFormat = new Intl.NumberFormat(locale);
   const [index, setIndex] = useState(0);
   const [reviews, setReviews] = useState<GoogleReview[]>(fallbackReviews);
   const [meta, setMeta] = useState({ rating: 4.9, totalReviews: 500 });
@@ -154,7 +171,7 @@ export default function TestimonialsSection() {
 
   return (
     <section className="py-24 bg-navy relative overflow-hidden" id="testimonials">
-      <div className="absolute inset-0 hero-pattern opacity-30" />
+      <div aria-hidden="true" className="absolute inset-0 hero-pattern opacity-30" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
 
@@ -165,13 +182,13 @@ export default function TestimonialsSection() {
           <h2 className="font-heading text-5xl md:text-6xl text-white font-light mb-4">
             {t("heading")}
           </h2>
-          <p className="text-white/50 text-lg max-w-xl mx-auto">
+          <p className="text-white/65 text-lg max-w-xl mx-auto">
             {isLive ? t("subheadingLive") : t("subheadingFallback")}
           </p>
 
           {/* Google verified pill */}
           {isLive && (
-            <div className="inline-flex items-center gap-2 mt-4 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 text-xs font-sans text-white/50">
+            <div className="inline-flex items-center gap-2 mt-4 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 text-xs font-sans text-white/65">
               <GoogleLogo size={13} />
               {t("verifiedBadge")}
             </div>
@@ -181,34 +198,47 @@ export default function TestimonialsSection() {
         {/* Cards */}
         <div className="grid md:grid-cols-3 gap-6 mb-10">
           {visible.map((r, i) => (
-            <ReviewCard key={r.author_name + i} review={r} active={i === 0} />
+            <ReviewCard
+              key={r.author_name + i}
+              review={r}
+              active={i === 0}
+              ratingLabel={t("ratingLabel", { rating: r.rating })}
+            />
           ))}
         </div>
 
         {/* Controls */}
         <div className="flex items-center justify-center gap-5">
           <button
+            type="button"
             onClick={prev}
-            className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:border-gold hover:text-gold transition-all"
+            className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/65 hover:border-gold hover:text-gold transition-colors"
             aria-label={t("prevLabel")}
           >
             <ChevronLeft size={16} />
           </button>
-          <div className="flex gap-2">
+          <div className="flex">
             {reviews.map((_, i) => (
               <button
                 key={i}
+                type="button"
                 onClick={() => setIndex(i)}
-                className={`rounded-full transition-all duration-200 ${
-                  i === index ? "w-6 h-2 bg-gold" : "w-2 h-2 bg-white/25 hover:bg-white/50"
-                }`}
+                className="group px-2 py-3"
                 aria-label={t("goToReview", { n: i + 1 })}
-              />
+                aria-current={i === index ? "true" : undefined}
+              >
+                <span
+                  className={`block h-2 rounded-full transition-[width,background-color] duration-200 ${
+                    i === index ? "w-6 bg-gold" : "w-2 bg-white/25 group-hover:bg-white/50"
+                  }`}
+                />
+              </button>
             ))}
           </div>
           <button
+            type="button"
             onClick={next}
-            className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:border-gold hover:text-gold transition-all"
+            className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/65 hover:border-gold hover:text-gold transition-colors"
             aria-label={t("nextLabel")}
           >
             <ChevronRight size={16} />
@@ -223,12 +253,12 @@ export default function TestimonialsSection() {
                 <Star key={i} size={14} className="fill-gold text-gold" />
               ))}
             </div>
-            <span className="text-white font-semibold">{meta.rating.toFixed(1)}</span>
-            <span className="text-white/40 text-sm">·</span>
-            <span className="text-white/55 text-sm">
-              {meta.totalReviews.toLocaleString()}+ {t("verifiedReviews")}
+            <span className="text-white font-semibold tabular-nums">{ratingFormat.format(meta.rating)}</span>
+            <span className="text-white/65 text-sm">·</span>
+            <span className="text-white/65 text-sm">
+              {countFormat.format(meta.totalReviews)}+ {t("verifiedReviews")}
             </span>
-            <span className="text-white/40 text-sm">·</span>
+            <span className="text-white/65 text-sm">·</span>
             {isLive ? (
               <a
                 href="https://maps.app.goo.gl/ttj7tm52qumTJfjm6"
@@ -239,7 +269,7 @@ export default function TestimonialsSection() {
                 {t("viewAllGoogle")}
               </a>
             ) : (
-              <span className="text-white/55 text-sm">{t("platforms")}</span>
+              <span className="text-white/65 text-sm">{t("platforms")}</span>
             )}
           </div>
         </div>

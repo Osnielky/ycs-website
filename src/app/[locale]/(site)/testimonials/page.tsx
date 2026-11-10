@@ -134,7 +134,7 @@ export default async function TestimonialsPage({ params }: Props) {
           <h1 className="font-heading text-6xl md:text-7xl text-white font-light mb-5">
             {t("heroTitle")}
           </h1>
-          <p className="text-white/60 text-xl leading-relaxed max-w-2xl mx-auto">
+          <p className="text-white/65 text-xl leading-relaxed max-w-2xl mx-auto">
             {t("heroSubtitle")}
           </p>
         </div>
@@ -148,7 +148,7 @@ export default async function TestimonialsPage({ params }: Props) {
               <div key={p.name} className="bg-white rounded-2xl p-6 text-center border border-cream-dark card-hover">
                 <div className="font-heading text-4xl text-navy mb-1">
                   {p.rating}
-                  <span className="text-gold text-2xl">/5</span>
+                  <span className="text-gold-deep text-2xl">/5</span>
                 </div>
                 <div className="flex justify-center gap-0.5 mb-2">
                   {[...Array(5)].map((_, i) => (
@@ -156,7 +156,7 @@ export default async function TestimonialsPage({ params }: Props) {
                   ))}
                 </div>
                 <p className="text-navy font-semibold text-sm">{p.name}</p>
-                <p className="text-navy/40 text-xs">{p.count} {t("reviewsLabel")}</p>
+                <p className="text-navy/70 text-xs">{p.count} {t("reviewsLabel")}</p>
               </div>
             ))}
           </div>
@@ -184,7 +184,7 @@ export default async function TestimonialsPage({ params }: Props) {
                 </div>
                 <p
                   itemProp="reviewBody"
-                  className="text-navy/65 text-sm leading-relaxed flex-1 mb-6 italic"
+                  className="text-navy/70 text-sm leading-relaxed flex-1 mb-6 italic"
                 >
                   &ldquo;{review.text}&rdquo;
                 </p>
@@ -192,7 +192,7 @@ export default async function TestimonialsPage({ params }: Props) {
                   <p itemProp="author" itemScope itemType="https://schema.org/Person" className="text-navy font-semibold text-sm">
                     <span itemProp="name">{review.name}</span>
                   </p>
-                  <p itemProp="name" className="text-gold text-xs tracking-wider mt-0.5">{review.procedure}</p>
+                  <p itemProp="name" className="text-gold-deep text-xs tracking-wider mt-0.5">{review.procedure}</p>
                 </div>
               </article>
             ))}

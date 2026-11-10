@@ -107,7 +107,7 @@ export default async function AboutPage({ params }: Props) {
           <h1 className="font-heading text-6xl md:text-7xl text-white font-light mb-5">
             {t("heroTitle")}
           </h1>
-          <p className="text-white/60 text-xl leading-relaxed max-w-2xl mx-auto">
+          <p className="text-white/65 text-xl leading-relaxed max-w-2xl mx-auto">
             {t("heroSubtitle")}
           </p>
         </div>
@@ -134,7 +134,7 @@ export default async function AboutPage({ params }: Props) {
             </div>
             <div className="absolute -bottom-6 -right-6 bg-white border border-cream-dark rounded-2xl p-5 shadow-xl">
               <p className="font-heading text-4xl text-navy mb-0.5">20+</p>
-              <p className="text-navy/50 text-xs tracking-widest uppercase">{t("expTitle")}</p>
+              <p className="text-navy/70 text-xs tracking-widest uppercase">{t("expTitle")}</p>
             </div>
           </div>
 
@@ -143,7 +143,7 @@ export default async function AboutPage({ params }: Props) {
             <h2 className="font-heading text-5xl text-navy font-light mb-5">
               {t("storyHeading")}
             </h2>
-            <div className="space-y-4 text-navy/65 leading-relaxed">
+            <div className="space-y-4 text-navy/70 leading-relaxed">
               <p>{t("storyP1")}</p>
               <p>{t("storyP2")}</p>
               <p>{t("storyP3")}</p>
@@ -151,13 +151,13 @@ export default async function AboutPage({ params }: Props) {
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center bg-navy hover:bg-navy-light text-white text-sm font-semibold tracking-[0.12em] uppercase px-7 py-3.5 rounded-full transition-all duration-200"
+                className="inline-flex items-center justify-center bg-navy hover:bg-navy-light text-white text-sm font-semibold tracking-[0.12em] uppercase px-7 py-3.5 rounded-full transition duration-200"
               >
                 {t("bookConsultation")}
               </Link>
               <a
                 href="tel:+13052183513"
-                className="inline-flex items-center justify-center border-2 border-navy text-navy hover:bg-navy hover:text-white text-sm font-semibold tracking-[0.12em] uppercase px-7 py-3.5 rounded-full transition-all duration-200"
+                className="inline-flex items-center justify-center border-2 border-navy text-navy hover:bg-navy hover:text-white text-sm font-semibold tracking-[0.12em] uppercase px-7 py-3.5 rounded-full transition duration-200"
               >
                 (305) 218-3513
               </a>
@@ -180,7 +180,7 @@ export default async function AboutPage({ params }: Props) {
                   <v.icon size={24} className="text-gold" />
                 </div>
                 <h3 className="font-heading text-xl text-navy mb-3">{v.title}</h3>
-                <p className="text-navy/55 text-sm leading-relaxed">{v.desc}</p>
+                <p className="text-navy/70 text-sm leading-relaxed">{v.desc}</p>
               </div>
             ))}
           </div>
@@ -201,10 +201,10 @@ export default async function AboutPage({ params }: Props) {
               MR
             </div>
             <div>
-              <p className="text-gold text-xs tracking-[0.3em] uppercase mb-1">{t("drTitle")}</p>
+              <p className="text-gold-deep text-xs tracking-[0.3em] uppercase mb-1">{t("drTitle")}</p>
               <h3 className="font-heading text-4xl text-navy mb-3">Dr. Mario Reyes-Serrano</h3>
-              <p className="text-navy/60 leading-relaxed mb-4">{t("drBio1")}</p>
-              <p className="text-navy/60 leading-relaxed">{t("drBio2")}</p>
+              <p className="text-navy/70 leading-relaxed mb-4">{t("drBio1")}</p>
+              <p className="text-navy/70 leading-relaxed">{t("drBio2")}</p>
             </div>
           </div>
         </div>

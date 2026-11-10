@@ -26,7 +26,7 @@ export default function TransformImage({ src, alt, badge, placeholder }: Transfo
       ) : (
         <div className="flex h-full w-full flex-col items-center justify-center gap-2 hero-pattern text-center px-3">
           <span className="font-heading text-3xl text-gold/70">{badge}</span>
-          <span className="text-white/30 text-[11px] tracking-[0.2em] uppercase">{placeholder}</span>
+          <span className="text-white/65 text-[11px] tracking-[0.2em] uppercase">{placeholder}</span>
         </div>
       )}
       <span className="absolute top-3 left-3 rounded-full bg-navy/80 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.15em] text-gold">

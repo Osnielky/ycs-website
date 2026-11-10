@@ -7,7 +7,8 @@ export const metadata: Metadata = {
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
+      {/* suppressHydrationWarning: browser extensions inject attributes on <body> before hydration */}
       <body suppressHydrationWarning>
         {children}
       </body>

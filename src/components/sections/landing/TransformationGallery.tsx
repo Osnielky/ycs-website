@@ -26,7 +26,7 @@ export default function TransformationGallery({
         <div className="text-center max-w-2xl mx-auto mb-14">
           <span className="gold-divider mx-auto mb-5" />
           <h2 className="font-heading text-4xl md:text-5xl text-navy font-light mb-4">{heading}</h2>
-          {intro && <p className="text-navy/60 leading-relaxed">{intro}</p>}
+          {intro && <p className="text-navy/70 leading-relaxed">{intro}</p>}
         </div>
 
         {education && (
@@ -38,14 +38,14 @@ export default function TransformationGallery({
                 <h3 className="font-heading text-2xl md:text-3xl text-navy font-light mb-3">
                   {education.title}
                 </h3>
-                <p className="text-navy/65 leading-relaxed">{education.body}</p>
+                <p className="text-navy/70 leading-relaxed">{education.body}</p>
               </div>
               <div>
                 <span className="gold-divider mb-4" />
                 <h3 className="font-heading text-2xl md:text-3xl text-navy font-light mb-3">
                   {education.combinedTitle}
                 </h3>
-                <p className="text-navy/65 leading-relaxed">{education.combinedBody}</p>
+                <p className="text-navy/70 leading-relaxed">{education.combinedBody}</p>
               </div>
             </div>
 
@@ -100,7 +100,7 @@ export default function TransformationGallery({
                     />
                   ))}
                 </div>
-                {t.note && <p className="text-navy/45 text-sm mt-5 italic">{t.note}</p>}
+                {t.note && <p className="text-navy/70 text-sm mt-5 italic">{t.note}</p>}
               </div>
             );
           })}

@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 function AnimatedNumber({
   value,
@@ -13,26 +14,31 @@ function AnimatedNumber({
   active: boolean;
 }) {
   const [display, setDisplay] = useState(0);
+  const locale = useLocale();
+  const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (!active) return;
-    const duration = 1800;
+    // Reduced motion: land on the final number in a single frame, no count-up
+    const duration = reducedMotion ? 1 : 1800;
     const start = performance.now();
+    let frame = 0;
 
     const tick = (now: number) => {
       const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
+      const progress = Math.min(Math.max(elapsed, 1) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
       setDisplay(Math.round(eased * value));
-      if (progress < 1) requestAnimationFrame(tick);
+      if (progress < 1) frame = requestAnimationFrame(tick);
     };
 
-    requestAnimationFrame(tick);
-  }, [active, value]);
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [active, value, reducedMotion]);
 
   return (
-    <span>
-      {display.toLocaleString()}
+    <span className="tabular-nums">
+      {new Intl.NumberFormat(locale).format(display)}
       {suffix}
     </span>
   );
@@ -71,8 +77,8 @@ export default function StatsBar() {
       className="bg-navy py-14 relative overflow-hidden"
     >
       {/* Subtle top/bottom gold lines */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
+      <div aria-hidden="true" className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
+      <div aria-hidden="true" className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0">
@@ -91,7 +97,7 @@ export default function StatsBar() {
                 />
               </div>
               <span className="gold-divider mx-auto mb-3" />
-              <p className="text-white/60 text-sm tracking-wider uppercase">
+              <p className="text-white/65 text-sm tracking-wider uppercase">
                 {stat.label}
               </p>
             </div>

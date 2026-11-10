@@ -3,11 +3,12 @@
 import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
-import { Phone, ArrowDown, Star } from "lucide-react";
+import { Phone, ArrowDown, Star, Pause, Play } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import * as z from "zod/mini"; // tree-shakable build: the full "zod" entry adds ~300 KB to the client bundle
 import { useTranslations } from "next-intl";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 /* ── Add more images to public/hero/ as 2.jpg, 3.jpg … to extend the slideshow ── */
 const slides = [
@@ -23,9 +24,9 @@ export default function Hero() {
   const t = useTranslations("hero");
 
   const schema = useMemo(() => z.object({
-    name: z.string().min(2, t("formNameError")),
-    phone: z.string().min(7, t("formPhoneError")),
-    procedure: z.string().optional(),
+    name: z.string().check(z.minLength(2, t("formNameError"))),
+    phone: z.string().check(z.minLength(7, t("formPhoneError"))),
+    procedure: z.optional(z.string()),
   }), [t]);
 
   type FormData = z.infer<typeof schema>;
@@ -36,6 +37,11 @@ export default function Hero() {
   const [prev, setPrev] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
+  // null = visitor has not chosen; autoplay then follows the reduced-motion preference
+  const [userPlaying, setUserPlaying] = useState<boolean | null>(null);
+  const reducedMotion = usePrefersReducedMotion();
+  const playing = userPlaying ?? !reducedMotion;
 
   const {
     register,
@@ -44,6 +50,7 @@ export default function Hero() {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   useEffect(() => {
+    if (!playing) return;
     const timer = setInterval(() => {
       // Functional update: `c` is always the latest value, no stale closure
       setCurrent((c) => {
@@ -52,17 +59,21 @@ export default function Hero() {
       });
     }, 6000);
     return () => clearInterval(timer);
-  }, []); // Empty deps: interval is created once, never re-created
+  }, [playing]);
 
   async function onSubmit(data: FormData) {
     setLoading(true);
+    setSubmitError(false);
     try {
-      await fetch("/api/leads", {
+      const res = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
+      if (!res.ok) throw new Error(`Lead request failed: ${res.status}`);
       setSubmitted(true);
+    } catch {
+      setSubmitError(true);
     } finally {
       setLoading(false);
     }
@@ -109,17 +120,31 @@ export default function Hero() {
       <div className="absolute inset-0 z-10 bg-gradient-to-t from-navy-dark/80 via-transparent to-navy-dark/30" />
 
       {/* Slide indicator dots */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+      <div className="absolute bottom-7 left-1/2 -translate-x-1/2 z-20 flex items-center">
         {slides.map((_, i) => (
           <button
             key={i}
+            type="button"
             onClick={() => { setPrev(current); setCurrent(i); }}
-            className={`h-[3px] rounded-full transition-all duration-500 ${
-              i === current ? "w-8 bg-gold" : "w-3 bg-white/35"
-            }`}
-            aria-label={`Slide ${i + 1}`}
-          />
+            className="group px-1.5 py-3"
+            aria-label={t("goToSlide", { n: i + 1 })}
+            aria-current={i === current ? "true" : undefined}
+          >
+            <span
+              className={`block h-[3px] rounded-full transition-[width,background-color] duration-500 ${
+                i === current ? "w-8 bg-gold" : "w-3 bg-white/35 group-hover:bg-white/70"
+              }`}
+            />
+          </button>
         ))}
+        <button
+          type="button"
+          onClick={() => setUserPlaying(!playing)}
+          className="ml-2 p-2 text-white/65 hover:text-gold transition-colors"
+          aria-label={playing ? t("pauseSlideshow") : t("playSlideshow")}
+        >
+          {playing ? <Pause size={12} /> : <Play size={12} />}
+        </button>
       </div>
 
       {/* ── Main content ── */}
@@ -162,13 +187,13 @@ export default function Hero() {
           <div className="flex flex-col sm:flex-row gap-4 mb-10">
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center bg-gold hover:bg-gold-dark text-white font-semibold text-sm tracking-[0.12em] uppercase px-8 py-4 rounded-full transition-all duration-200 hover:scale-105 hover:shadow-[0_8px_30px_rgba(201,164,110,0.5)]"
+              className="inline-flex items-center justify-center bg-gold hover:bg-gold-dark text-navy-dark font-semibold text-sm tracking-[0.12em] uppercase px-8 py-4 rounded-full transition duration-200 hover:scale-105 hover:shadow-[0_8px_30px_rgba(201,164,110,0.5)]"
             >
               {t("bookConsultation")}
             </Link>
             <Link
               href="/gallery"
-              className="inline-flex items-center justify-center border border-white/30 hover:border-gold text-white hover:text-gold text-sm tracking-[0.12em] uppercase px-8 py-4 rounded-full transition-all duration-200"
+              className="inline-flex items-center justify-center border border-white/30 hover:border-gold text-white hover:text-gold text-sm tracking-[0.12em] uppercase px-8 py-4 rounded-full transition duration-200"
             >
               {t("viewResults")}
             </Link>
@@ -178,7 +203,7 @@ export default function Hero() {
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <a
               href="tel:+13052183513"
-              className="inline-flex items-center gap-2 text-white/50 hover:text-gold transition-colors text-sm"
+              className="inline-flex items-center gap-2 text-white/65 hover:text-gold transition-colors text-sm"
             >
               <Phone size={14} />
               <span>{t("callUs")}</span>
@@ -188,9 +213,9 @@ export default function Hero() {
               href="https://wa.me/13052183513"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-white/50 hover:text-[#25D366] transition-colors text-sm"
+              className="inline-flex items-center gap-2 text-white/65 hover:text-[#25D366] transition-colors text-sm"
             >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden="true">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
               </svg>
               <span>{t("chatWhatsapp")}</span>
@@ -203,12 +228,12 @@ export default function Hero() {
           <div className="absolute inset-0 bg-gold/10 blur-3xl rounded-3xl" />
           <div className="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 shadow-[0_20px_60px_rgba(6,14,31,0.6)]">
             {submitted ? (
-              <div className="text-center py-8">
+              <div className="text-center py-8" role="status">
                 <div className="w-16 h-16 bg-gold/20 border border-gold rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-gold text-2xl">✓</span>
+                  <span className="text-gold text-2xl" aria-hidden="true">✓</span>
                 </div>
                 <h3 className="font-heading text-white text-2xl mb-2">{t("thankYouTitle")}</h3>
-                <p className="text-white/60 text-sm leading-relaxed">
+                <p className="text-white/65 text-sm leading-relaxed">
                   {t("thankYouMessage")}
                 </p>
               </div>
@@ -217,39 +242,46 @@ export default function Hero() {
                 <div className="mb-6">
                   <span className="gold-divider mb-3" />
                   <h2 className="font-heading text-white text-2xl font-light">{t("formTitle")}</h2>
-                  <p className="text-white/50 text-sm mt-1">{t("formSubtitle")}</p>
+                  <p className="text-white/65 text-sm mt-1">{t("formSubtitle")}</p>
                 </div>
 
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
                   <div>
                     <input
                       {...register("name")}
                       placeholder={t("formNamePlaceholder")}
+                      aria-label={t("formNamePlaceholder")}
+                      aria-invalid={!!errors.name}
+                      aria-describedby={errors.name ? "hero-name-error" : undefined}
                       autoComplete="name"
                       data-lpignore="true"
                       data-1p-ignore
-                      className="w-full bg-white/10 border border-white/25 focus:border-gold rounded-lg px-4 py-3 text-white placeholder-white/40 text-sm outline-none transition-colors"
+                      className="w-full bg-white/10 border border-white/25 focus:border-gold rounded-lg px-4 py-3 text-white placeholder-white/40 text-sm outline-none focus-visible:ring-2 focus-visible:ring-gold/60 transition-colors"
                     />
-                    {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name.message}</p>}
+                    {errors.name && <p id="hero-name-error" role="alert" className="text-red-400 text-xs mt-1">{errors.name.message}</p>}
                   </div>
 
                   <div>
                     <input
                       {...register("phone")}
                       placeholder={t("formPhonePlaceholder")}
+                      aria-label={t("formPhonePlaceholder")}
+                      aria-invalid={!!errors.phone}
+                      aria-describedby={errors.phone ? "hero-phone-error" : undefined}
                       type="tel"
                       autoComplete="tel"
                       data-lpignore="true"
                       data-1p-ignore
-                      className="w-full bg-white/10 border border-white/25 focus:border-gold rounded-lg px-4 py-3 text-white placeholder-white/40 text-sm outline-none transition-colors"
+                      className="w-full bg-white/10 border border-white/25 focus:border-gold rounded-lg px-4 py-3 text-white placeholder-white/40 text-sm outline-none focus-visible:ring-2 focus-visible:ring-gold/60 transition-colors"
                     />
-                    {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone.message}</p>}
+                    {errors.phone && <p id="hero-phone-error" role="alert" className="text-red-400 text-xs mt-1">{errors.phone.message}</p>}
                   </div>
 
                   <div>
                     <select
                       {...register("procedure")}
-                      className="w-full bg-white/10 border border-white/25 focus:border-gold rounded-lg px-4 py-3 text-white/70 text-sm outline-none transition-colors appearance-none"
+                      aria-label={t("formProcedurePlaceholder")}
+                      className="w-full bg-white/10 border border-white/25 focus:border-gold rounded-lg px-4 py-3 text-white/70 text-sm outline-none focus-visible:ring-2 focus-visible:ring-gold/60 transition-colors appearance-none"
                     >
                       <option value="" className="bg-navy text-white">{t("formProcedurePlaceholder")}</option>
                       {procedures.map((p) => (
@@ -258,15 +290,21 @@ export default function Hero() {
                     </select>
                   </div>
 
+                  {submitError && (
+                    <p role="alert" className="text-red-300 text-sm text-center bg-red-500/15 border border-red-400/30 rounded-lg py-2 px-3">
+                      {t("formError")}
+                    </p>
+                  )}
+
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-gold hover:bg-gold-dark text-white font-semibold text-sm tracking-[0.1em] uppercase py-3.5 rounded-lg transition-all duration-200 hover:shadow-[0_4px_20px_rgba(201,164,110,0.5)] disabled:opacity-60"
+                    className="w-full bg-gold hover:bg-gold-dark text-navy-dark font-semibold text-sm tracking-[0.1em] uppercase py-3.5 rounded-lg transition duration-200 hover:shadow-[0_4px_20px_rgba(201,164,110,0.5)] disabled:opacity-60"
                   >
                     {loading ? t("formSubmitting") : t("formSubmit")}
                   </button>
 
-                  <p className="text-white/30 text-[11px] text-center leading-relaxed">
+                  <p className="text-white/65 text-[11px] text-center leading-relaxed">
                     {t("formDisclaimer")}
                   </p>
                 </form>
@@ -277,8 +315,8 @@ export default function Hero() {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-10 right-8 z-20 flex flex-col items-center gap-1 animate-bounce">
-        <ArrowDown size={16} className="text-white/30" />
+      <div aria-hidden="true" className="absolute bottom-10 right-8 z-20 flex flex-col items-center gap-1 motion-safe:animate-bounce">
+        <ArrowDown size={16} className="text-white/65" />
       </div>
     </section>
   );

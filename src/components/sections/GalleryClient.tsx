@@ -5,6 +5,8 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
+import { useFocusTrap } from "@/hooks/useFocusTrap";
+import { useQueryParamState } from "@/hooks/useQueryParamState";
 
 interface CaseItem {
   id: number;
@@ -61,6 +63,7 @@ function DragSlider({
   afterAlt,
   beforeLabel,
   afterLabel,
+  dragHint,
 }: {
   beforeBg: string;
   afterBg: string;
@@ -82,13 +85,39 @@ function DragSlider({
     setPos(Math.min(100, Math.max(0, ((clientX - left) / width) * 100)));
   }, []);
 
+  // Keyboard alternative to dragging. Stops propagation so the lightbox's
+  // arrow-key prev/next does not also fire while the slider has focus.
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    const step = e.shiftKey ? 10 : 5;
+    let next: number | null = null;
+    if (e.key === "ArrowLeft" || e.key === "ArrowDown") next = pos - step;
+    else if (e.key === "ArrowRight" || e.key === "ArrowUp") next = pos + step;
+    else if (e.key === "Home") next = 0;
+    else if (e.key === "End") next = 100;
+    if (next === null) return;
+    e.preventDefault();
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+    setPos(Math.min(100, Math.max(0, next)));
+  };
+
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-full select-none touch-none cursor-col-resize overflow-hidden"
+      role="slider"
+      tabIndex={0}
+      aria-label={dragHint}
+      aria-orientation="horizontal"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={Math.round(pos)}
+      aria-valuetext={`${beforeLabel} ${Math.round(pos)}% · ${afterLabel} ${100 - Math.round(pos)}%`}
+      className="relative w-full h-full select-none touch-none cursor-col-resize overflow-hidden focus-visible:-outline-offset-4"
+      onKeyDown={onKeyDown}
       onPointerDown={(e) => { dragging.current = true; e.currentTarget.setPointerCapture(e.pointerId); move(e.clientX); }}
       onPointerMove={(e) => { if (dragging.current) move(e.clientX); }}
       onPointerUp={() => { dragging.current = false; }}
+      onPointerCancel={() => { dragging.current = false; }}
     >
       {/* Before */}
       <div className={`absolute inset-0 bg-gradient-to-br ${beforeBg}`}>
@@ -106,10 +135,10 @@ function DragSlider({
         </span>
       </div>
 
-      {/* After — clipped */}
+      {/* After — revealed to the right of the divider, matching the Before/After labels and the grid cards */}
       <div
         className={`absolute inset-0 bg-gradient-to-br ${afterBg}`}
-        style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
+        style={{ clipPath: `inset(0 0 0 ${pos}%)` }}
       >
         {afterImg && (
           <Image
@@ -136,7 +165,7 @@ function DragSlider({
         className="absolute top-1/2 z-10 pointer-events-none -translate-y-1/2 -translate-x-1/2 w-9 h-9 rounded-full bg-white shadow-[0_2px_12px_rgba(0,0,0,0.3)] flex items-center justify-center"
         style={{ left: `${pos}%` }}
       >
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" className="w-4 h-4 text-[#0d1b3e]">
+        <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" className="w-4 h-4 text-[#0d1b3e]">
           <polyline points="6,4 2,10 6,16" />
           <polyline points="14,4 18,10 14,16" />
         </svg>
@@ -169,11 +198,20 @@ function GalleryCard({
 
   return (
     <div
-      className="break-inside-avoid mb-5 group cursor-pointer"
+      className="relative break-inside-avoid mb-5 group"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onClick={onClick}
+      onFocus={() => setHovered(true)}
+      onBlur={() => setHovered(false)}
     >
+      {/* The whole card is one real button, so it is reachable and operable by keyboard */}
+      <button
+        type="button"
+        onClick={onClick}
+        aria-haspopup="dialog"
+        aria-label={`${viewFullSizeLabel}: ${item.procedure}`}
+        className="absolute inset-0 z-30 rounded-xl cursor-pointer"
+      />
       <div className="overflow-hidden rounded-xl border border-cream-dark shadow-sm bg-white transition-shadow duration-300 group-hover:shadow-[0_16px_48px_rgba(13,27,62,0.13)]">
         {/* Image area */}
         <div className={`relative ${imgH} overflow-hidden`}>
@@ -206,19 +244,18 @@ function GalleryCard({
             )}
           </div>
 
-          {/* Divider */}
+          {/* Divider + handle — one full-width layer moved with transform (compositor-only) */}
           <div
-            className={`absolute top-0 bottom-0 w-px bg-white/85 z-10 transition-[left] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${hovered ? "gallery-card-sweep-x" : ""}`}
-            style={{ left: "50%" }}
-          />
-          <div
-            className={`absolute top-1/2 z-10 -translate-y-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-white shadow-md flex items-center justify-center transition-[left] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${hovered ? "gallery-card-sweep-x" : ""}`}
-            style={{ left: "50%" }}
+            aria-hidden="true"
+            className={`absolute inset-0 z-10 pointer-events-none ${hovered ? "gallery-card-sweep-x" : ""}`}
           >
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" className="w-3 h-3 text-[#0d1b3e]">
-              <polyline points="5,3 2,8 5,13" />
-              <polyline points="11,3 14,8 11,13" />
-            </svg>
+            <div className="absolute top-0 bottom-0 left-1/2 w-px bg-white/85" />
+            <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-white shadow-md flex items-center justify-center">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" className="w-3 h-3 text-[#0d1b3e]">
+                <polyline points="5,3 2,8 5,13" />
+                <polyline points="11,3 14,8 11,13" />
+              </svg>
+            </div>
           </div>
 
           {/* Labels */}
@@ -240,7 +277,7 @@ function GalleryCard({
           )}
 
           {/* Expand overlay */}
-          <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+          <div aria-hidden="true" className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none">
             <div className="bg-white/15 backdrop-blur-sm border border-white/30 rounded-full px-4 py-1.5">
               <span className="text-white text-[11px] tracking-wider font-medium">{viewFullSizeLabel}</span>
             </div>
@@ -251,11 +288,11 @@ function GalleryCard({
         <div className="px-4 py-3.5 flex items-center justify-between">
           <div>
             <p className="text-[#0d1b3e] text-sm font-semibold leading-tight">{item.procedure}</p>
-            <p className="text-[#0d1b3e]/40 text-[11px] tracking-wider uppercase mt-0.5">{item.category}</p>
+            <p className="text-[#0d1b3e]/70 text-[11px] tracking-wider uppercase mt-0.5">{item.category}</p>
           </div>
           <div className="text-right">
-            <p className="text-[#0d1b3e]/30 text-[10px] tracking-wider uppercase">{recoveryLabel}</p>
-            <p className="text-[#c9a46e] text-xs font-semibold mt-0.5">{item.recovery}</p>
+            <p className="text-[#0d1b3e]/70 text-[10px] tracking-wider uppercase">{recoveryLabel}</p>
+            <p className="text-gold-deep text-xs font-semibold mt-0.5">{item.recovery}</p>
           </div>
         </div>
       </div>
@@ -277,6 +314,10 @@ function Lightbox({
   recoveryLabel,
   disclaimer,
   bookLabel,
+  closeLabel,
+  prevLabel,
+  nextLabel,
+  dialogLabel,
 }: {
   items: CaseItem[];
   index: number;
@@ -289,8 +330,14 @@ function Lightbox({
   recoveryLabel: string;
   disclaimer: string;
   bookLabel: string;
+  closeLabel: string;
+  prevLabel: string;
+  nextLabel: string;
+  dialogLabel: string;
 }) {
   const item = items[index];
+  const panelRef = useRef<HTMLDivElement>(null);
+  useFocusTrap(panelRef);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -307,27 +354,32 @@ function Lightbox({
   }, [onClose, onPrev, onNext]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8" onClick={onClose}>
-      {/* Backdrop */}
-      <div className="absolute inset-0 bg-[#060e1f]/96 backdrop-blur-lg" />
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8">
+      {/* Backdrop — click to dismiss (Escape and the Close button cover keyboard) */}
+      <div aria-hidden="true" className="absolute inset-0 bg-[#060e1f]/96 backdrop-blur-lg" onClick={onClose} />
 
       {/* Panel */}
       <div
-        className="relative z-10 w-full max-w-xl rounded-2xl overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.8)] border border-white/8"
-        onClick={(e) => e.stopPropagation()}
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label={dialogLabel}
+        tabIndex={-1}
+        className="relative z-10 w-full max-w-xl max-h-[calc(100dvh-2rem)] overflow-y-auto overscroll-contain rounded-2xl shadow-[0_32px_80px_rgba(0,0,0,0.8)] border border-white/8 focus:outline-none"
       >
         {/* Close */}
         <button
+          type="button"
           onClick={onClose}
           className="absolute top-4 right-4 z-30 w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
-          aria-label="Close"
+          aria-label={closeLabel}
         >
           <X size={14} />
         </button>
 
         {/* Counter */}
         <div className="absolute top-4 left-4 z-30 bg-black/40 backdrop-blur-sm rounded-full px-3 py-1">
-          <span className="text-white/60 text-[11px] tracking-wider">{index + 1} / {items.length}</span>
+          <span className="text-white/70 text-[11px] tracking-wider tabular-nums" aria-live="polite">{index + 1} / {items.length}</span>
         </div>
 
         {/* Slider */}
@@ -348,22 +400,22 @@ function Lightbox({
         {/* Info panel */}
         <div className="bg-[#0d1b3e]/80 p-6 backdrop-blur-sm">
           <div className="flex items-start justify-between mb-4">
-            <div>
+            <div className="min-w-0">
               <p className="text-[#c9a46e] text-[11px] tracking-[0.2em] uppercase font-semibold mb-1">{item.category}</p>
               <h3 className="font-[var(--font-heading)] text-white text-2xl font-light">{item.procedure}</h3>
             </div>
             <div className="text-right shrink-0 ml-4">
-              <p className="text-white/35 text-[10px] tracking-wider uppercase">{recoveryLabel}</p>
+              <p className="text-white/65 text-[10px] tracking-wider uppercase">{recoveryLabel}</p>
               <p className="text-white/70 text-sm mt-0.5 font-medium">{item.recovery}</p>
             </div>
           </div>
 
-          <p className="text-white/40 text-xs leading-relaxed mb-5">{disclaimer}</p>
+          <p className="text-white/65 text-xs leading-relaxed mb-5">{disclaimer}</p>
 
           <Link
             href="/contact"
             onClick={onClose}
-            className="flex items-center justify-center w-full bg-[#c9a46e] hover:bg-[#a87d45] text-white font-semibold text-xs tracking-[0.15em] uppercase py-3.5 rounded-lg transition-all duration-200 hover:shadow-[0_4px_20px_rgba(201,164,110,0.4)]"
+            className="flex items-center justify-center w-full bg-[#c9a46e] hover:bg-[#a87d45] text-navy-dark font-semibold text-xs tracking-[0.15em] uppercase py-3.5 rounded-lg transition duration-200 hover:shadow-[0_4px_20px_rgba(201,164,110,0.4)]"
           >
             {bookLabel}
           </Link>
@@ -371,16 +423,18 @@ function Lightbox({
 
         {/* Prev / Next */}
         <button
+          type="button"
           onClick={onPrev}
           className="absolute left-3 top-[200px] -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-black/40 hover:bg-black/65 text-white backdrop-blur-sm transition-colors z-20"
-          aria-label="Previous"
+          aria-label={prevLabel}
         >
           <ChevronLeft size={18} />
         </button>
         <button
+          type="button"
           onClick={onNext}
           className="absolute right-3 top-[200px] -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-black/40 hover:bg-black/65 text-white backdrop-blur-sm transition-colors z-20"
-          aria-label="Next"
+          aria-label={nextLabel}
         >
           <ChevronRight size={18} />
         </button>
@@ -393,7 +447,8 @@ function Lightbox({
 
 export default function GalleryClient() {
   const t = useTranslations("galleryPage");
-  const [activeCategory, setActiveCategory] = useState("All");
+  // Filter lives in the URL (?category=Face) so a filtered view can be linked to
+  const [activeCategory, setActiveCategory] = useQueryParamState("category", CATEGORY_KEYS, "All");
   const [lightboxIndex, setLightboxIndex]   = useState<number | null>(null);
 
   const categoryDisplayLabel: Record<string, string> = {
@@ -433,6 +488,8 @@ export default function GalleryClient() {
             src="/hero/miami-cosmetic-surgery-before-after-results.webp"
             alt="Before and after cosmetic surgery results in Miami including facelift, rhinoplasty, tummy tuck and body contouring"
             title="Miami Cosmetic Surgery Before and After Gallery"
+            width={1920}
+            height={1080}
             fetchPriority="high"
             loading="eager"
             decoding="async"
@@ -445,26 +502,26 @@ export default function GalleryClient() {
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <div className="inline-flex items-center gap-2 bg-[#c9a46e]/12 border border-[#c9a46e]/25 rounded-full px-4 py-1.5 mb-8">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#c9a46e] animate-pulse" />
+            <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-[#c9a46e] motion-safe:animate-pulse" />
             <span className="text-[#c9a46e]/80 text-[11px] tracking-[0.22em] uppercase font-semibold">{t("badgeLabel")}</span>
           </div>
 
           <span className="gold-divider mx-auto mb-6" />
 
           <h1 className="font-[var(--font-heading)] text-white font-light leading-[1.06] mb-5">
-            <span className="block text-5xl md:text-7xl">{t("heroTitle")}</span>
-            <em className="not-italic block text-5xl md:text-7xl text-[#c9a46e]">Gallery</em>
+            <span className="block text-5xl md:text-7xl">{t("heroTitleLead")}</span>
+            <em className="not-italic block text-5xl md:text-7xl text-[#c9a46e]">{t("heroTitleAccent")}</em>
           </h1>
 
-          <p className="text-white/50 text-lg leading-relaxed max-w-xl mx-auto">
+          <p className="text-white/65 text-lg leading-relaxed max-w-xl mx-auto">
             {t("heroSubtitle")}
           </p>
         </div>
       </section>
 
       {/* ── Consent bar ── */}
-      <div className="bg-[#1a2d5a]/40 border-y border-[#c9a46e]/12 py-2.5">
-        <p className="text-center text-white/30 text-[11px] tracking-[0.15em] uppercase">
+      <div className="bg-[#1a2d5a] border-y border-[#c9a46e]/12 py-2.5">
+        <p className="text-center text-white/65 text-[11px] tracking-[0.15em] uppercase">
           {t("consentBar")}
         </p>
       </div>
@@ -474,22 +531,24 @@ export default function GalleryClient() {
         <div className="max-w-7xl mx-auto px-6">
 
           {/* Filter tabs */}
-          <div className="flex flex-wrap justify-center gap-2 mb-5">
+          <div className="flex flex-wrap justify-center gap-2 mb-5" role="group" aria-label={t("badgeLabel")}>
             {CATEGORY_KEYS.map((cat) => {
               const active = cat === activeCategory;
               return (
                 <button
                   key={cat}
+                  type="button"
+                  aria-pressed={active}
                   onClick={() => setActiveCategory(cat)}
-                  className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[11px] font-bold tracking-[0.15em] uppercase transition-all duration-250 ${
+                  className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[11px] font-bold tracking-[0.15em] uppercase transition duration-250 ${
                     active
                       ? "bg-[#0d1b3e] text-white shadow-[0_4px_18px_rgba(13,27,62,0.22)]"
-                      : "bg-white border border-[#0d1b3e]/12 text-[#0d1b3e]/45 hover:border-[#0d1b3e]/35 hover:text-[#0d1b3e] hover:shadow-sm"
+                      : "bg-white border border-[#0d1b3e]/12 text-[#0d1b3e]/70 hover:border-[#0d1b3e]/35 hover:text-[#0d1b3e] hover:shadow-sm"
                   }`}
                 >
                   {categoryDisplayLabel[cat]}
-                  <span className={`inline-flex items-center justify-center w-4 h-4 rounded-full text-[10px] font-bold leading-none ${
-                    active ? "bg-[#c9a46e] text-white" : "bg-[#0d1b3e]/8 text-[#0d1b3e]/40"
+                  <span className={`inline-flex items-center justify-center w-4 h-4 rounded-full text-[10px] font-bold leading-none tabular-nums ${
+                    active ? "bg-[#c9a46e] text-navy-dark" : "bg-[#0d1b3e]/8 text-[#0d1b3e]/70"
                   }`}>
                     {countFor(cat)}
                   </span>
@@ -499,7 +558,7 @@ export default function GalleryClient() {
           </div>
 
           {/* Count line */}
-          <p className="text-center text-[#0d1b3e]/30 text-[11px] tracking-[0.18em] uppercase mb-12">
+          <p aria-live="polite" className="text-center text-[#0d1b3e]/70 text-[11px] tracking-[0.18em] uppercase mb-12">
             {filtered.length} {filtered.length !== 1 ? t("resultsSuffix") : t("resultSuffix")}
             {activeCategory !== "All" && ` · ${categoryDisplayLabel[activeCategory]}`}
           </p>
@@ -522,7 +581,7 @@ export default function GalleryClient() {
 
           {filtered.length === 0 && (
             <div className="text-center py-20">
-              <p className="text-[#0d1b3e]/30 text-sm tracking-wider">{t("noResults")}</p>
+              <p className="text-[#0d1b3e]/70 text-sm tracking-wider">{t("noResults")}</p>
             </div>
           )}
 
@@ -532,12 +591,12 @@ export default function GalleryClient() {
             <p className="font-[var(--font-heading)] text-[#0d1b3e] text-3xl md:text-4xl font-light mb-2">
               {t("ctaHeading")}
             </p>
-            <p className="text-[#0d1b3e]/45 text-sm mb-8">
+            <p className="text-[#0d1b3e]/70 text-sm mb-8">
               {t("ctaSubtitle")}
             </p>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center bg-[#0d1b3e] hover:bg-[#060e1f] text-white font-semibold text-[11px] tracking-[0.18em] uppercase px-10 py-4 rounded-full transition-all duration-200 hover:shadow-[0_8px_30px_rgba(13,27,62,0.28)]"
+              className="inline-flex items-center justify-center bg-[#0d1b3e] hover:bg-[#060e1f] text-white font-semibold text-[11px] tracking-[0.18em] uppercase px-10 py-4 rounded-full transition duration-200 hover:shadow-[0_8px_30px_rgba(13,27,62,0.28)]"
             >
               {t("ctaButton")}
             </Link>
@@ -559,6 +618,10 @@ export default function GalleryClient() {
           recoveryLabel={recoveryLabel}
           disclaimer={disclaimer}
           bookLabel={bookLabel}
+          closeLabel={t("close")}
+          prevLabel={t("previous")}
+          nextLabel={t("next")}
+          dialogLabel={t("lightboxLabel", { procedure: filtered[lightboxIndex]?.procedure ?? "" })}
         />
       )}
     </>

@@ -93,7 +93,7 @@ export default async function ProceduresPage({ params }: Props) {
           <h1 className="font-heading text-6xl md:text-7xl text-white font-light mb-5">
             {t("heroTitle")}
           </h1>
-          <p className="text-white/60 text-xl leading-relaxed max-w-2xl mx-auto">
+          <p className="text-white/65 text-xl leading-relaxed max-w-2xl mx-auto">
             {t("heroSubtitle")}
           </p>
         </div>
@@ -133,20 +133,20 @@ export default async function ProceduresPage({ params }: Props) {
                           <p className="text-gold text-xs tracking-widest uppercase">{proc.tagline}</p>
                         </div>
                         <div>
-                          <p className="text-white/50 text-sm leading-relaxed mb-4 line-clamp-2">
+                          <p className="text-white/65 text-sm leading-relaxed mb-4 line-clamp-2">
                             {locale === "es" && proc.es?.description ? proc.es.description : proc.description}
                           </p>
                           <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-1.5 text-white/40 text-xs">
+                            <div className="flex items-center gap-1.5 text-white/65 text-xs">
                               <Clock size={11} />
                               <span>{proc.recovery}</span>
                             </div>
-                            <span className="flex items-center gap-1 text-gold text-xs font-medium group-hover:gap-2 transition-all">
+                            <span className="flex items-center gap-1 text-gold text-xs font-medium group-hover:gap-2 transition-[gap]">
                               {t("learnMore")} <ArrowRight size={12} />
                             </span>
                           </div>
                         </div>
-                        <div className="absolute inset-0 border-2 border-gold/0 group-hover:border-gold/30 rounded-xl transition-all duration-300" />
+                        <div className="absolute inset-0 border-2 border-gold/0 group-hover:border-gold/30 rounded-xl transition duration-300" />
                       </div>
                     </Link>
                   ))}

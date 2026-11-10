@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Cormorant_Garamond, Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, setRequestLocale } from "next-intl/server";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -75,12 +75,12 @@ export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const messages = await getMessages();
+  const t = await getTranslations("nav");
 
   return (
     <html
       lang={locale}
       className={`${cormorant.variable} ${inter.variable}`}
-      suppressHydrationWarning
     >
       <head>
         <script
@@ -88,10 +88,17 @@ export default async function LocaleLayout({ children, params }: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
         />
       </head>
+      {/* suppressHydrationWarning: browser extensions inject attributes on <body> before hydration */}
       <body className="min-h-screen flex flex-col antialiased" suppressHydrationWarning>
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-white focus:text-navy focus:text-sm focus:font-semibold focus:px-4 focus:py-2.5 focus:rounded-lg focus:shadow-lg"
+        >
+          {t("skipToContent")}
+        </a>
         <NextIntlClientProvider messages={messages}>
           <Navbar />
-          <main className="flex-1">{children}</main>
+          <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">{children}</main>
           <Footer />
         </NextIntlClientProvider>
       </body>
