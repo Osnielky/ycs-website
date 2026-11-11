@@ -312,7 +312,11 @@ export default async function ProcedureDetailPage({ params }: Props) {
           />
           <ProcessSections heading={landing.processHeading} sections={landing.process} />
           {landing.pricing && (
-            <PricingSection pricing={landing.pricing} ctaLabel={labels.defaultCta} />
+            <PricingSection
+              pricing={landing.pricing}
+              ctaLabel={labels.defaultCta}
+              financingLabel={locale === "es" ? "Ver opciones de financiamiento" : "See financing options"}
+            />
           )}
           <CandidacySection candidacy={landing.candidacy} ctaLabel={labels.defaultCta} phone={labels.phone} />
           <RecoveryTimeline heading={landing.timelineHeading} timeline={landing.timeline} />

@@ -5,9 +5,10 @@ import type { LandingPricing } from "@/data/landings";
 interface PricingSectionProps {
   pricing: LandingPricing;
   ctaLabel: string;
+  financingLabel: string;
 }
 
-export default function PricingSection({ pricing, ctaLabel }: PricingSectionProps) {
+export default function PricingSection({ pricing, ctaLabel, financingLabel }: PricingSectionProps) {
   return (
     <section className="py-20 bg-white">
       <div className="max-w-5xl mx-auto px-6">
@@ -53,7 +54,12 @@ export default function PricingSection({ pricing, ctaLabel }: PricingSectionProp
           <div className="bg-navy rounded-2xl p-8">
             <span className="gold-divider mb-5" />
             {pricing.financingNote && (
-              <p className="text-white/80 leading-relaxed mb-6">{pricing.financingNote}</p>
+              <p className="text-white/80 leading-relaxed mb-6">
+                {pricing.financingNote}{" "}
+                <Link href="/financing" className="text-gold underline underline-offset-2 hover:text-gold-light">
+                  {financingLabel}
+                </Link>
+              </p>
             )}
             <Link
               href="/contact"

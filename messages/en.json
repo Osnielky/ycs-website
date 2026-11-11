@@ -108,7 +108,6 @@
     "stars": "{rating} Stars from {count} Google Reviews",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service",
-    "accessibilityStatement": "Accessibility Statement",
     "mobileBook": "Book",
     "mobileCall": "Call",
     "mobileText": "Text",
@@ -118,7 +117,9 @@
     "navAbout": "ABOUT",
     "navTestimonials": "TESTIMONIALS",
     "navContact": "CONTACT US",
-    "copyright": "All rights reserved."
+    "copyright": "All rights reserved.",
+    "financing": "Financing",
+    "outOfTown": "Out-of-Town Patients"
   },
   "footerForm": {
     "intro": "Fill out the form below and we'll get in touch to book a call.",

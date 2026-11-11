@@ -108,7 +108,6 @@
     "stars": "{rating} Estrellas de {count} Reseñas en Google",
     "privacyPolicy": "Política de Privacidad",
     "termsOfService": "Términos de Servicio",
-    "accessibilityStatement": "Declaración de Accesibilidad",
     "mobileBook": "Reservar",
     "mobileCall": "Llamar",
     "mobileText": "Mensaje",
@@ -118,7 +117,9 @@
     "navAbout": "NOSOTROS",
     "navTestimonials": "TESTIMONIOS",
     "navContact": "CONTÁCTENOS",
-    "copyright": "Todos los derechos reservados."
+    "copyright": "Todos los derechos reservados.",
+    "financing": "Financiamiento",
+    "outOfTown": "Pacientes de Fuera"
   },
   "footerForm": {
     "intro": "Complete el formulario a continuación y nos comunicaremos para programar una llamada.",

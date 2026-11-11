@@ -3,6 +3,7 @@ import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { procedures } from "@/data/procedures";
 import { BASE_URL, languageAlternates } from "@/lib/seo";
+import { infoPages } from "@/data/info-pages";
 
 type ChangeFreq = MetadataRoute.Sitemap[number]["changeFrequency"];
 
@@ -66,6 +67,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...entry("/gallery", { changeFrequency: "monthly", priority: 0.8, images: galleryImages() }),
     ...entry("/about", { changeFrequency: "monthly", priority: 0.7 }),
     ...entry("/testimonials", { changeFrequency: "monthly", priority: 0.7 }),
+    ...infoPages.flatMap((p) =>
+      entry(`/${p.slug}`, {
+        changeFrequency: p.kind === "legal" ? "yearly" : "monthly",
+        priority: p.kind === "legal" ? 0.2 : 0.6,
+      }),
+    ),
     ...procedures.flatMap((p) =>
       entry(`/procedures/${p.slug}`, {
         changeFrequency: "monthly",

@@ -189,10 +189,11 @@ export default async function Footer() {
       <div className="bg-gold">
         <div className="w-full px-10 xl:px-20 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-[12px] text-navy-dark">
           <p>© {new Date().getFullYear()} Your Cosmetic Surgery &amp; SPA. {t("copyright")}</p>
-          <div className="flex gap-6">
-            <Link href="#" className="hover:underline underline-offset-2">{t("privacyPolicy")}</Link>
-            <Link href="#" className="hover:underline underline-offset-2">{t("termsOfService")}</Link>
-            <Link href="#" className="hover:underline underline-offset-2">{t("accessibilityStatement")}</Link>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-1">
+            <Link href="/financing" className="hover:underline underline-offset-2">{t("financing")}</Link>
+            <Link href="/out-of-town-patients" className="hover:underline underline-offset-2">{t("outOfTown")}</Link>
+            <Link href="/privacy-policy" className="hover:underline underline-offset-2">{t("privacyPolicy")}</Link>
+            <Link href="/terms" className="hover:underline underline-offset-2">{t("termsOfService")}</Link>
           </div>
         </div>
       </div>

@@ -2,50 +2,43 @@
 # to the matching page on the new site (ycosmeticsurgery.com).
 #
 # HOW TO USE
-#   Option A (Apache hosting): paste everything below at the TOP of the old site's
-#   .htaccess file, above the "# BEGIN WordPress" block.
-#   Option B (no file access): install the free "Redirection" WordPress plugin and
-#   add each pair below as Source URL -> Target URL, type 301.
+#   In Bluehost's File Manager, open the old site's folder (public_html), edit the
+#   file named ".htaccess", and paste everything below at the very TOP of the file,
+#   above the line "# BEGIN WordPress". Save.
 #
-# Keep the old domain registered and these redirects in place for at least a year.
-# Pages marked (*) have no equivalent on the new site yet; they point to the closest
-# page for now and should be re-pointed once the new page exists.
+# After this, every address on the old domain goes to the new site, including the
+# WordPress admin. To undo, delete this block from .htaccess in File Manager.
+# These redirects only work while the Bluehost hosting plan is active.
 
 RewriteEngine On
-RewriteCond %{HTTP_HOST} ^(www\.)?xcosmeticsurgery\.com$ [NC]
 
 # --- Procedures
-RedirectMatch 301 ^/brazilian-butt-lift/?$   https://ycosmeticsurgery.com/procedures/brazilian-butt-lift
-RedirectMatch 301 ^/tummy-tuck/?$            https://ycosmeticsurgery.com/procedures/tummy-tuck
-RedirectMatch 301 ^/lipo-360-2/?$            https://ycosmeticsurgery.com/procedures/lipo-360
-RedirectMatch 301 ^/breast-augementation/?$  https://ycosmeticsurgery.com/procedures/breast-augmentation
-RedirectMatch 301 ^/services/?$              https://ycosmeticsurgery.com/procedures
-RedirectMatch 301 ^/understanding-chin-liposuction-what-you-need-to-know/?$  https://ycosmeticsurgery.com/procedures/lipo-360
+RewriteRule ^brazilian-butt-lift/?$    https://ycosmeticsurgery.com/procedures/brazilian-butt-lift [R=301,L]
+RewriteRule ^tummy-tuck/?$             https://ycosmeticsurgery.com/procedures/tummy-tuck [R=301,L]
+RewriteRule ^lipo-360-2/?$             https://ycosmeticsurgery.com/procedures/lipo-360 [R=301,L]
+RewriteRule ^breast-augementation/?$   https://ycosmeticsurgery.com/procedures/breast-augmentation [R=301,L]
+RewriteRule ^understanding-chin-liposuction-what-you-need-to-know/?$ https://ycosmeticsurgery.com/procedures/lipo-360 [R=301,L]
+RewriteRule ^services/?$               https://ycosmeticsurgery.com/procedures [R=301,L]
+RewriteRule ^special-offers/?$         https://ycosmeticsurgery.com/procedures [R=301,L]
 
 # --- Galleries
-RedirectMatch 301 ^/photo-gallery/?$               https://ycosmeticsurgery.com/gallery
-RedirectMatch 301 ^/bbl-gallery/?$                 https://ycosmeticsurgery.com/gallery?category=Body
-RedirectMatch 301 ^/tummy-tuck-gallery/?$          https://ycosmeticsurgery.com/gallery?category=Body
-RedirectMatch 301 ^/lipo-360-gallery/?$            https://ycosmeticsurgery.com/gallery?category=Body
-RedirectMatch 301 ^/breast-augmentation-gallery/?$ https://ycosmeticsurgery.com/gallery?category=Breast
-RedirectMatch 301 ^/category/gallery/?$            https://ycosmeticsurgery.com/gallery
+RewriteRule ^photo-gallery/?$                https://ycosmeticsurgery.com/gallery [R=301,L]
+RewriteRule ^category/gallery/?$             https://ycosmeticsurgery.com/gallery [R=301,L]
+RewriteRule ^bbl-gallery/?$                  https://ycosmeticsurgery.com/gallery?category=Body [R=301,L]
+RewriteRule ^tummy-tuck-gallery/?$           https://ycosmeticsurgery.com/gallery?category=Body [R=301,L]
+RewriteRule ^lipo-360-gallery/?$             https://ycosmeticsurgery.com/gallery?category=Body [R=301,L]
+RewriteRule ^breast-augmentation-gallery/?$  https://ycosmeticsurgery.com/gallery?category=Breast [R=301,L]
 
 # --- About / contact
-RedirectMatch 301 ^/dr-mario-e-reyes/?$   https://ycosmeticsurgery.com/about
-RedirectMatch 301 ^/category/doctors/?$   https://ycosmeticsurgery.com/about
-RedirectMatch 301 ^/contact/?$            https://ycosmeticsurgery.com/contact
-RedirectMatch 301 ^/consults/?$           https://ycosmeticsurgery.com/contact
-RedirectMatch 301 ^/evaluation/?$         https://ycosmeticsurgery.com/contact
+RewriteRule ^dr-mario-e-reyes/?$    https://ycosmeticsurgery.com/about [R=301,L]
+RewriteRule ^category/doctors/?$    https://ycosmeticsurgery.com/about [R=301,L]
+RewriteRule ^contact/?$             https://ycosmeticsurgery.com/contact [R=301,L]
+RewriteRule ^consults/?$            https://ycosmeticsurgery.com/contact [R=301,L]
+RewriteRule ^evaluation/?$          https://ycosmeticsurgery.com/contact [R=301,L]
+RewriteRule ^financing-options/?$   https://ycosmeticsurgery.com/financing [R=301,L]
+RewriteRule ^out-of-town/?$         https://ycosmeticsurgery.com/out-of-town-patients [R=301,L]
+RewriteRule ^privacy-policy/?$       https://ycosmeticsurgery.com/privacy-policy [R=301,L]
+RewriteRule ^terms-and-conditions/?$ https://ycosmeticsurgery.com/terms [R=301,L]
 
-# --- (*) No equivalent on the new site yet
-RedirectMatch 301 ^/financing-options/?$     https://ycosmeticsurgery.com/contact
-RedirectMatch 301 ^/out-of-town/?$           https://ycosmeticsurgery.com/contact
-RedirectMatch 301 ^/special-offers/?$        https://ycosmeticsurgery.com/procedures
-RedirectMatch 301 ^/blog/?$                  https://ycosmeticsurgery.com/
-RedirectMatch 301 ^/privacy-policy/?$        https://ycosmeticsurgery.com/
-RedirectMatch 301 ^/terms-and-conditions/?$  https://ycosmeticsurgery.com/
-RedirectMatch 301 ^/manage-subscriptions/?$  https://ycosmeticsurgery.com/
-
-# --- Home, and anything not listed above
-RedirectMatch 301 ^/?$   https://ycosmeticsurgery.com/
-RedirectMatch 301 ^/.*$  https://ycosmeticsurgery.com/
+# --- Home page and everything else on the old domain
+RewriteRule ^ https://ycosmeticsurgery.com/ [R=301,L]
