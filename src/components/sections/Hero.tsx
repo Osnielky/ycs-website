@@ -8,6 +8,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod/mini"; // tree-shakable build: the full "zod" entry adds ~300 KB to the client bundle
 import { useTranslations } from "next-intl";
+import { googleReviews, googleRatingLabel } from "@/data/reviews";
+import { trackLead } from "@/lib/analytics";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 /* ── Add more images to public/hero/ as 2.jpg, 3.jpg … to extend the slideshow ── */
@@ -71,6 +73,7 @@ export default function Hero() {
         body: JSON.stringify(data),
       });
       if (!res.ok) throw new Error(`Lead request failed: ${res.status}`);
+      trackLead("hero", data.procedure);
       setSubmitted(true);
     } catch {
       setSubmitError(true);
@@ -160,7 +163,7 @@ export default function Hero() {
               ))}
             </div>
             <span className="text-white/80 text-xs tracking-wider">
-              {t("badge")}
+              {t("badge", { rating: googleRatingLabel, count: googleReviews.count })}
             </span>
           </div>
 

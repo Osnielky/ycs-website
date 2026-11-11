@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod/mini"; // tree-shakable build: the full "zod" entry adds ~300 KB to the client bundle
 import { CheckCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { trackLead } from "@/lib/analytics";
 
 export default function FooterContactForm() {
   const t = useTranslations("footerForm");
@@ -42,6 +43,7 @@ export default function FooterContactForm() {
         body: JSON.stringify(data),
       });
       if (!res.ok) throw new Error(`Lead request failed: ${res.status}`);
+      trackLead("footer", data.procedure);
       setSubmitted(true);
     } catch {
       setSubmitError(true);

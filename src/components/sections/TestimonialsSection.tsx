@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { testimonials } from "@/data/procedures";
+import { googleReviews } from "@/data/reviews";
 import type { GoogleReview, ReviewsResponse } from "@/app/api/google-reviews/route";
 
 // Deterministic color per reviewer name
@@ -144,7 +145,7 @@ export default function TestimonialsSection() {
   const countFormat = new Intl.NumberFormat(locale);
   const [index, setIndex] = useState(0);
   const [reviews, setReviews] = useState<GoogleReview[]>(fallbackReviews);
-  const [meta, setMeta] = useState({ rating: 4.9, totalReviews: 500 });
+  const [meta, setMeta] = useState<{ rating: number; totalReviews: number }>({ rating: googleReviews.rating, totalReviews: googleReviews.count });
   const [isLive, setIsLive] = useState(false);
 
   useEffect(() => {
@@ -261,7 +262,7 @@ export default function TestimonialsSection() {
             <span className="text-white/65 text-sm">·</span>
             {isLive ? (
               <a
-                href="https://maps.app.goo.gl/ttj7tm52qumTJfjm6"
+                href={googleReviews.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gold/80 text-sm hover:text-gold transition-colors underline underline-offset-2"

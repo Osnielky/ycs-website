@@ -4,6 +4,7 @@ import Image from "next/image";
 import { MapPin, Clock, Mail, Star } from "lucide-react";
 import FooterContactForm from "./FooterContactForm";
 import LazyBackground from "./LazyBackground";
+import { googleReviews, googleRatingLabel } from "@/data/reviews";
 
 export default async function Footer() {
   const t = await getTranslations("footer");
@@ -152,7 +153,7 @@ export default async function Footer() {
                     <Star key={i} size={12} className="fill-gold text-gold" />
                   ))}
                 </div>
-                <span className="text-white/65 text-sm">{t("stars")}</span>
+                <span className="text-white/65 text-sm">{t("stars", { rating: googleRatingLabel, count: googleReviews.count })}</span>
               </div>
             </div>
 

@@ -5,6 +5,7 @@ import { getMessages, getTranslations, setRequestLocale } from "next-intl/server
 import { routing } from "@/i18n/routing";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import Analytics from "@/components/Analytics";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -101,6 +102,7 @@ export default async function LocaleLayout({ children, params }: Props) {
           <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">{children}</main>
           <Footer />
         </NextIntlClientProvider>
+        <Analytics />
       </body>
     </html>
   );

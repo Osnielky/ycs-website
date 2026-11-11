@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod/mini"; // tree-shakable build: the full "zod" entry adds ~300 KB to the client bundle
 import { Phone, MapPin, Clock, Mail, CheckCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { trackLead } from "@/lib/analytics";
 
 export default function ContactForm() {
   const t = useTranslations("contactPage");
@@ -45,6 +46,7 @@ export default function ContactForm() {
         body: JSON.stringify(data),
       });
       if (!res.ok) throw new Error(`Lead request failed: ${res.status}`);
+      trackLead("contact", data.procedure);
       setSubmitted(true);
     } catch {
       setSubmitError(true);

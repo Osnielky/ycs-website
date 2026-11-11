@@ -11,6 +11,15 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
+
+# Pages are pre-rendered at build time, so anything that must appear in the HTML
+# (Search Console verification tag, Analytics ID) has to be present here — setting
+# it only on the Cloud Run service at runtime is too late.
+ARG GOOGLE_SITE_VERIFICATION=""
+ARG NEXT_PUBLIC_GA_ID=""
+ENV GOOGLE_SITE_VERIFICATION=$GOOGLE_SITE_VERIFICATION
+ENV NEXT_PUBLIC_GA_ID=$NEXT_PUBLIC_GA_ID
+
 RUN npm run build
 
 # ── Stage 3: runner ───────────────────────────────────────────────────────────

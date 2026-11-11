@@ -35,16 +35,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const name = es && proc.es?.name ? proc.es.name : proc.name;
   const description = es && proc.es?.description ? proc.es.description : proc.description;
 
+  const recovery = es && proc.es?.recovery ? proc.es.recovery : proc.recovery;
+  const fromPrice = proc.priceRange ? "$" + proc.priceRange.min.toLocaleString("en-US") : null;
+
+  // Kept under ~160 characters so Google shows it whole: price, recovery, location, call to action.
   const metaDescription = es
-    ? `${description} ${name} en Miami con cirujanos certificados y más de 20 años de experiencia. Consulta gratuita — atendemos Hialeah y todo el sur de Florida. Llame al (305) 218-3513.`
-    : `${description} ${name} in Miami by board-certified surgeons with 20+ years of experience. Free consultation — serving Hialeah and all of South Florida. Call (305) 218-3513.`;
+    ? `${name} en Miami${fromPrice ? " desde " + fromPrice : ""}. Recuperación: ${recovery}. Consulta gratuita en Your Cosmetic Surgery & SPA, Hialeah. Llame al (305) 218-3513.`
+    : `${name} in Miami${fromPrice ? " from " + fromPrice : ""}. Recovery: ${recovery}. Free consultation at Your Cosmetic Surgery & SPA in Hialeah. Call (305) 218-3513.`;
   const ogDescription = es
     ? `${description} Cirujanos certificados, consulta gratuita, financiamiento flexible. Hialeah, FL.`
     : `${description} Board-certified surgeons, free consultation, flexible financing. Hialeah, FL.`;
 
   return {
     // Brand suffix is appended by the root "%s | …" title template.
-    title: es ? `${name} en Miami, FL` : `${name} in Miami, FL`,
+    title: es ? `${name} en Miami: Costo y Recuperación` : `${name} in Miami: Cost & Recovery`,
     description: metaDescription,
     alternates: alternatesFor(`/procedures/${proc.slug}`, locale),
     openGraph: openGraph({
@@ -93,9 +97,12 @@ export default async function ProcedureDetailPage({ params }: Props) {
     medspa: tSection("tabMedspa"),
   };
 
-  const related = procedures
-    .filter((p) => p.category === proc.category && p.slug !== proc.slug)
-    .slice(0, 3);
+  // Internal links: same-category procedures first, then featured ones from other
+  // categories, so every procedure page links to six others.
+  const related = [
+    ...procedures.filter((p) => p.category === proc.category && p.slug !== proc.slug),
+    ...procedures.filter((p) => p.category !== proc.category && p.featured),
+  ].slice(0, 6);
 
   const pageUrl =
     locale === "en"
@@ -290,6 +297,11 @@ export default async function ProcedureDetailPage({ params }: Props) {
 
       {landing && (
         <>
+          <section className="pt-16 md:pt-20 bg-white">
+            <p className="max-w-3xl mx-auto px-6 text-center text-navy/70 text-lg leading-relaxed">
+              {landing.intro}
+            </p>
+          </section>
           <TransformationGallery
             heading={landing.transformationsHeading}
             intro={landing.transformationsIntro}
@@ -396,9 +408,10 @@ export default async function ProcedureDetailPage({ params }: Props) {
             <h2 className="font-heading text-4xl text-navy font-light mb-8">
               {t("relatedProcedures")}
             </h2>
-            <div className="grid sm:grid-cols-3 gap-5">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {related.map((r) => {
                 const relName = locale === "es" && r.es?.name ? r.es.name : r.name;
+                const relTagline = locale === "es" && r.es?.tagline ? r.es.tagline : r.tagline;
                 return (
                   <Link
                     key={r.id}
@@ -407,7 +420,7 @@ export default async function ProcedureDetailPage({ params }: Props) {
                   >
                     <div>
                       <p className="font-heading text-navy text-xl mb-1">{relName}</p>
-                      <p className="text-navy/70 text-xs tracking-wider">{r.tagline}</p>
+                      <p className="text-navy/70 text-xs tracking-wider">{relTagline}</p>
                     </div>
                     <ArrowRight size={16} className="text-navy/70 group-hover:text-gold transition-colors" />
                   </Link>

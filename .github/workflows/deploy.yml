@@ -37,6 +37,8 @@ jobs:
         run: |
           IMAGE=${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/ycs-website/${{ env.SERVICE }}:${{ github.sha }}
           docker build \
+            --build-arg GOOGLE_SITE_VERIFICATION="${{ secrets.GOOGLE_SITE_VERIFICATION }}" \
+            --build-arg NEXT_PUBLIC_GA_ID="${{ secrets.NEXT_PUBLIC_GA_ID }}" \
             -t $IMAGE .
           docker push $IMAGE
           echo "IMAGE=$IMAGE" >> $GITHUB_ENV

@@ -22,7 +22,6 @@ const procedureMenu = [
       { name: "Brazilian Butt Lift", slug: "brazilian-butt-lift" },
       { name: "Lipo 360", slug: "lipo-360" },
       { name: "Tummy Tuck", slug: "tummy-tuck" },
-      { name: "Liposuction", slug: "liposuction" },
       { name: "Mommy Makeover", slug: "mommy-makeover" },
       { name: "Abdominal Etching", slug: "abdominal-etching" },
       { name: "Arm Lift", slug: "arm-lift" },

@@ -12,6 +12,16 @@ const nextConfig: NextConfig = {
   },
   compress: true,
   poweredByHeader: false,
+  // The platform's http→https redirect is a temporary 302; HSTS tells browsers
+  // (and signals to crawlers) that the site is https-only from then on.
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [{ key: "Strict-Transport-Security", value: "max-age=31536000" }],
+      },
+    ];
+  },
   // Tree-shake barrel imports so unused icons / helpers never reach the bundle.
   experimental: {
     optimizePackageImports: ["lucide-react", "next-intl"],

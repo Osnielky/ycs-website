@@ -16,8 +16,8 @@ export const metadata: Metadata = {
     ? { google: process.env.GOOGLE_SITE_VERIFICATION }
     : undefined,
   title: {
-    default: "Your Cosmetic Surgery & SPA | Trusted Plastic Surgeons in Miami",
-    template: "%s | Your Cosmetic Surgery & SPA Miami",
+    default: "Plastic Surgery in Miami & Hialeah | Your Cosmetic Surgery & SPA",
+    template: "%s | Your Cosmetic Surgery & SPA",
   },
   description:
     "Your Cosmetic Surgery & SPA in Hialeah, Miami — board-certified plastic surgeons with 20+ years of experience. BBL, tummy tuck, breast augmentation, Lipo 360, rhinoplasty & more. Free consultation. Serving all of South Florida.",

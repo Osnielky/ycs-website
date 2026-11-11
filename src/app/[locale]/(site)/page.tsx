@@ -4,6 +4,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import Hero from "@/components/sections/Hero";
 import StatsBar from "@/components/sections/StatsBar";
 import { alternatesFor, openGraph } from "@/lib/seo";
+import { googleReviews, googleRatingLabel } from "@/data/reviews";
 
 // Below-fold sections: defer JS parsing until needed
 const ProceduresSection  = dynamic(() => import("@/components/sections/ProceduresSection"));
@@ -79,8 +80,10 @@ const jsonLd = {
   hasMap: "https://maps.google.com/?q=1255+W+46th+St+Hialeah+FL+33012",
   aggregateRating: {
     "@type": "AggregateRating",
-    ratingValue: "4.9",
-    reviewCount: "653",
+    ratingValue: googleRatingLabel,
+    bestRating: "5",
+    worstRating: "1",
+    reviewCount: String(googleReviews.count),
   },
   employee: {
     "@type": "Physician",

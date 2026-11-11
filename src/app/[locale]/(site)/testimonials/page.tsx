@@ -4,6 +4,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { alternatesFor, openGraph } from "@/lib/seo";
 import { testimonials } from "@/data/procedures";
 import CTABanner from "@/components/sections/CTABanner";
+import { googleReviews, googleRatingLabel } from "@/data/reviews";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "testimonialsPage" });
   const title = t("metaTitle");
-  const description = t("metaDescription");
+  const description = t("metaDescription", { rating: googleRatingLabel, count: googleReviews.count });
   return {
     title,
     description,
@@ -36,14 +37,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const platforms = [
-  { name: "Google",       rating: "4.9", count: "312" },
-  { name: "RealSelf",     rating: "4.8", count: "180" },
-  { name: "Healthgrades", rating: "5.0", count: "94"  },
-  { name: "Vitals",       rating: "4.9", count: "67"  },
-];
-
-const totalReviews = platforms.reduce((sum, p) => sum + parseInt(p.count), 0);
+// Only figures we can verify against the live Google Business Profile are shown.
+const totalReviews = googleReviews.count;
 
 const reviewsJsonLd = {
   "@context": "https://schema.org",
@@ -81,7 +76,7 @@ const jsonLd = {
   url: "https://ycosmeticsurgery.com",
   aggregateRating: {
     "@type": "AggregateRating",
-    ratingValue: "4.9",
+    ratingValue: googleRatingLabel,
     bestRating: "5",
     worstRating: "1",
     ratingCount: String(totalReviews),
@@ -143,23 +138,25 @@ export default async function TestimonialsPage({ params }: Props) {
       {/* Rating summary */}
       <section className="py-16 bg-cream-dark">
         <div className="max-w-5xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {platforms.map((p) => (
-              <div key={p.name} className="bg-white rounded-2xl p-6 text-center border border-cream-dark card-hover">
-                <div className="font-heading text-4xl text-navy mb-1">
-                  {p.rating}
-                  <span className="text-gold-deep text-2xl">/5</span>
-                </div>
-                <div className="flex justify-center gap-0.5 mb-2">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={13} className="fill-gold text-gold" />
-                  ))}
-                </div>
-                <p className="text-navy font-semibold text-sm">{p.name}</p>
-                <p className="text-navy/70 text-xs">{p.count} {t("reviewsLabel")}</p>
-              </div>
-            ))}
-          </div>
+          <a
+            href={googleReviews.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block max-w-sm mx-auto bg-white rounded-2xl p-8 text-center border border-cream-dark card-hover"
+          >
+            <div className="font-heading text-5xl text-navy mb-2">
+              {googleRatingLabel}
+              <span className="text-gold-deep text-2xl">/5</span>
+            </div>
+            <div className="flex justify-center gap-0.5 mb-3" aria-hidden="true">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} size={15} className="fill-gold text-gold" />
+              ))}
+            </div>
+            <p className="text-navy font-semibold text-sm">Google</p>
+            <p className="text-navy/70 text-xs mb-3">{googleReviews.count} {t("reviewsLabel")}</p>
+            <span className="text-gold-deep text-xs font-semibold underline underline-offset-2">{t("readOnGoogle")}</span>
+          </a>
         </div>
       </section>
 

@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod/mini"; // tree-shakable build: the full "zod" entry adds ~300 KB to the client bundle
 import { X, Phone, Calendar, CheckCircle, Clock, ChevronLeft } from "lucide-react";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
+import { trackLead } from "@/lib/analytics";
 
 type Step = "choose" | "form" | "success";
 type ApptType = "asap" | "scheduled";
@@ -120,6 +121,7 @@ export default function ConsultationModal({ procedure, onClose }: Props) {
         throw new Error(typeof json.error === "string" ? json.error : t("genericError"));
       }
 
+      trackLead("consultation_modal", procedure);
       setStep("success");
     } catch (err: unknown) {
       setServerError(err instanceof Error && err.message ? err.message : t("genericError"));

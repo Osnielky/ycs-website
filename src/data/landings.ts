@@ -1,3 +1,9 @@
+import { BRAZILIAN_BUTT_LIFT_LANDING } from "./landings/brazilian-butt-lift";
+import { TUMMY_TUCK_LANDING } from "./landings/tummy-tuck";
+import { LIPO_360_LANDING } from "./landings/lipo-360";
+import { MOMMY_MAKEOVER_LANDING } from "./landings/mommy-makeover";
+import { BREAST_AUGMENTATION_LANDING } from "./landings/breast-augmentation";
+
 export interface LandingOffer {
   headline: string;
   subtext?: string;
@@ -511,6 +517,11 @@ const FACELIFT_LANDING: LandingContent = {
 
 export const landings: Record<string, LandingContent> = {
   facelift: FACELIFT_LANDING,
+  "brazilian-butt-lift": BRAZILIAN_BUTT_LIFT_LANDING,
+  "tummy-tuck": TUMMY_TUCK_LANDING,
+  "lipo-360": LIPO_360_LANDING,
+  "mommy-makeover": MOMMY_MAKEOVER_LANDING,
+  "breast-augmentation": BREAST_AUGMENTATION_LANDING,
 };
 
 export function getLanding(slug: string, locale: string): LandingLocaleContent | null {

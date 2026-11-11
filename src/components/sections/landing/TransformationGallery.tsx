@@ -18,19 +18,24 @@ export default function TransformationGallery({
   labels,
   procedureName,
 }: TransformationGalleryProps) {
-  if (transformations.length === 0) return null;
+  // Pages without patient photos yet still show the educational content.
+  if (transformations.length === 0 && !education) return null;
+  const hasPhotos = transformations.length > 0;
 
   return (
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <span className="gold-divider mx-auto mb-5" />
-          <h2 className="font-heading text-4xl md:text-5xl text-navy font-light mb-4">{heading}</h2>
-          {intro && <p className="text-navy/70 leading-relaxed">{intro}</p>}
-        </div>
+        {/* The results heading only makes sense when there are photos to show */}
+        {hasPhotos && (
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <span className="gold-divider mx-auto mb-5" />
+            <h2 className="font-heading text-4xl md:text-5xl text-navy font-light mb-4">{heading}</h2>
+            {intro && <p className="text-navy/70 leading-relaxed">{intro}</p>}
+          </div>
+        )}
 
         {education && (
-          <div className="max-w-5xl mx-auto mb-20">
+          <div className={`max-w-5xl mx-auto ${hasPhotos ? "mb-20" : ""}`}>
             {/* What is / combined with — paired columns */}
             <div className="grid md:grid-cols-2 gap-10 md:gap-14 mb-16">
               <div>
