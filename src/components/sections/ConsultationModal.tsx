@@ -121,7 +121,7 @@ export default function ConsultationModal({ procedure, onClose }: Props) {
         throw new Error(typeof json.error === "string" ? json.error : t("genericError"));
       }
 
-      trackLead("consultation_modal", procedure);
+      trackLead("consultation_modal");
       setStep("success");
     } catch (err: unknown) {
       setServerError(err instanceof Error && err.message ? err.message : t("genericError"));

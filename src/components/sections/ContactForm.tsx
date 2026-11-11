@@ -46,7 +46,7 @@ export default function ContactForm() {
         body: JSON.stringify(data),
       });
       if (!res.ok) throw new Error(`Lead request failed: ${res.status}`);
-      trackLead("contact", data.procedure);
+      trackLead("contact");
       setSubmitted(true);
     } catch {
       setSubmitError(true);

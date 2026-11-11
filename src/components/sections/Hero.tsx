@@ -73,7 +73,7 @@ export default function Hero() {
         body: JSON.stringify(data),
       });
       if (!res.ok) throw new Error(`Lead request failed: ${res.status}`);
-      trackLead("hero", data.procedure);
+      trackLead("hero");
       setSubmitted(true);
     } catch {
       setSubmitError(true);
