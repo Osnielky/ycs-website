@@ -4,7 +4,7 @@ const credentials = [
   {
     icon: ShieldCheck,
     title: "Licensed Physician",
-    desc: "Our lead surgeon holds an active Florida medical licence (ME94353), which anyone can verify with the Florida Department of Health.",
+    desc: "Our lead surgeon holds an active Florida medical license (ME94353), which anyone can verify with the Florida Department of Health.",
   },
   {
     icon: Award,

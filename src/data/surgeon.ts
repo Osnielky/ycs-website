@@ -1,10 +1,10 @@
 /**
  * Content for the surgeon profile page (/dr-mario-reyes-serrano).
  *
- * Licence, education, training, hospital privileges, memberships and languages
+ * License, education, training, hospital privileges, memberships and languages
  * come from the surgeon's public Florida Department of Health practitioner
- * profile (licence ME94353, read 2026-11-13). That profile lists no certification
- * from a specialty board recognised by the Florida Board of Medicine, so this
+ * profile (license ME94353, read 2026-11-13). That profile lists no certification
+ * from a specialty board recognized by the Florida Board of Medicine, so this
  * page does not use the words "board-certified". Do not add them back without a
  * certificate naming the certifying board.
  */
@@ -86,9 +86,9 @@ export const surgeon: Record<"en" | "es", SurgeonContent> = {
       "Fellowship in plastic surgery, Calixto García Hospital, Havana (1976 – 1978)",
       "Additional training in breast surgery, Havana (1988 – 1989)",
     ],
-    licensesHeading: "Licence",
+    licensesHeading: "License",
     licenses: [
-      "Florida medical licence ME94353, active. You can verify it on the Florida Department of Health licence lookup.",
+      "Florida medical license ME94353, active. You can verify it on the Florida Department of Health license lookup.",
     ],
     languagesHeading: "Languages",
     languages: ["English", "Spanish"],

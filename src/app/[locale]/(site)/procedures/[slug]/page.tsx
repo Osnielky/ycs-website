@@ -12,6 +12,8 @@ import { getLanding, landingLabels } from "@/data/landings";
 import OfferBanner from "@/components/sections/landing/OfferBanner";
 import TransformationGallery from "@/components/sections/landing/TransformationGallery";
 import ProcessSections from "@/components/sections/landing/ProcessSections";
+import BlogCard from "@/components/sections/BlogCard";
+import { blogPosts } from "@/data/blog";
 import PricingSection from "@/components/sections/landing/PricingSection";
 import CandidacySection from "@/components/sections/landing/CandidacySection";
 import RecoveryTimeline from "@/components/sections/landing/RecoveryTimeline";
@@ -105,6 +107,9 @@ export default async function ProcedureDetailPage({ params }: Props) {
     ...procedures.filter((p) => p.category === proc.category && p.slug !== proc.slug),
     ...procedures.filter((p) => p.category !== proc.category && p.featured),
   ].slice(0, 6);
+
+  // Blog guides that discuss this procedure.
+  const guides = blogPosts.filter((p) => p.relatedProcedures.includes(proc.slug)).slice(0, 3);
 
   const pageUrl =
     locale === "en"
@@ -437,6 +442,23 @@ export default async function ProcedureDetailPage({ params }: Props) {
                 <ArrowLeft size={14} />
                 {t("backToAll")}
               </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Related guides from the blog */}
+      {guides.length > 0 && (
+        <section className="py-20 bg-cream">
+          <div className="max-w-6xl mx-auto px-6">
+            <span className="gold-divider mb-5" />
+            <h2 className="font-heading text-4xl text-navy font-light mb-8">
+              {locale === "es" ? "Guías Relacionadas" : "Related Guides"}
+            </h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
+              {guides.map((g) => (
+                <BlogCard key={g.slug} post={g} locale={locale} headingLevel="h3" />
+              ))}
             </div>
           </div>
         </section>

@@ -262,6 +262,7 @@ export default function Navbar() {
               { label: t("gallery"), href: "/gallery" },
               { label: t("about"), href: "/about" },
               { label: t("testimonials"), href: "/testimonials" },
+              { label: t("blog"), href: "/blog" },
               { label: t("contact"), href: "/contact" },
             ].map((link) => (
               <li key={link.href}>
@@ -395,6 +396,7 @@ export default function Navbar() {
               { label: t("gallery"), href: "/gallery" },
               { label: t("about"), href: "/about" },
               { label: t("testimonials"), href: "/testimonials" },
+              { label: t("blog"), href: "/blog" },
               { label: t("contact"), href: "/contact" },
             ].map((link) => (
               <Link

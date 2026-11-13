@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { procedures } from "@/data/procedures";
 import { BASE_URL, languageAlternates } from "@/lib/seo";
 import { infoPages } from "@/data/info-pages";
+import { blogPosts } from "@/data/blog";
 
 type ChangeFreq = MetadataRoute.Sitemap[number]["changeFrequency"];
 
@@ -73,6 +74,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: p.kind === "legal" ? "yearly" : "monthly",
         priority: p.kind === "legal" ? 0.2 : 0.6,
       }),
+    ),
+    ...entry("/blog", { changeFrequency: "weekly", priority: 0.7 }),
+    ...blogPosts.flatMap((p) =>
+      entry(`/blog/${p.slug}`, { changeFrequency: "monthly", priority: 0.6 }),
     ),
     ...procedures.flatMap((p) =>
       entry(`/procedures/${p.slug}`, {
