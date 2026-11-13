@@ -1,0 +1,178 @@
+{
+  "id": "seduction-cosmetic-center",
+  "identified": true,
+  "name": "Svelta Plastic Surgery",
+  "website": "https://sveltaplasticsurgery.com/",
+  "address": "4950 SW 8th St, Miami, FL 33134",
+  "checkedOn": "2026-11-13",
+  "google": {
+    "rating": 4.5,
+    "reviewCount": 2658,
+    "seenAt": "https://sveltaplasticsurgery.com/brazilian-butt-lift-miami/",
+    "note": "As quoted on the clinic's own site ('4.5 - 2,658+ reviews', linked to a Google Maps search; also in the site footer). Not verified on Google itself; the count likely includes reviews collected under the former Seduction Cosmetic Center name."
+  },
+  "prices": {
+    "brazilian-butt-lift": {
+      "text": "standalone BBL procedures start at $4,500",
+      "kind": "starting-at",
+      "low": 4500,
+      "high": null,
+      "includes": null,
+      "conditions": "Standalone BBL; final cost depends on amount of fat transferred and liposuction areas. Combination packages (Lipo 360 + BBL, Tummy Tuck + BBL) start at $7,500-$8,500. Specials page tags it 'Limited Time' with no end date.",
+      "source": "https://sveltaplasticsurgery.com/brazilian-butt-lift-miami/",
+      "confidence": "high"
+    },
+    "tummy-tuck": {
+      "text": "Standalone tummy tucks start at $3,900.",
+      "kind": "starting-at",
+      "low": 3900,
+      "high": null,
+      "includes": "Page says the accredited surgical suite and anesthesia team are reflected in the quoted price rather than billed as a separate facility fee.",
+      "conditions": "Standalone abdominoplasty; final cost depends on technique and extent of skin removal. Tummy Tuck + BBL combo starts at $8,500.",
+      "source": "https://sveltaplasticsurgery.com/tummy-tuck-miami/",
+      "confidence": "high"
+    },
+    "mommy-makeover": {
+      "text": "Mommy Makeovers start at $6,500",
+      "kind": "starting-at",
+      "low": 6500,
+      "high": null,
+      "includes": "Starting price is for a tummy tuck plus breast procedure combination.",
+      "conditions": "Page shows a price range of $6,500 - $20,000; with liposuction from $9,500; with liposuction and BBL from $12,000. Depends on procedure combination and anatomy.",
+      "source": "https://sveltaplasticsurgery.com/mommy-makeover-miami/",
+      "confidence": "high"
+    },
+    "lipo-360": {
+      "text": "Lipo 360 starts at $3,000",
+      "kind": "starting-at",
+      "low": 3000,
+      "high": null,
+      "includes": null,
+      "conditions": "Page says most cases fall in the $3,000 to $8,000 range depending on technique, extent and anatomy; Lipo 360 + BBL starts at $7,500.",
+      "source": "https://sveltaplasticsurgery.com/lipo-360/",
+      "confidence": "high"
+    },
+    "abdominal-etching": {
+      "text": "$4,000 - $9,000",
+      "kind": "range",
+      "low": 4000,
+      "high": 9000,
+      "includes": null,
+      "conditions": "Cost depends on the extent of sculpting required and anesthesia type.",
+      "source": "https://sveltaplasticsurgery.com/abdominal-etching-miami/",
+      "confidence": "high"
+    },
+    "breast-augmentation": {
+      "text": "Breast augmentation at Svelta starts at $2,800",
+      "kind": "starting-at",
+      "low": 2800,
+      "high": null,
+      "includes": "Page says surgical facility and anesthesia are included in the total procedure cost.",
+      "conditions": "Implant augmentation; typical range stated as $2,800 to $12,000 depending on implant type, surgeon, anesthesia and technique. Fat-transfer augmentation starts at $4,500.",
+      "source": "https://sveltaplasticsurgery.com/breast-augmentation-miami/",
+      "confidence": "high"
+    },
+    "breast-lift": {
+      "text": "Procedures starting at $4,500.",
+      "kind": "starting-at",
+      "low": 4500,
+      "high": null,
+      "includes": "Page says the surgical suite and anesthesia team are reflected in the quoted price, not a separate facility fee.",
+      "conditions": "Price range shown as $4,500 - $7,000. Lift with implants is priced individually. Final cost depends on technique, surgeon and individual goals; personalized quote required.",
+      "source": "https://sveltaplasticsurgery.com/breast-lift-miami/",
+      "confidence": "high"
+    },
+    "breast-reduction": {
+      "text": "Procedures starting at $6,500.",
+      "kind": "starting-at",
+      "low": 6500,
+      "high": null,
+      "includes": null,
+      "conditions": "Price range shown as $6,500 - $8,500. Final cost depends on technique, surgeon and individual goals; personalized quote required.",
+      "source": "https://sveltaplasticsurgery.com/breast-reduction/",
+      "confidence": "high"
+    },
+    "gynecomastia": {
+      "text": "Procedures starting at $4,000.",
+      "kind": "starting-at",
+      "low": 4000,
+      "high": null,
+      "includes": null,
+      "conditions": "Price range shown as $4,000 - $5,000. Final cost depends on technique, surgeon and individual goals; personalized quote required.",
+      "source": "https://sveltaplasticsurgery.com/gynecomastia/",
+      "confidence": "high"
+    },
+    "rhinoplasty": {
+      "text": "Rhinoplasty at Svelta starts at $6,500.",
+      "kind": "starting-at",
+      "low": 6500,
+      "high": null,
+      "includes": null,
+      "conditions": "Price range shown as $6,500 to $15,000; complex or revision cases $8,500 to $15,000. Depends on complexity, open vs closed technique and whether functional correction is included.",
+      "source": "https://sveltaplasticsurgery.com/rhinoplasty/",
+      "confidence": "high"
+    },
+    "facelift": {
+      "text": "Starting at $12,000.",
+      "kind": "starting-at",
+      "low": 12000,
+      "high": null,
+      "includes": null,
+      "conditions": "Price range shown as $12,000 - $18,000. Final cost depends on technique, surgeon and individual goals; personalized quote required.",
+      "source": "https://sveltaplasticsurgery.com/facelift/",
+      "confidence": "high"
+    },
+    "eyelid-surgery": {
+      "text": "Starting at $3,000.",
+      "kind": "starting-at",
+      "low": 3000,
+      "high": null,
+      "includes": null,
+      "conditions": "Price range shown as $3,000 - $4,000. Final cost depends on technique, surgeon and individual goals; personalized quote required.",
+      "source": "https://sveltaplasticsurgery.com/eyelid-surgery/",
+      "confidence": "high"
+    },
+    "neck-lift": {
+      "text": "Starting at $4,500.",
+      "kind": "starting-at",
+      "low": 4500,
+      "high": null,
+      "includes": null,
+      "conditions": "Price range shown as $4,500 - $10,000. Final cost depends on technique, surgeon and individual goals; personalized quote required.",
+      "source": "https://sveltaplasticsurgery.com/neck-lift/",
+      "confidence": "high"
+    },
+    "bichectomy": {
+      "text": "$2,000 - $6,000",
+      "kind": "range",
+      "low": 2000,
+      "high": 6000,
+      "includes": null,
+      "conditions": "Final cost depends on surgeon, facility and individual anatomy.",
+      "source": "https://sveltaplasticsurgery.com/buccal-fat-removal/",
+      "confidence": "high"
+    },
+    "botox-fillers": {
+      "text": "Starting at $12/unit.",
+      "kind": "starting-at",
+      "low": 12,
+      "high": null,
+      "includes": null,
+      "conditions": "Botox only, price per unit; page also states $300 - $1,200 per session. Filler prices were not checked.",
+      "source": "https://sveltaplasticsurgery.com/botox/",
+      "confidence": "high"
+    },
+    "laser-resurfacing": {
+      "text": "$800 - $2,500 per session",
+      "kind": "range",
+      "low": 800,
+      "high": 2500,
+      "includes": null,
+      "conditions": "Fraxel laser, per session; varies with laser type, treatment area size and number of passes. Package pricing available.",
+      "source": "https://sveltaplasticsurgery.com/fraxel-laser-treatment/",
+      "confidence": "high"
+    }
+  },
+  "financing": "Site advertises financing through CareCredit, Affirm and an in-house layaway plan, with payments 'starting from $25/week' for qualified applicants.",
+  "notes": "IDENTITY: the clinic now trades as Svelta Plastic Surgery. No site exists under the Seduction name: seductioncosmetic.com returns a 301 redirect to sveltaplasticsurgery.com, the address (4950 SW 8th St, Miami) is the one long listed for Seduction Cosmetic Center, and the About page names Luis Jardon as founder (Seduction was known as 'Seduction by Jardon'). The Svelta site itself never mentions the former name; web search results (not fetched) describe a 2025/2026 rebrand. A reviewer should decide whether to list it as Svelta or 'Svelta (formerly Seduction Cosmetic Center)'. Address is in Miami proper, not Coral Gables. All prices are the clinic's own 'starting at' or range figures stated in page text; no promotion end dates are given. The home page and /specials/ page list 'Liposuction starting at $3,000 per area' while the Lipo 360 page says Lipo 360 starts at $3,000 - same figure, different scope. Pages were read through an automated page summarizer, so exact quotes should be spot-checked before publication. No prices found/checked for arm-lift, thigh-lift, otoplasty, microneedling (no such pages in the navigation)."
+}

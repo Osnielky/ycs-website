@@ -1,0 +1,53 @@
+{
+  "id": "xiluet-plastic-surgery",
+  "identified": true,
+  "name": "Xiluet Aesthetic Surgery",
+  "website": "https://xiluetaestheticsurgery.com/",
+  "address": "7390 West Flagler ST, Miami, FL 33144",
+  "checkedOn": "2026-11-13",
+  "google": null,
+  "prices": {
+    "brazilian-butt-lift": {
+      "text": "costs starting at $3,999",
+      "kind": "starting-at",
+      "low": 3999,
+      "high": null,
+      "includes": null,
+      "conditions": null,
+      "source": "https://xiluetaestheticsurgery.com/brazilian-butt-lift/",
+      "confidence": "high"
+    },
+    "mommy-makeover": {
+      "text": "costs starting at $6,999",
+      "kind": "starting-at",
+      "low": 6999,
+      "high": null,
+      "includes": null,
+      "conditions": null,
+      "source": "https://xiluetaestheticsurgery.com/mommy-makeover/",
+      "confidence": "high"
+    },
+    "tummy-tuck": {
+      "text": "Tummy Tuck (4) Areas $4250",
+      "kind": "promotion",
+      "low": 4250,
+      "high": null,
+      "includes": "Not stated; the '(4) Areas' wording appears to mean liposuction of four areas is part of the package, but the page does not explain it.",
+      "conditions": "Listed on the Specials page with 'Some Restrictions Apply' and a $250 deposit; no end date given. Same page also lists 'Extended Tummy Tuck $3500', 'Tummy Tuck With Liposuction (12) Areas $5850' and 'Circumferential Tummy Tuck $7000'. The tummy tuck procedure page itself states no price.",
+      "source": "https://xiluetaestheticsurgery.com/specials/",
+      "confidence": "medium"
+    },
+    "breast-lift": {
+      "text": "Breast Lift (Gel) $4500",
+      "kind": "promotion",
+      "low": 4500,
+      "high": null,
+      "includes": "Not stated; '(Gel)' probably means the lift is combined with silicone gel implants, but the page does not say.",
+      "conditions": "Listed on the Specials page with 'Some Restrictions Apply' and a $250 deposit; no end date given. May be a lift-with-implants package rather than a lift alone. The breast lift procedure page quotes only U.S. average ranges, not a clinic price.",
+      "source": "https://xiluetaestheticsurgery.com/specials/",
+      "confidence": "medium"
+    }
+  },
+  "financing": "The site says payment plans are available through Cherry, CareCredit and Affirm.",
+  "notes": "IDENTITY: the requester's 'Xiluete/Xiluet Plastic Surgery' is taken to be this business. The site brands itself 'Xiluet Aesthetic Surgery' (title, headings, copyright 2026) but its form SMS-consent text says 'text messages from Xiluet Plastic Surgery', so the two names are used by the same site. Third-party directories (not used as sources) list 'Xiluet Plastic Surgery' at 8396 or 8360 SW 8th St, Miami; the site itself shows only 7390 West Flagler ST. A reviewer should confirm it is one business that moved/rebranded. A separate domain xiluetaesthetic.com did not resolve; xiluet-plastic-surgery.pages.dev says it is a design concept, not the official site, and was ignored. CONFLICT (BBL): the BBL procedure page says 'costs starting at $3,999' (recorded), while the Specials page lists 'Brazilian Butt Lift (12) $4250' and 'BBL (12) Areas & JPlasma $3500'. OTHER SPECIALS not mapped to a key (all 'Some Restrictions Apply', $250 deposit, no end date): 'Liposuction (12) Areas $2850' (not labelled Lipo 360, so not recorded under lipo-360); 'Tummy Tuck Ext With Lipo (12) With Fat Transfer $7450'; 'Tummy Tuck Ext (12) & Breast Lift (Gel) With BBL $9250'. The liposuction page says 'liposuction cost at Xiluet Aesthetic Surgery goes from $1500 to $8000'. NOT RECORDED: procedure pages for breast augmentation, breast lift, breast reduction, arm lift, thigh lift, rhinoplasty, facelift, eyelid surgery and lip fillers give only national/Miami market average ranges, not the clinic's own prices. Site also advertises 'UP TO $2500 DISCOUNT ONLINE' with no terms. Specials prices were read from page text (verified in raw HTML). No Google rating or review count appears on the pages fetched."
+}

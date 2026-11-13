@@ -1,0 +1,163 @@
+{
+  "id": "mia-aesthetics",
+  "identified": true,
+  "name": "Mia Aesthetics",
+  "website": "https://miaaesthetics.com/locations/miami/",
+  "address": "9300 SW 72nd St, Miami, FL 33173",
+  "checkedOn": "2026-11-13",
+  "google": null,
+  "prices": {
+    "tummy-tuck": {
+      "text": "Starting Price: $4,600*",
+      "kind": "starting-at",
+      "low": 4600,
+      "high": null,
+      "includes": null,
+      "conditions": "Footnote: '*Pricing Varies by Surgeon'. Company-wide page, not specific to the Miami location.",
+      "source": "https://miaaesthetics.com/cosmetic-plastic-surgery/body/tummy-tuck/",
+      "confidence": "high"
+    },
+    "brazilian-butt-lift": {
+      "text": "Starting Price: $4,300*",
+      "kind": "starting-at",
+      "low": 4300,
+      "high": null,
+      "includes": null,
+      "conditions": "Footnote: '*Pricing Varies by Surgeon'. Company-wide page, not specific to the Miami location.",
+      "source": "https://miaaesthetics.com/cosmetic-plastic-surgery/body/brazilian-butt-lift-bbl/",
+      "confidence": "high"
+    },
+    "mommy-makeover": {
+      "text": "Starting Price: $6,399*",
+      "kind": "starting-at",
+      "low": 6399,
+      "high": null,
+      "includes": null,
+      "conditions": "Footnote: '*Pricing Varies by Surgeon'. Company-wide page, not specific to the Miami location.",
+      "source": "https://miaaesthetics.com/cosmetic-plastic-surgery/body/mommy-makeover/",
+      "confidence": "high"
+    },
+    "arm-lift": {
+      "text": "Starting Price: $4,900*",
+      "kind": "starting-at",
+      "low": 4900,
+      "high": null,
+      "includes": null,
+      "conditions": "Footnote: '*Pricing Varies by Surgeon'. Company-wide page, not specific to the Miami location.",
+      "source": "https://miaaesthetics.com/cosmetic-plastic-surgery/body/arm-lift/",
+      "confidence": "high"
+    },
+    "thigh-lift": {
+      "text": "Starting Price: $4,900*",
+      "kind": "starting-at",
+      "low": 4900,
+      "high": null,
+      "includes": null,
+      "conditions": "Footnote: '*Pricing Varies by Surgeon'. Company-wide page, not specific to the Miami location.",
+      "source": "https://miaaesthetics.com/cosmetic-plastic-surgery/body/thigh-lift/",
+      "confidence": "high"
+    },
+    "breast-augmentation": {
+      "text": "Starting Price: $3,300*",
+      "kind": "starting-at",
+      "low": 3300,
+      "high": null,
+      "includes": null,
+      "conditions": "Footnote: '*Pricing Varies by Surgeon'. Company-wide page, not specific to the Miami location.",
+      "source": "https://miaaesthetics.com/cosmetic-plastic-surgery/breast/augmentation-implants/",
+      "confidence": "high"
+    },
+    "breast-lift": {
+      "text": "Starting Price: $4,600*",
+      "kind": "starting-at",
+      "low": 4600,
+      "high": null,
+      "includes": null,
+      "conditions": "Footnote: '*Pricing Varies by Surgeon'. Company-wide page, not specific to the Miami location.",
+      "source": "https://miaaesthetics.com/cosmetic-plastic-surgery/breast/lift/",
+      "confidence": "high"
+    },
+    "breast-reduction": {
+      "text": "Starting Price: $6,000*",
+      "kind": "starting-at",
+      "low": 6000,
+      "high": null,
+      "includes": null,
+      "conditions": "Footnote: '*Pricing Varies by Surgeon'. Company-wide page, not specific to the Miami location.",
+      "source": "https://miaaesthetics.com/cosmetic-plastic-surgery/breast/reduction/",
+      "confidence": "high"
+    },
+    "gynecomastia": {
+      "text": "Starting Price: $4,600",
+      "kind": "starting-at",
+      "low": 4600,
+      "high": null,
+      "includes": null,
+      "conditions": "Page heading is 'Male Breast Reduction' (gynecomastia surgery). Footnote: '*Pricing Varies by Surgeon'. Company-wide page, not specific to the Miami location.",
+      "source": "https://miaaesthetics.com/cosmetic-plastic-surgery/breast/male-breast-procedures/",
+      "confidence": "high"
+    },
+    "rhinoplasty": {
+      "text": "Starting Price: $8,600*",
+      "kind": "starting-at",
+      "low": 8600,
+      "high": null,
+      "includes": null,
+      "conditions": "Footnote: '*Pricing Varies by Surgeon'. Company-wide page, not specific to the Miami location.",
+      "source": "https://miaaesthetics.com/cosmetic-plastic-surgery/face/nose-job-rhinoplasty/",
+      "confidence": "high"
+    },
+    "facelift": {
+      "text": "Starting Price: $12,900*",
+      "kind": "starting-at",
+      "low": 12900,
+      "high": null,
+      "includes": null,
+      "conditions": "Footnote: '*Pricing Varies by Surgeon'. Company-wide page, not specific to the Miami location.",
+      "source": "https://miaaesthetics.com/cosmetic-plastic-surgery/face/facelift/",
+      "confidence": "high"
+    },
+    "eyelid-surgery": {
+      "text": "Starting Price: $4,300*",
+      "kind": "starting-at",
+      "low": 4300,
+      "high": null,
+      "includes": null,
+      "conditions": "Footnote: '*Pricing Varies by Surgeon'. Company-wide page, not specific to the Miami location.",
+      "source": "https://miaaesthetics.com/cosmetic-plastic-surgery/face/eyelid-lift-blepharoplasty/",
+      "confidence": "high"
+    },
+    "neck-lift": {
+      "text": "Starting Price: $12,900*",
+      "kind": "starting-at",
+      "low": 12900,
+      "high": null,
+      "includes": null,
+      "conditions": "Footnote: '*Pricing Varies by Surgeon'. Company-wide page, not specific to the Miami location.",
+      "source": "https://miaaesthetics.com/cosmetic-plastic-surgery/face/neck-lift/",
+      "confidence": "high"
+    },
+    "otoplasty": {
+      "text": "Starting Price: $6,700*",
+      "kind": "starting-at",
+      "low": 6700,
+      "high": null,
+      "includes": null,
+      "conditions": "Footnote: '*Pricing Varies by Surgeon'. Company-wide page, not specific to the Miami location.",
+      "source": "https://miaaesthetics.com/cosmetic-plastic-surgery/face/ear-pinning-otoplasty/",
+      "confidence": "high"
+    },
+    "bichectomy": {
+      "text": "Starting Price: $6,400*",
+      "kind": "starting-at",
+      "low": 6400,
+      "high": null,
+      "includes": null,
+      "conditions": "Footnote: '*Pricing Varies by Surgeon'. Company-wide page, not specific to the Miami location.",
+      "source": "https://miaaesthetics.com/cosmetic-plastic-surgery/face/buccal-cheek-fat-removal/",
+      "confidence": "high"
+    }
+  },
+  "financing": "The site lists Cherry, Alphaeon Credit, Affirm and United Medical Credit, says financed procedures must be paid in full 10 days before surgery, and that a booking fee locks the price for 12 months.",
+  "notes": "Mia Aesthetics is a multi-city chain (14 locations); the Miami clinic page (9300 SW 72nd St) publishes no prices of its own. All recorded prices are the chain-wide 'Starting Price' shown at the top of each national procedure page with the footnote '*Pricing Varies by Surgeon'; none is tied to a city, so the Miami price could differ and is not separately published. Pages do not say what the starting price includes. Facelift and neck lift both show $12,900. NOT RECORDED: the Lipo 360 page shows no price (the separate Liposuction page shows 'Starting Price: $4,000*', which is not Lipo 360). RF Microneedling ('Starting at $1,000') is on a page titled for Atlanta and J-Plasma skin tightening ('Pricing as Low as $1,700') is not one of the requested procedures; neither was recorded for Miami. No abdominal-etching, botox/filler or laser-resurfacing prices found. The financing page mentions specials and reduced prices for new doctors but gives no figures. No Google rating or review count appears on the pages fetched. /pricing/ returns 404; there is no price-list or specials page."
+}

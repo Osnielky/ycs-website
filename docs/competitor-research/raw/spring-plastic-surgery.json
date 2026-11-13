@@ -1,0 +1,43 @@
+{
+  "id": "spring-plastic-surgery",
+  "identified": true,
+  "name": "Spring Plastic Surgery",
+  "website": "https://springplasticsurgery.com/",
+  "address": "16400 NW 2nd Ave #200, Miami, FL 33169",
+  "checkedOn": "2026-11-13",
+  "google": null,
+  "prices": {
+    "mommy-makeover": {
+      "text": "the Mommy Makeover procedure starts at $6,500",
+      "kind": "starting-at",
+      "low": 6500,
+      "high": null,
+      "includes": null,
+      "conditions": "Depends on the characteristics of each patient. The same page cites a Miami market average of $10,000 - $20,000, which is not the clinic's price.",
+      "source": "https://springplasticsurgery.com/mommy-makeover/",
+      "confidence": "high"
+    },
+    "eyelid-surgery": {
+      "text": "Blepharoplasty from $3,000",
+      "kind": "starting-at",
+      "low": 3000,
+      "high": null,
+      "includes": null,
+      "conditions": "Stated as a heading on the face procedures overview page; no dedicated eyelid surgery page exists. No detail on upper/lower or what is covered.",
+      "source": "https://springplasticsurgery.com/face-procedures/",
+      "confidence": "high"
+    },
+    "botox-fillers": {
+      "text": "BOTOX® from $1,500",
+      "kind": "starting-at",
+      "low": 1500,
+      "high": null,
+      "includes": null,
+      "conditions": "Botox only. No unit, area or session basis is given for the $1,500, and the clinic's dedicated Botox page states no dollar price (says patients pay by the unit, 20-60 units per session). Basis of the figure is unclear.",
+      "source": "https://springplasticsurgery.com/face-procedures/",
+      "confidence": "medium"
+    }
+  },
+  "financing": "The site says it offers flexible financing through ALPHAEON Credit, CareCredit, United Medical Credit, Cherry and Affirm; a non-refundable deposit reserves the surgery date and full payment is due before treatment.",
+  "notes": "Identity confirmed from the site's own name and Miami address. The site publishes very few prices: none on the BBL, tummy tuck, liposuction, VASER, abdominal etching, breast augmentation, breast lift or financing pages (those pages direct visitors to contact the clinic). Not recorded because not tied to one procedure: the breast procedures overview (https://springplasticsurgery.com/breast-procedures/) says 'Breast surgery typically starts at $3,500' without naming augmentation, lift or reduction. Not recorded because they are general Miami market figures, not clinic prices: rhinoplasty $6,000-$15,000 (rhinoplasty cost article; the face overview page says $8,000-$15,000, an internal inconsistency), breast augmentation $5,000-$10,000, facial surgery $5,000-$15,000. No aggregate Google rating or review count appears on the home or testimonials pages (individual reviews only); a third-party directory showed figures in search results but was not used. Oddity: the home page header email link reportedly points to a different domain (summerplastic.surgery) than the visible hello@springplasticsurgery.com address. Pages were read through an automated fetch-and-extract tool, so quoted wording should be spot-checked against the live pages before publication."
+}

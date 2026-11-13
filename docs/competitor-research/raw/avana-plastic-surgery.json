@@ -1,0 +1,143 @@
+{
+  "id": "avana-plastic-surgery",
+  "identified": true,
+  "name": "Avana Plastic Surgery",
+  "website": "https://www.avanaplasticsurgery.com/",
+  "address": "1645 SW 107th Ave Suite 114 C, Miami, FL 33165",
+  "checkedOn": "2026-11-13",
+  "google": null,
+  "prices": {
+    "brazilian-butt-lift": {
+      "text": "BBL cost in Miami at Avana Plastic Surgery starts at an affordable $3800",
+      "kind": "starting-at",
+      "low": 3800,
+      "high": null,
+      "includes": null,
+      "conditions": "Final price depends on amount of liposuction and fat transfer, technique and combined procedures; page tells readers to check weekly specials.",
+      "source": "https://www.avanaplasticsurgery.com/brazilian-butt-lift-miami",
+      "confidence": "high"
+    },
+    "tummy-tuck": {
+      "text": "Tummy Tuck Miami - $3500 Abdominoplasty",
+      "kind": "estimate",
+      "low": 3500,
+      "high": null,
+      "includes": null,
+      "conditions": "Figure appears only in the page title; body text gives a general Miami range of $3,500 to $10,000 rather than a stated Avana price. See notes for conflicting figures.",
+      "source": "https://www.avanaplasticsurgery.com/tummy-tuck-miami",
+      "confidence": "medium"
+    },
+    "mommy-makeover": {
+      "text": "Starting Price: $5675",
+      "kind": "starting-at",
+      "low": 5675,
+      "high": null,
+      "includes": "'Classic Makeover' package: tummy tuck plus a choice of breast lift, reduction or augmentation.",
+      "conditions": "Other packages on the page start at $5,700 (BBL + Lipo 360/etching + breast augmentation), $6,200 (BBL + abdominoplasty) and $7,300 (BBL + breast lift).",
+      "source": "https://www.avanaplasticsurgery.com/mommy-makeover-miami",
+      "confidence": "high"
+    },
+    "lipo-360": {
+      "text": "the cost of lipo 360 starts at $3,000",
+      "kind": "starting-at",
+      "low": 3000,
+      "high": null,
+      "includes": null,
+      "conditions": "Depends on patient size, number of areas and whether fat is transferred; exact quote at consultation.",
+      "source": "https://www.avanaplasticsurgery.com/lipo-360-miami",
+      "confidence": "high"
+    },
+    "arm-lift": {
+      "text": "Arm lift Miami $4500 (Brachioplasty)",
+      "kind": "estimate",
+      "low": 4500,
+      "high": null,
+      "includes": null,
+      "conditions": "Figure appears only in the page title; body text gives only a RealSelf market range ($4,500-$12,000), not an Avana price.",
+      "source": "https://www.avanaplasticsurgery.com/arm-lift-miami",
+      "confidence": "medium"
+    },
+    "abdominal-etching": {
+      "text": "Abdominal Etching Miami - $4500 Ab sculpting surgery",
+      "kind": "estimate",
+      "low": 4500,
+      "high": null,
+      "includes": null,
+      "conditions": "Figure appears only in the page title; body text cites a Miami-area average of $6,000 including anesthesia, operating fees and garment, not described as Avana's price.",
+      "source": "https://www.avanaplasticsurgery.com/abdominal-etching-surgery-in-miami",
+      "confidence": "medium"
+    },
+    "breast-augmentation": {
+      "text": "breast augmentation cost in Miami starts at $3,000",
+      "kind": "starting-at",
+      "low": 3000,
+      "high": null,
+      "includes": null,
+      "conditions": "Final price depends on implant type, surgeon experience and facility fees.",
+      "source": "https://www.avanaplasticsurgery.com/breast-augmentation-miami",
+      "confidence": "high"
+    },
+    "breast-lift": {
+      "text": "breast lift prices range between $3,500 to $5,000",
+      "kind": "range",
+      "low": 3500,
+      "high": 5000,
+      "includes": null,
+      "conditions": "Same page's title says 'Starts at $3800', which conflicts with the $3,500 lower bound in the body text.",
+      "source": "https://www.avanaplasticsurgery.com/breast-lift-miami",
+      "confidence": "medium"
+    },
+    "breast-reduction": {
+      "text": "Breast Reduction Miami - $4000 Mammoplasty",
+      "kind": "estimate",
+      "low": 4000,
+      "high": null,
+      "includes": null,
+      "conditions": "Figure appears only in the page title; body text gives a general Miami average range of $3,500 to $7,000.",
+      "source": "https://www.avanaplasticsurgery.com/breast-reduction-miami",
+      "confidence": "medium"
+    },
+    "facelift": {
+      "text": "Introductory pricing $6500",
+      "kind": "promotion",
+      "low": 6500,
+      "high": null,
+      "includes": null,
+      "conditions": "Deep plane facelift only, promoted on the home page as an introductory special tied to one surgeon (Dr. Triana); no end date seen. The general facelift page states no Avana price.",
+      "source": "https://www.avanaplasticsurgery.com/",
+      "confidence": "medium"
+    },
+    "eyelid-surgery": {
+      "text": "Eyelid surgery Miami at Avana will cost $4,650 on average.",
+      "kind": "estimate",
+      "low": 4650,
+      "high": null,
+      "includes": null,
+      "conditions": "An average, not a quote; varies with office location, anesthesia type and upper vs lower lids.",
+      "source": "https://www.avanaplasticsurgery.com/eyelid-surgery-miami",
+      "confidence": "high"
+    },
+    "otoplasty": {
+      "text": "typical otoplasty Miami cost for ear surgery is $2,500-$4,700",
+      "kind": "range",
+      "low": 2500,
+      "high": 4700,
+      "includes": null,
+      "conditions": "Worded as a typical Miami cost (average $3,550) with no source cited; unclear whether it is Avana's own fee. Fee varies per patient.",
+      "source": "https://www.avanaplasticsurgery.com/miami-otoplasty",
+      "confidence": "medium"
+    },
+    "botox-fillers": {
+      "text": "A Botox injection costs $20 per unit at Avana Plastic Surgery.",
+      "kind": "fixed",
+      "low": 20,
+      "high": null,
+      "includes": null,
+      "conditions": "Botox only, per unit; number of units varies by area (page gives examples of roughly $400-$480 per area). Filler prices were not checked.",
+      "source": "https://www.avanaplasticsurgery.com/botox-injections-miami",
+      "confidence": "high"
+    }
+  },
+  "financing": "Site promotes financing through Alphaeon Credit with weekly payments (for example 'Liposuction from $25/Week With Financing'), subject to credit approval.",
+  "notes": "Identity is clear; the site lists three South Florida offices (West Miami main office 1645 SW 107th Ave Suite 114 C; 8700 W Flagler St Suite 250, Miami, FL 33174; 7802 NW 103 St Suite 106, Hialeah Gardens, FL 33016) plus Dallas, TX. CONFLICTING PRICES: the home page shows 'Average Cost' figures that differ from the procedure pages (BBL $3800, Liposuction $3499, Tummy Tuck $4000, Breast Augmentation $2799, Mommy Makeover $6500), and the /specials page shows 'Special Price*' figures with no footnote or end date (Tummy Tuck plus full back lipo $6,000; Lipo 360 $2,800; Mommy Makeover $6,075; Breast Augmentation silicone implant $3,700; BBL plus lipo 12 areas plus J-Plasma $4,200). Per the brief, the procedure-page figure is recorded. Tummy tuck is the weakest entry: $3,500 (title), $4,000 (home page average) and $6,000 (special with back lipo) all appear. Several entries marked medium come only from the page <title>, with body text citing market averages. No Avana price was found on the thigh-lift, gynecomastia, rhinoplasty, general facelift or buccal fat pages (only ASPS/RealSelf averages, not recorded); neck-lift, laser-resurfacing and microneedling were not found in the navigation. GOOGLE: no Google rating shown; the /reviews page shows '4.5 out of 5 / 6021 client reviews or surveys' from internal surveys and the home page claims '+3200 5 star reviews' without naming a platform - neither recorded. Pages were read through an automated page summarizer, so exact quotes should be spot-checked before publication."
+}

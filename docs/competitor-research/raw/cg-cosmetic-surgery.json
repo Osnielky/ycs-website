@@ -1,0 +1,98 @@
+{
+  "id": "cg-cosmetic-surgery",
+  "identified": true,
+  "name": "CG Cosmetic Surgery",
+  "website": "https://www.cgcosmetic.com/",
+  "address": "2601 SW 37th Ave, Miami, FL 33133",
+  "checkedOn": "2026-11-13",
+  "google": {
+    "rating": 4.5,
+    "reviewCount": 10900,
+    "seenAt": "https://www.cgcosmetic.com/breast-augmentation-miami/",
+    "note": "As quoted on the clinic's own site: \"4.5 ★ from 10,900+ Google reviews (October 2026)\". The count is a rounded \"10,900+\" figure, not an exact number; other pages say \"More than 10,000 Google reviews\". Not verified on a Google page."
+  },
+  "prices": {
+    "breast-augmentation": {
+      "text": "Saline from $2,500* · silicone from $3,000",
+      "kind": "starting-at",
+      "low": 2500,
+      "high": null,
+      "includes": "No fixed inclusion list; the page says the written quote after consultation itemizes surgeon, facility, anesthesia and implants.",
+      "conditions": "$2,500 is for saline implants; silicone starts at $3,000. Prices apply when paid in full. Premium implants, a simultaneous lift or combined procedures raise the total.",
+      "source": "https://www.cgcosmetic.com/breast-augmentation-miami/",
+      "confidence": "high"
+    },
+    "brazilian-butt-lift": {
+      "text": "BBL pricing starts at $4,500 (cash price)",
+      "kind": "starting-at",
+      "low": 4500,
+      "high": null,
+      "includes": "Page says the price includes all fees for the procedure; compression garment (faja) and post-op lymphatic massages are not included.",
+      "conditions": "Cash price; consultation required and final price varies with medical evaluation, areas liposuctioned and combined procedures. Page states BMI below 31 for candidacy. Page calls it a \"BBL special\" with no end date.",
+      "source": "https://www.cgcosmetic.com/brazilian-butt-lift-miami-fat-transfer/",
+      "confidence": "high"
+    },
+    "tummy-tuck": {
+      "text": "Packages start at $4,500",
+      "kind": "starting-at",
+      "low": 4500,
+      "high": null,
+      "includes": "Surgeon, anesthesia and surgical facility, as written in the personal quote.",
+      "conditions": "Consultation required; final price varies with extent of surgery, muscle repair and whether liposuction is combined.",
+      "source": "https://www.cgcosmetic.com/tummy-tuck-surgery/",
+      "confidence": "high"
+    },
+    "breast-lift": {
+      "text": "Packages, with or without implants, start from $5,000",
+      "kind": "starting-at",
+      "low": 5000,
+      "high": null,
+      "includes": "Surgeon's fee, facility, anesthesia, implants when used, and follow-up visits.",
+      "conditions": "Consultation required; final cost depends on lift technique, whether implants are added and combined procedures.",
+      "source": "https://www.cgcosmetic.com/breast-lift-miami/",
+      "confidence": "high"
+    },
+    "mommy-makeover": {
+      "text": "Mommy makeover pricing starts from $8,000",
+      "kind": "starting-at",
+      "low": 8000,
+      "high": null,
+      "includes": "Surgeon's fee, facility, anesthesia, implants when the plan uses them, and follow-up visits.",
+      "conditions": "Consultation required; final price varies with the procedures chosen. Some sentences on the page say \"around $8,000\".",
+      "source": "https://www.cgcosmetic.com/mommy-makeover-miami/",
+      "confidence": "high"
+    },
+    "lipo-360": {
+      "text": "Lipo 360 starts from $3,000, anesthesia included",
+      "kind": "starting-at",
+      "low": 3000,
+      "high": null,
+      "includes": "Anesthesia; nothing else is listed as included.",
+      "conditions": "Consultation required; final price varies with the areas treated and amount of fat.",
+      "source": "https://www.cgcosmetic.com/lipo-360-miami/",
+      "confidence": "high"
+    },
+    "rhinoplasty": {
+      "text": "Rhinoplasty starts at $6,500.",
+      "kind": "starting-at",
+      "low": 6500,
+      "high": null,
+      "includes": null,
+      "conditions": "Consultation required; final price depends on the surgical plan (complexity, primary vs revision).",
+      "source": "https://www.cgcosmetic.com/rhinoplasty-miami/",
+      "confidence": "high"
+    },
+    "facelift": {
+      "text": "Our facelift pricing starts at $5,000",
+      "kind": "starting-at",
+      "low": 5000,
+      "high": null,
+      "includes": null,
+      "conditions": "Consultation required; final price varies with type of facelift, combined procedures, anesthesia and facility.",
+      "source": "https://www.cgcosmetic.com/face-lift-surgery/",
+      "confidence": "high"
+    }
+  },
+  "financing": "The site says financing is available through third-party lenders (CareCredit and United Medical Credit are named on the BBL page) subject to credit approval; the home page says \"100% financing available\".",
+  "notes": "Formerly Coral Gables Cosmetic Center per the site. All prices are 'starting at' figures read as text on the clinic's own procedure pages (via page-to-markdown fetch; quotes are short excerpts). Home page repeats the same starting prices with no conflicts found. Neck lift has no own price: the facelift page says it is quoted at consultation, so none recorded. Not recorded because outside the key list or combined: traditional liposuction 'from $2,000' (tummy tuck and lipo 360 pages) and BBL + tummy tuck combo 'from $7,500' (BBL page). Pages also quote ASPS national average surgeon fees, which are not clinic prices and were ignored. No pages found for arm lift, thigh lift, breast reduction, gynecomastia, eyelid, otoplasty, buccal fat, injectables, laser or microneedling (not exhaustively searched). The dedicated financing page and social media were not fetched."
+}

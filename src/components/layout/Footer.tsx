@@ -16,6 +16,7 @@ export default async function Footer() {
     { label: t("navAbout"), href: "/about" },
     { label: t("navTestimonials"), href: "/testimonials" },
     { label: t("navBlog"), href: "/blog" },
+    { label: t("navPrices"), href: "/miami-cosmetic-surgery-prices-compared" },
     { label: t("navContact"), href: "/contact" },
   ];
 

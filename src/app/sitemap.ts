@@ -75,6 +75,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: p.kind === "legal" ? 0.2 : 0.6,
       }),
     ),
+    ...entry("/miami-cosmetic-surgery-prices-compared", { changeFrequency: "monthly", priority: 0.8 }),
     ...entry("/blog", { changeFrequency: "weekly", priority: 0.7 }),
     ...blogPosts.flatMap((p) =>
       entry(`/blog/${p.slug}`, { changeFrequency: "monthly", priority: 0.6 }),

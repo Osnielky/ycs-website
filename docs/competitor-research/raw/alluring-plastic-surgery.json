@@ -1,0 +1,78 @@
+{
+  "id": "alluring-plastic-surgery",
+  "identified": true,
+  "name": "Alluring Plastic Surgery",
+  "website": "https://alluringplasticsurgery.com/",
+  "address": "8435 SW 24th St, Miami, FL 33155",
+  "checkedOn": "2026-11-13",
+  "google": {
+    "rating": 4.7,
+    "reviewCount": 87,
+    "seenAt": "https://alluringplasticsurgery.com/",
+    "note": "As quoted on the clinic's own site (\"4.7 on Google · 87 reviews\"); not checked against Google directly."
+  },
+  "prices": {
+    "tummy-tuck": {
+      "text": "Mini from $3,000 Full from $4,500",
+      "kind": "starting-at",
+      "low": 3000,
+      "high": null,
+      "includes": "Not itemized. The page says the mini and extended mini list prices do not include muscle repair; for other types, patients are told to ask whether the price covers it.",
+      "conditions": "Price by type: mini from $3,000, extended mini from $4,000, full from $4,500, extended from $5,500, fleur-de-lis from $10,000. The $3,000 low is the mini only. Abdomen and flank liposuction added to a tummy tuck is $1,500. $500 off for two combined procedures, $1,000 for three. Described as list prices and estimates that may change; confirmed after an exam.",
+      "source": "https://alluringplasticsurgery.com/procedures/tummy-tuck-miami",
+      "confidence": "high"
+    },
+    "brazilian-butt-lift": {
+      "text": "Starting at $5,500. Most patients $5,500–$10,000",
+      "kind": "starting-at",
+      "low": 5500,
+      "high": 10000,
+      "includes": "Pre-surgery consultations, surgeon's fee, anesthesia, surgical facility, compression garment and BBL pillow, and follow-up visits.",
+      "conditions": "Set per patient after an exam; depends on fat volume, areas treated and other procedures. Ranges are estimates and may change.",
+      "source": "https://alluringplasticsurgery.com/procedures/brazilian-butt-lift-bbl-miami",
+      "confidence": "high"
+    },
+    "lipo-360": {
+      "text": "Lipo 360 from $4,000",
+      "kind": "starting-at",
+      "low": 4000,
+      "high": null,
+      "includes": null,
+      "conditions": "Liposuction of one area added to another procedure is $500–$1,500 depending on the area. Price set after an exam; estimates may change.",
+      "source": "https://alluringplasticsurgery.com/procedures/liposuction-miami",
+      "confidence": "high"
+    },
+    "breast-augmentation": {
+      "text": "From $3,500 saline · $4,500 silicone",
+      "kind": "starting-at",
+      "low": 3500,
+      "high": null,
+      "includes": null,
+      "conditions": "From $3,500 with saline implants, from $4,500 with silicone. $500 off for two combined procedures, $1,000 for three. Estimates that may change; confirmed after an exam.",
+      "source": "https://alluringplasticsurgery.com/procedures/breast-augmentation-miami",
+      "confidence": "high"
+    },
+    "breast-lift": {
+      "text": "a breast lift is $5,000 without implants",
+      "kind": "starting-at",
+      "low": 5000,
+      "high": null,
+      "includes": null,
+      "conditions": "$5,000 without implants, $6,000 with saline implants, $7,000 with silicone; a modified lift (skin removed below the areola only) is $4,000. The page calls these starting prices from the practice's price list; confirmed at consultation.",
+      "source": "https://alluringplasticsurgery.com/procedures/breast-lift-miami",
+      "confidence": "high"
+    },
+    "breast-reduction": {
+      "text": "$6,000–$9,000",
+      "kind": "range",
+      "low": 6000,
+      "high": 9000,
+      "includes": null,
+      "conditions": "Stated by size (small to medium, large or extra large). This figure appears in the price table on the mommy makeover page, not on the breast reduction page itself, which states no clinic price.",
+      "source": "https://alluringplasticsurgery.com/procedures/mommy-makeover-miami",
+      "confidence": "medium"
+    }
+  },
+  "financing": "The site says financing is available through Cherry, CareCredit and United Credit, subject to credit approval.",
+  "notes": "Mommy makeover: the clinic explicitly says it does not publish one mommy makeover price (priced part by part, $500 off for two combined procedures, $1,000 off for three), so no mommy-makeover entry was recorded. The home page says tummy tuck, mommy makeover, breast and face procedures are priced per patient with a written quote after consultation, yet the tummy tuck, breast augmentation and breast lift pages do list starting prices; these do not contradict each other numerically but the home page is less specific. Breast reduction price comes only from the mommy makeover page table; the breast reduction, facelift and blepharoplasty pages use an older layout (last updated January 21, 2026) and state no clinic prices (a blog teaser on the breast reduction page mentions \"$6K-$12K financing\", not recorded). The procedure pages also quote ASPS national average costs for comparison; those are not clinic prices and were not recorded. The financing page mentions lender limits ($10,000 and $25,000), not prices. Priced pages show last-updated dates of September to November 2026."
+}

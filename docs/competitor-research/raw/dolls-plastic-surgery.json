@@ -1,0 +1,48 @@
+{
+  "id": "dolls-plastic-surgery",
+  "identified": true,
+  "name": "Dolls Plastic Surgery",
+  "website": "https://dollsplasticsurgery.com/",
+  "address": "18205 Biscayne Blvd Suite 100, Aventura, FL 33160",
+  "checkedOn": "2026-11-13",
+  "google": {
+    "rating": null,
+    "reviewCount": 2064,
+    "seenAt": "https://dollsplasticsurgery.com/",
+    "note": "As quoted on the clinic's own site in a Trustindex Google-reviews widget: \"EXCELLENT Based on 2064 reviews\". No numeric rating appears in the page text (stars are graphical), so rating is left null."
+  },
+  "prices": {
+    "brazilian-butt-lift": {
+      "text": "Pricing starts at $5,000",
+      "kind": "starting-at",
+      "low": 5000,
+      "high": null,
+      "includes": "The pricing section says it covers surgical and anesthesia fees, implants, and post-surgical garments.",
+      "conditions": "CONFLICT ON THE SAME PAGE: the hero banner at the top says \"Pricing starts at $3,500\" (no inclusions stated), while the \"How Much Is a BBL in Miami?\" section says $5,000. Recorded the $5,000 figure because it is the one in the dedicated pricing section with stated inclusions. Final quote depends on areas treated, fat volume transferred and combined procedures.",
+      "source": "https://dollsplasticsurgery.com/procedures/bbl-surgery-miami/",
+      "confidence": "medium"
+    },
+    "lipo-360": {
+      "text": "Pricing starts at $4,000",
+      "kind": "starting-at",
+      "low": 4000,
+      "high": null,
+      "includes": "Surgical, anesthesia and operating room fees.",
+      "conditions": "The page prices \"liposuction\" generally and does not say whether $4,000 is for Lipo 360 or fewer areas. Final quote depends on areas treated and fat volume removed.",
+      "source": "https://dollsplasticsurgery.com/procedures/liposuction-surgery-miami/",
+      "confidence": "medium"
+    },
+    "rhinoplasty": {
+      "text": "Rhinoplasty typically ranges from $6,000 to $15,000",
+      "kind": "range",
+      "low": 6000,
+      "high": 15000,
+      "includes": "Surgeon's fee, anesthesia, facility fees and post-operative care.",
+      "conditions": "Hero banner on the same page says \"Pricing starts at $6,000\" (consistent with the range). Total depends on extent and complexity of the case.",
+      "source": "https://dollsplasticsurgery.com/procedures/rhinoplasty/",
+      "confidence": "high"
+    }
+  },
+  "financing": "The site says it partners with financing companies, with plans starting at 0% interest, no credit score impact to check options, and coverage up to $25,000.",
+  "notes": "Clinic is in Aventura (north Miami-Dade), marketed as Miami. BBL PRICE CONFLICT: the BBL page shows two starting prices, $3,500 in the hero banner and $5,000 in the pricing section; see the BBL entry. The BBL pricing sentence also lists \"implants\" among inclusions, which looks like template text. Liposuction price is not specific to Lipo 360. Pages checked with no dollar price (state pricing is customized): tummy tuck, mommy makeover, breast augmentation, breast lift, breast reduction, facelift, blepharoplasty, the procedures index, and the blog article /mommy-makeover-cost-miami/ (dated October 26, 2026; contains a leftover \"[verificar dato]\" placeholder). The specials page (/our-specials/) advertises \"50% Off Any Procedure\" and eight procedure specials (\"New contracts only. Restrictions apply.\") but the offers are images with no prices in the page text; image contents were not read."
+}
