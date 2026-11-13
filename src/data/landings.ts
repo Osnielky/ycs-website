@@ -3,6 +3,20 @@ import { TUMMY_TUCK_LANDING } from "./landings/tummy-tuck";
 import { LIPO_360_LANDING } from "./landings/lipo-360";
 import { MOMMY_MAKEOVER_LANDING } from "./landings/mommy-makeover";
 import { BREAST_AUGMENTATION_LANDING } from "./landings/breast-augmentation";
+import { BREAST_LIFT_LANDING } from "./landings/breast-lift";
+import { BREAST_REDUCTION_LANDING } from "./landings/breast-reduction";
+import { GYNECOMASTIA_LANDING } from "./landings/gynecomastia";
+import { RHINOPLASTY_LANDING } from "./landings/rhinoplasty";
+import { EYELID_SURGERY_LANDING } from "./landings/eyelid-surgery";
+import { NECK_LIFT_LANDING } from "./landings/neck-lift";
+import { OTOPLASTY_LANDING } from "./landings/otoplasty";
+import { BICHECTOMY_LANDING } from "./landings/bichectomy";
+import { ARM_LIFT_LANDING } from "./landings/arm-lift";
+import { THIGH_LIFT_LANDING } from "./landings/thigh-lift";
+import { ABDOMINAL_ETCHING_LANDING } from "./landings/abdominal-etching";
+import { BOTOX_FILLERS_LANDING } from "./landings/botox-fillers";
+import { LASER_RESURFACING_LANDING } from "./landings/laser-resurfacing";
+import { MICRONEEDLING_LANDING } from "./landings/microneedling";
 
 export interface LandingOffer {
   headline: string;
@@ -522,6 +536,20 @@ export const landings: Record<string, LandingContent> = {
   "lipo-360": LIPO_360_LANDING,
   "mommy-makeover": MOMMY_MAKEOVER_LANDING,
   "breast-augmentation": BREAST_AUGMENTATION_LANDING,
+  "breast-lift": BREAST_LIFT_LANDING,
+  "breast-reduction": BREAST_REDUCTION_LANDING,
+  "gynecomastia": GYNECOMASTIA_LANDING,
+  "rhinoplasty": RHINOPLASTY_LANDING,
+  "eyelid-surgery": EYELID_SURGERY_LANDING,
+  "neck-lift": NECK_LIFT_LANDING,
+  "otoplasty": OTOPLASTY_LANDING,
+  "bichectomy": BICHECTOMY_LANDING,
+  "arm-lift": ARM_LIFT_LANDING,
+  "thigh-lift": THIGH_LIFT_LANDING,
+  "abdominal-etching": ABDOMINAL_ETCHING_LANDING,
+  "botox-fillers": BOTOX_FILLERS_LANDING,
+  "laser-resurfacing": LASER_RESURFACING_LANDING,
+  "microneedling": MICRONEEDLING_LANDING,
 };
 
 export function getLanding(slug: string, locale: string): LandingLocaleContent | null {

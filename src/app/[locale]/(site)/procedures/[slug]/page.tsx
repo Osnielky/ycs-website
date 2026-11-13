@@ -86,6 +86,8 @@ export default async function ProcedureDetailPage({ params }: Props) {
   const name = locale === "es" && proc.es?.name ? proc.es.name : proc.name;
   const description = locale === "es" && proc.es?.description ? proc.es.description : proc.description;
   const benefits = locale === "es" && proc.es?.benefits ? proc.es.benefits : proc.benefits;
+  const displayRecovery = locale === "es" && proc.es?.recovery ? proc.es.recovery : proc.recovery;
+  const crumbs = locale === "es" ? { home: "Inicio", procedures: "Procedimientos" } : { home: "Home", procedures: "Procedures" };
 
   const landing = getLanding(slug, locale);
   const labels = landingLabels[locale] ?? landingLabels.en;
@@ -267,9 +269,9 @@ export default async function ProcedureDetailPage({ params }: Props) {
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
           <div className="relative z-10 max-w-4xl mx-auto px-6">
             <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-white/65 text-sm mb-10">
-              <Link href="/" className="hover:text-white transition-colors">Home</Link>
+              <Link href="/" className="hover:text-white transition-colors">{crumbs.home}</Link>
               <span aria-hidden="true">/</span>
-              <Link href="/procedures" className="hover:text-white transition-colors">Procedures</Link>
+              <Link href="/procedures" className="hover:text-white transition-colors">{crumbs.procedures}</Link>
               <span aria-hidden="true">/</span>
               <span className="text-gold" aria-current="page">{name}</span>
             </nav>
@@ -285,7 +287,7 @@ export default async function ProcedureDetailPage({ params }: Props) {
             </p>
             <div className="flex items-center gap-3 text-white/65 text-sm">
               <Clock size={14} className="text-gold" />
-              <span>{t("recoveryLabel")} {proc.recovery}</span>
+              <span>{t("recoveryLabel")} {displayRecovery}</span>
             </div>
           </div>
         </section>
