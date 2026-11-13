@@ -18,27 +18,53 @@ const getSupabase = () => createClient(
   process.env.SUPABASE_SERVICE_KEY!
 );
 
-// Per-visitor cap on confirmation emails. In memory, so it is per server
-// instance: a coarse brake on bursts, with the per-address check as the real limit.
+// Caps on confirmation emails. In memory, so they are per server instance: a
+// coarse brake on bursts, with the per-address check in the handler as the
+// main limit.
 const CONFIRM_WINDOW_MS = 60 * 60 * 1000;
-const CONFIRM_MAX_PER_WINDOW = 3;
+const CONFIRM_MAX_PER_VISITOR = 3;
+const CONFIRM_MAX_TOTAL = 30;
 const confirmHits = new Map<string, number[]>();
+let confirmTotal: number[] = [];
 
+/**
+ * The address Google's front end saw. It appends to X-Forwarded-For, so the
+ * last entry is the one the client cannot forge; earlier entries are whatever
+ * the client sent.
+ */
 function clientIp(req: NextRequest): string {
-  return req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const parts = (req.headers.get("x-forwarded-for") ?? "").split(",").map((p) => p.trim()).filter(Boolean);
+  return parts[parts.length - 1] ?? "unknown";
 }
 
 function allowConfirmation(ip: string): boolean {
   const now = Date.now();
-  const recent = (confirmHits.get(ip) ?? []).filter((t) => now - t < CONFIRM_WINDOW_MS);
-  if (recent.length >= CONFIRM_MAX_PER_WINDOW) {
+  const fresh = (t: number) => now - t < CONFIRM_WINDOW_MS;
+
+  confirmTotal = confirmTotal.filter(fresh);
+  if (confirmTotal.length >= CONFIRM_MAX_TOTAL) return false;
+
+  // Drop expired visitors instead of ever resetting the whole table.
+  if (confirmHits.size > 2000) {
+    for (const [key, times] of confirmHits) {
+      if (!times.some(fresh)) confirmHits.delete(key);
+    }
+  }
+
+  const recent = (confirmHits.get(ip) ?? []).filter(fresh);
+  if (recent.length >= CONFIRM_MAX_PER_VISITOR) {
     confirmHits.set(ip, recent);
     return false;
   }
   recent.push(now);
   confirmHits.set(ip, recent);
-  if (confirmHits.size > 5000) confirmHits.clear();
+  confirmTotal.push(now);
   return true;
+}
+
+/** Escape the wildcard characters of a SQL LIKE pattern. */
+function likeLiteral(value: string): string {
+  return value.replace(/[\\%_]/g, (c) => `\\${c}`);
 }
 
 export async function POST(req: NextRequest) {
@@ -53,7 +79,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const lead = parsed.data;
+    // Email addresses are compared case-insensitively everywhere, so keep one form.
+    const lead = { ...parsed.data, email: parsed.data.email?.trim().toLowerCase() };
 
     let saved = false;
     try {
@@ -101,13 +128,15 @@ export async function POST(req: NextRequest) {
     // The address is typed by whoever fills the form, so sending is limited:
     // only for a lead that was saved, once per address per day, and a few per
     // visitor. Anything over the limit is still a lead, just without the email.
-    if (lead.email && saved && allowConfirmation(clientIp(req))) {
+    // Addresses with a "+tag" are skipped: the tag makes endless variants of one
+    // inbox, which would defeat the once-per-address limit.
+    if (lead.email && !lead.email.includes("+") && saved && allowConfirmation(clientIp(req))) {
       try {
         const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
         const { count, error } = await getSupabase()
           .from("leads")
           .select("*", { count: "exact", head: true })
-          .eq("email", lead.email)
+          .ilike("email", likeLiteral(lead.email))
           .gte("created_at", since);
         // count includes the lead saved above, so 1 means first in 24 hours.
         if (!error && count === 1) {
