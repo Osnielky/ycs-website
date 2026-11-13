@@ -20,11 +20,11 @@ export const metadata: Metadata = {
     template: "%s | Your Cosmetic Surgery & SPA",
   },
   description:
-    "Your Cosmetic Surgery & SPA in Hialeah, Miami — board-certified plastic surgeons with 20+ years of experience. BBL, tummy tuck, breast augmentation, Lipo 360, rhinoplasty & more. Free consultation. Serving all of South Florida.",
+    "Your Cosmetic Surgery & SPA in Hialeah, Miami — cosmetic surgery with 20+ years of experience. BBL, tummy tuck, breast augmentation, Lipo 360, rhinoplasty & more. Free consultation. Serving all of South Florida.",
   keywords: [
     "cosmetic surgery Miami",
     "plastic surgery Miami",
-    "plastic surgeon Hialeah",
+    "cosmetic surgeon Hialeah",
     "BBL Miami",
     "Brazilian butt lift Miami",
     "tummy tuck Miami",
@@ -60,15 +60,15 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://ycosmeticsurgery.com",
     siteName: "Your Cosmetic Surgery & SPA",
-    title: "Your Cosmetic Surgery & SPA | Trusted Plastic Surgeons in Miami",
+    title: "Your Cosmetic Surgery & SPA | Trusted Cosmetic Surgeons in Miami",
     description:
-      "Board-certified plastic surgeons with 20+ years of experience in Miami. Natural results, flexible financing, free consultations. Serving Hialeah, Miami, and all of South Florida.",
+      "Cosmetic surgery in Miami with 20+ years of experience. Natural results, flexible financing, free consultations. Serving Hialeah, Miami, and all of South Florida.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Your Cosmetic Surgery & SPA — Trusted Plastic Surgeons in Miami",
+        alt: "Your Cosmetic Surgery & SPA — Trusted Cosmetic Surgeons in Miami",
       },
     ],
   },

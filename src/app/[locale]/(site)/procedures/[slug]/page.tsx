@@ -43,8 +43,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? `${name} en Miami${fromPrice ? " desde " + fromPrice : ""}. Recuperación: ${recovery}. Consulta gratuita en Your Cosmetic Surgery & SPA, Hialeah. Llame al (305) 218-3513.`
     : `${name} in Miami${fromPrice ? " from " + fromPrice : ""}. Recovery: ${recovery}. Free consultation at Your Cosmetic Surgery & SPA in Hialeah. Call (305) 218-3513.`;
   const ogDescription = es
-    ? `${description} Cirujanos certificados, consulta gratuita, financiamiento flexible. Hialeah, FL.`
-    : `${description} Board-certified surgeons, free consultation, flexible financing. Hialeah, FL.`;
+    ? `${description} Consulta gratuita, financiamiento flexible. Hialeah, FL.`
+    : `${description} Free consultation, flexible financing. Hialeah, FL.`;
 
   return {
     // Brand suffix is appended by the root "%s | …" title template.
@@ -140,12 +140,8 @@ export default async function ProcedureDetailPage({ params }: Props) {
       followup: landing
         ? `Recovery timeline: ${landing.timeline.map((s) => `${s.stage} — ${s.detail}`).join(" ")}`
         : `Recovery time: ${proc.recovery}`,
-      preparation: "A private consultation with a board-certified surgeon to assess candidacy, review goals, and create a personalized surgical plan.",
+      preparation: "A private consultation with your surgeon to assess candidacy, review goals, and create a personalized surgical plan.",
       howPerformed: description,
-      recognizingAuthority: {
-        "@type": "MedicalOrganization",
-        name: "American Board of Plastic Surgery",
-      },
       relevantSpecialty: {
         "@type": "MedicalSpecialty",
         name: "Plastic Surgery",

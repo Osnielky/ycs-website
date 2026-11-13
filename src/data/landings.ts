@@ -144,7 +144,7 @@ const FACELIFT_LANDING: LandingContent = {
   heroImageSize: { width: 1672, height: 941 },
   heroImageMobileSize: { width: 1080, height: 1350 },
   intro:
-    "A facelift — medically known as a rhytidectomy — is the gold standard for restoring a naturally youthful, rested look to the face and neck. At Your Cosmetic Surgery & SPA in Miami, our board-certified surgeons use advanced deep-plane techniques that reposition the deeper facial tissues, not just tighten skin, for results that look like you — only years younger. Below you can see real transformations, understand exactly how the procedure works step by step, and find out whether you qualify for a free consultation.",
+    "A facelift — medically known as a rhytidectomy — is the gold standard for restoring a naturally youthful, rested look to the face and neck. At Your Cosmetic Surgery & SPA in Miami, our surgeons use advanced deep-plane techniques that reposition the deeper facial tissues, not just tighten skin, for results that look like you — only years younger. Below you can see real transformations, understand exactly how the procedure works step by step, and find out whether you qualify for a free consultation.",
   offer: {
     headline: "Limited-Time: $1,000 Off Your Facelift This Month",
     subtext: "Plus a complimentary skin-rejuvenation treatment with every facelift booked this month.",
@@ -227,7 +227,7 @@ const FACELIFT_LANDING: LandingContent = {
     {
       heading: "Comfort, Safety, and Anesthesia",
       body:
-        "Your facelift is performed in our fully accredited surgical facility under the care of a board-certified anesthesia provider. Most facelifts take three to five hours depending on the areas treated. You go home the same day with a dedicated nurse coordinator who walks you through every step of aftercare and stays reachable throughout your recovery.",
+        "Your facelift is performed in our fully accredited surgical facility under the care of an anesthesia provider. Most facelifts take three to five hours depending on the areas treated. You go home the same day with a dedicated nurse coordinator who walks you through every step of aftercare and stays reachable throughout your recovery.",
     },
     {
       heading: "Results That Last",
@@ -281,7 +281,7 @@ const FACELIFT_LANDING: LandingContent = {
   candidacy: {
     heading: "See If You Qualify — Free Consultation",
     intro:
-      "The only way to know if a facelift is right for you is a one-on-one evaluation with a board-certified surgeon. Your consultation is completely free, with no pressure and no obligation. You likely qualify if you:",
+      "The only way to know if a facelift is right for you is a one-on-one evaluation with your surgeon. Your consultation is completely free, with no pressure and no obligation. You likely qualify if you:",
     qualifies: [
       "Are bothered by sagging skin, jowls, or deep folds around the mouth and jaw",
       "Have a loose or banded neckline you would like tightened",
@@ -325,7 +325,7 @@ const FACELIFT_LANDING: LandingContent = {
     },
     {
       q: "Does the facelift price include anesthesia and facility fees?",
-      a: "Your personalized quote spells out exactly what is included, such as the surgeon's fee, anesthesia by a board-certified provider, and the accredited surgical-facility fee. Because every plan is different, we confirm your complete, all-inclusive price in writing at your free consultation so there are no surprises.",
+      a: "Your personalized quote spells out exactly what is included, such as the surgeon's fee, anesthesia, and the accredited surgical-facility fee. Because every plan is different, we confirm your complete, all-inclusive price in writing at your free consultation so there are no surprises.",
     },
     {
       q: "Do you offer financing for a facelift?",
@@ -338,7 +338,7 @@ const FACELIFT_LANDING: LandingContent = {
     heroImageSize: { width: 1672, height: 941 },
     heroImageMobileSize: { width: 1080, height: 1350 },
     intro:
-      "Un lifting facial — conocido médicamente como ritidectomía — es el estándar de oro para restaurar un aspecto naturalmente joven y descansado en el rostro y el cuello. En Your Cosmetic Surgery & SPA en Miami, nuestros cirujanos certificados utilizan técnicas avanzadas de plano profundo que reposicionan los tejidos faciales más profundos, no solo tensan la piel, para lograr resultados que se ven como usted — solo que años más joven. A continuación puede ver transformaciones reales, comprender exactamente cómo funciona el procedimiento paso a paso y descubrir si califica para una consulta gratuita.",
+      "Un lifting facial — conocido médicamente como ritidectomía — es el estándar de oro para restaurar un aspecto naturalmente joven y descansado en el rostro y el cuello. En Your Cosmetic Surgery & SPA en Miami, nuestros cirujanos utilizan técnicas avanzadas de plano profundo que reposicionan los tejidos faciales más profundos, no solo tensan la piel, para lograr resultados que se ven como usted — solo que años más joven. A continuación puede ver transformaciones reales, comprender exactamente cómo funciona el procedimiento paso a paso y descubrir si califica para una consulta gratuita.",
     offer: {
       headline: "Por Tiempo Limitado: $1,000 de Descuento en tu Lifting Facial este Mes",
       subtext: "Además, un tratamiento de rejuvenecimiento de la piel de cortesía con cada lifting reservado este mes.",
@@ -421,7 +421,7 @@ const FACELIFT_LANDING: LandingContent = {
       {
         heading: "Comodidad, Seguridad y Anestesia",
         body:
-          "Su lifting facial se realiza en nuestra instalación quirúrgica totalmente acreditada bajo el cuidado de un proveedor de anestesia certificado. La mayoría de los liftings toman de tres a cinco horas según las áreas tratadas. Regresa a casa el mismo día con una enfermera coordinadora dedicada que le guía en cada paso del cuidado posoperatorio y permanece disponible durante toda su recuperación.",
+          "Su lifting facial se realiza en nuestra instalación quirúrgica totalmente acreditada bajo el cuidado de un proveedor de anestesia. La mayoría de los liftings toman de tres a cinco horas según las áreas tratadas. Regresa a casa el mismo día con una enfermera coordinadora dedicada que le guía en cada paso del cuidado posoperatorio y permanece disponible durante toda su recuperación.",
       },
       {
         heading: "Resultados que Perduran",
@@ -475,7 +475,7 @@ const FACELIFT_LANDING: LandingContent = {
     candidacy: {
       heading: "Descubra si Califica — Consulta Gratuita",
       intro:
-        "La única forma de saber si un lifting facial es adecuado para usted es una evaluación personalizada con un cirujano certificado. Su consulta es completamente gratuita, sin presión y sin compromiso. Probablemente califique si usted:",
+        "La única forma de saber si un lifting facial es adecuado para usted es una evaluación personalizada con su cirujano. Su consulta es completamente gratuita, sin presión y sin compromiso. Probablemente califique si usted:",
       qualifies: [
         "Le molesta la piel flácida, las papadas o los pliegues profundos alrededor de la boca y la mandíbula",
         "Tiene un cuello suelto o con bandas que le gustaría tensar",
@@ -519,7 +519,7 @@ const FACELIFT_LANDING: LandingContent = {
       },
       {
         q: "¿El precio del lifting facial incluye la anestesia y los honorarios de la instalación?",
-        a: "Su cotización personalizada detalla exactamente qué incluye, como los honorarios del cirujano, la anestesia por un proveedor certificado y los honorarios de la instalación quirúrgica acreditada. Como cada plan es diferente, confirmamos su precio completo, todo incluido, por escrito en su consulta gratuita para que no haya sorpresas.",
+        a: "Su cotización personalizada detalla exactamente qué incluye, como los honorarios del cirujano, la anestesia y los honorarios de la instalación quirúrgica acreditada. Como cada plan es diferente, confirmamos su precio completo, todo incluido, por escrito en su consulta gratuita para que no haya sorpresas.",
       },
       {
         q: "¿Ofrecen financiamiento para un lifting facial?",

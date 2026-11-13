@@ -5,11 +5,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod/mini"; // tree-shakable build: the full "zod" entry adds ~300 KB to the client bundle
 import { CheckCircle } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { trackLead } from "@/lib/analytics";
 
 export default function FooterContactForm() {
   const t = useTranslations("footerForm");
+  const locale = useLocale();
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [submitError, setSubmitError] = useState(false);
@@ -40,7 +41,7 @@ export default function FooterContactForm() {
       const res = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, locale }),
       });
       if (!res.ok) throw new Error(`Lead request failed: ${res.status}`);
       trackLead("footer");

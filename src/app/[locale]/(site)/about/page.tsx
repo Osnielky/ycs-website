@@ -120,7 +120,7 @@ export default async function AboutPage({ params }: Props) {
             <div className="aspect-[4/5] rounded-2xl overflow-hidden relative">
               <Image
                 src="/Dr-Mario-Reyes-Cosmetic Surgeon-miami.webp"
-                alt="Dr. Mario Reyes-Serrano — Board-Certified Plastic Surgeon Miami"
+                alt="Dr. Mario Reyes-Serrano, cosmetic surgeon in Miami"
                 fill
                 className="object-cover object-top"
                 quality={90}
@@ -205,6 +205,12 @@ export default async function AboutPage({ params }: Props) {
               <h3 className="font-heading text-4xl text-navy mb-3">Dr. Mario Reyes-Serrano</h3>
               <p className="text-navy/70 leading-relaxed mb-4">{t("drBio1")}</p>
               <p className="text-navy/70 leading-relaxed">{t("drBio2")}</p>
+              <Link
+                href="/dr-mario-reyes-serrano"
+                className="inline-flex items-center mt-5 text-navy font-semibold text-sm tracking-[0.12em] uppercase underline underline-offset-4 decoration-gold hover:text-gold-deep transition-colors"
+              >
+                {t("drProfileLink")}
+              </Link>
             </div>
           </div>
         </div>

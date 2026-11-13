@@ -88,7 +88,7 @@ const jsonLd = {
   employee: {
     "@type": "Physician",
     name: "Dr. Mario Reyes-Serrano",
-    jobTitle: "Board-Certified Plastic Surgeon",
+    jobTitle: "Cosmetic Surgeon",
   },
 };
 

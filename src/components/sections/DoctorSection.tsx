@@ -99,7 +99,7 @@ export default async function DoctorSection() {
             {/* CTA buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                href="/about"
+                href="/dr-mario-reyes-serrano"
                 className="inline-flex items-center justify-center border border-white/40 hover:border-gold text-white hover:text-gold text-xs font-bold tracking-[0.2em] uppercase px-8 py-4 transition duration-200"
               >
                 {t("learnMore")}

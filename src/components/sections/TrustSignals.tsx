@@ -3,8 +3,8 @@ import { ShieldCheck, Award, Users, HeartHandshake } from "lucide-react";
 const credentials = [
   {
     icon: ShieldCheck,
-    title: "Board Certified",
-    desc: "American Board of Plastic Surgery (ABPS) certified surgeons with subspecialty training in aesthetic procedures.",
+    title: "Licensed Physician",
+    desc: "Our lead surgeon holds an active Florida medical licence (ME94353), which anyone can verify with the Florida Department of Health.",
   },
   {
     icon: Award,
@@ -13,8 +13,8 @@ const credentials = [
   },
   {
     icon: Users,
-    title: "ASPS Members",
-    desc: "Active members of the American Society of Plastic Surgeons, committed to ethical practice and continuing education.",
+    title: "Professional Memberships",
+    desc: "Member of the American Academy of Cosmetic Surgery and the American Medical Association.",
   },
   {
     icon: HeartHandshake,
@@ -49,7 +49,7 @@ export default function TrustSignals() {
             Why Miami Chooses Us
           </h2>
           <p className="text-navy/70 text-lg max-w-2xl mx-auto">
-            Board-certified surgeons with 20+ years of experience, an
+            A surgical team with 20+ years of experience, an
             accredited facility in Hialeah, and an unwavering commitment to
             natural, beautiful results across South Florida.
           </p>
@@ -111,7 +111,7 @@ export default function TrustSignals() {
           <div className="text-center md:text-left">
             <p className="text-gold text-xs tracking-[0.3em] uppercase mb-1">Lead Surgeon</p>
             <h3 className="font-heading text-3xl text-white mb-1">Dr. Mario Reyes-Serrano</h3>
-            <p className="text-white/65 text-sm mb-3">Board-Certified Plastic Surgeon · 20+ Years of Experience</p>
+            <p className="text-white/65 text-sm mb-3">Cosmetic Surgeon · 20+ Years of Experience</p>
             <p className="text-white/65 text-sm leading-relaxed max-w-2xl">
               One of South Florida&apos;s most trusted cosmetic surgeons, Dr. Reyes-Serrano
               brings over two decades of expertise to every procedure. His philosophy

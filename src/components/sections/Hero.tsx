@@ -7,7 +7,7 @@ import { Phone, ArrowDown, Star, Pause, Play } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod/mini"; // tree-shakable build: the full "zod" entry adds ~300 KB to the client bundle
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { googleReviews, googleRatingLabel } from "@/data/reviews";
 import { trackLead } from "@/lib/analytics";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
@@ -15,7 +15,7 @@ import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 /* ── Add more images to public/hero/ as 2.jpg, 3.jpg … to extend the slideshow ── */
 const slides = [
   { src: "/hero/1.webp", position: "center center", alt: "Cosmetic surgery consultation at Your Cosmetic Surgery & SPA in Miami, FL" },
-  { src: "/hero/2.webp", position: "center 25%",    alt: "Board-certified plastic surgeon performing procedure at YCS Aesthetic Center Hialeah" },
+  { src: "/hero/2.webp", position: "center 25%",    alt: "Cosmetic surgeon performing procedure at YCS Aesthetic Center Hialeah" },
   { src: "/hero/3.webp", position: "center 15%",    alt: "Patient transformation results at Your Cosmetic Surgery & SPA Miami" },
   { src: "/hero/4.webp", position: "center 20%",    alt: "Cosmetic surgery results — BBL, tummy tuck, liposuction at YCS Miami" },
   { src: "/hero/5.webp", position: "center 18%",    alt: "Luxury cosmetic surgery facility in Hialeah serving South Florida" },
@@ -24,6 +24,7 @@ const slides = [
 
 export default function Hero() {
   const t = useTranslations("hero");
+  const locale = useLocale();
 
   const schema = useMemo(() => z.object({
     name: z.string().check(z.minLength(2, t("formNameError"))),
@@ -70,7 +71,7 @@ export default function Hero() {
       const res = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, locale }),
       });
       if (!res.ok) throw new Error(`Lead request failed: ${res.status}`);
       trackLead("hero");

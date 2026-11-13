@@ -4,7 +4,7 @@ export const BASE_URL = 'https://ycosmeticsurgery.com';
 
 export const SITE_NAME = 'Your Cosmetic Surgery & SPA';
 export const DEFAULT_OG_IMAGE = '/og-image.png';
-const DEFAULT_OG_ALT = 'Your Cosmetic Surgery & SPA — Trusted Plastic Surgeons in Miami';
+const DEFAULT_OG_ALT = 'Your Cosmetic Surgery & SPA — Trusted Cosmetic Surgeons in Miami';
 
 /** Normalize a locale-agnostic path to a leading-slash form ('' stays ''). */
 function normalizePath(path: string): string {

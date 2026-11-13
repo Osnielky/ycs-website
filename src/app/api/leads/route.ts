@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@supabase/supabase-js";
-import { sendLeadEmail } from "@/lib/email";
+import { sendLeadConfirmationEmail, sendLeadEmail } from "@/lib/email";
 
 const schema = z.object({
   name: z.string().min(2),
@@ -10,6 +10,7 @@ const schema = z.object({
   procedure: z.string().optional(),
   message: z.string().optional(),
   smsConsent: z.boolean().optional(),
+  locale: z.enum(["en", "es"]).optional(),
 });
 
 const getSupabase = () => createClient(
@@ -70,6 +71,21 @@ export async function POST(req: NextRequest) {
     if (!saved && !emailed) {
       console.error("[YCS Lead] LOST — not saved or emailed:", JSON.stringify(lead));
       return NextResponse.json({ error: "Failed to save lead" }, { status: 500 });
+    }
+
+    // Confirmation to the patient. Best effort: the lead is already safe, so a
+    // failure here is logged and never turns the request into an error.
+    if (lead.email) {
+      try {
+        const sent = await sendLeadConfirmationEmail({
+          name: lead.name,
+          email: lead.email,
+          locale: lead.locale,
+        });
+        if (sent) console.log("[YCS Email] Patient confirmation sent");
+      } catch (err) {
+        console.error("[YCS Email] Patient confirmation FAILED:", err);
+      }
     }
 
     return NextResponse.json({ success: true });

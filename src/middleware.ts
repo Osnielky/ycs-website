@@ -34,7 +34,7 @@ const OLD_SITE_REDIRECTS: Record<string, string> = {
   '/tummy-tuck-gallery': '/gallery?category=Body',
   '/lipo-360-gallery': '/gallery?category=Body',
   '/breast-augmentation-gallery': '/gallery?category=Breast',
-  '/dr-mario-e-reyes': '/about',
+  '/dr-mario-e-reyes': '/dr-mario-reyes-serrano',
   '/category/doctors': '/about',
   '/contact': '/contact',
   '/consults': '/contact',

@@ -67,6 +67,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...entry("/gallery", { changeFrequency: "monthly", priority: 0.8, images: galleryImages() }),
     ...entry("/about", { changeFrequency: "monthly", priority: 0.7 }),
     ...entry("/testimonials", { changeFrequency: "monthly", priority: 0.7 }),
+    ...entry("/dr-mario-reyes-serrano", { changeFrequency: "monthly", priority: 0.7 }),
     ...infoPages.flatMap((p) =>
       entry(`/${p.slug}`, {
         changeFrequency: p.kind === "legal" ? "yearly" : "monthly",

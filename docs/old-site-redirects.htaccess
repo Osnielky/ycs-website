@@ -30,7 +30,7 @@ RewriteRule ^lipo-360-gallery/?$             https://ycosmeticsurgery.com/galler
 RewriteRule ^breast-augmentation-gallery/?$  https://ycosmeticsurgery.com/gallery?category=Breast [R=301,L]
 
 # --- About / contact
-RewriteRule ^dr-mario-e-reyes/?$    https://ycosmeticsurgery.com/about [R=301,L]
+RewriteRule ^dr-mario-e-reyes/?$    https://ycosmeticsurgery.com/dr-mario-reyes-serrano [R=301,L]
 RewriteRule ^category/doctors/?$    https://ycosmeticsurgery.com/about [R=301,L]
 RewriteRule ^contact/?$             https://ycosmeticsurgery.com/contact [R=301,L]
 RewriteRule ^consults/?$            https://ycosmeticsurgery.com/contact [R=301,L]
