@@ -18,6 +18,29 @@ const getSupabase = () => createClient(
   process.env.SUPABASE_SERVICE_KEY!
 );
 
+// Per-visitor cap on confirmation emails. In memory, so it is per server
+// instance: a coarse brake on bursts, with the per-address check as the real limit.
+const CONFIRM_WINDOW_MS = 60 * 60 * 1000;
+const CONFIRM_MAX_PER_WINDOW = 3;
+const confirmHits = new Map<string, number[]>();
+
+function clientIp(req: NextRequest): string {
+  return req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+}
+
+function allowConfirmation(ip: string): boolean {
+  const now = Date.now();
+  const recent = (confirmHits.get(ip) ?? []).filter((t) => now - t < CONFIRM_WINDOW_MS);
+  if (recent.length >= CONFIRM_MAX_PER_WINDOW) {
+    confirmHits.set(ip, recent);
+    return false;
+  }
+  recent.push(now);
+  confirmHits.set(ip, recent);
+  if (confirmHits.size > 5000) confirmHits.clear();
+  return true;
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -75,14 +98,26 @@ export async function POST(req: NextRequest) {
 
     // Confirmation to the patient. Best effort: the lead is already safe, so a
     // failure here is logged and never turns the request into an error.
-    if (lead.email) {
+    // The address is typed by whoever fills the form, so sending is limited:
+    // only for a lead that was saved, once per address per day, and a few per
+    // visitor. Anything over the limit is still a lead, just without the email.
+    if (lead.email && saved && allowConfirmation(clientIp(req))) {
       try {
-        const sent = await sendLeadConfirmationEmail({
-          name: lead.name,
-          email: lead.email,
-          locale: lead.locale,
-        });
-        if (sent) console.log("[YCS Email] Patient confirmation sent");
+        const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+        const { count, error } = await getSupabase()
+          .from("leads")
+          .select("*", { count: "exact", head: true })
+          .eq("email", lead.email)
+          .gte("created_at", since);
+        // count includes the lead saved above, so 1 means first in 24 hours.
+        if (!error && count === 1) {
+          const sent = await sendLeadConfirmationEmail({
+            name: lead.name,
+            email: lead.email,
+            locale: lead.locale,
+          });
+          if (sent) console.log("[YCS Email] Patient confirmation sent");
+        }
       } catch (err) {
         console.error("[YCS Email] Patient confirmation FAILED:", err);
       }
