@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from 'next-intl/plugin';
 
+import { googleWriteReviewUrl } from './src/data/reviews';
+
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 const nextConfig: NextConfig = {
@@ -21,6 +23,15 @@ const nextConfig: NextConfig = {
         headers: [{ key: "Strict-Transport-Security", value: "max-age=31536000" }],
       },
     ];
+  },
+  // Short address for staff to share: ycosmeticsurgery.com/review opens the
+  // Google review form. Temporary (307) so the destination can change.
+  async redirects() {
+    return ["/review", "/es/review", "/resena", "/es/resena"].map((source) => ({
+      source,
+      destination: googleWriteReviewUrl,
+      permanent: false,
+    }));
   },
   // Tree-shake barrel imports so unused icons / helpers never reach the bundle.
   experimental: {

@@ -13,5 +13,13 @@ export const googleReviews = {
   url: "https://maps.app.goo.gl/ttj7tm52qumTJfjm6",
 } as const;
 
+/**
+ * Opens the "write a review" form for the clinic's Google Business Profile.
+ * ycosmeticsurgery.com/review redirects here (see next.config.ts), and the QR
+ * code on the front-desk card in docs/review-card encodes this same address.
+ */
+export const googleWriteReviewUrl =
+  "https://search.google.com/local/writereview?placeid=ChIJyUDR1PC62YgRMoDzH4ajK4M";
+
 /** Rating formatted with one decimal, e.g. "4.6" */
 export const googleRatingLabel = googleReviews.rating.toFixed(1);

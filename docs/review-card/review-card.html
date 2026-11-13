@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Google review card (4 x 6 in)</title><style>@page{size:4in 6in;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.card{width:4in;height:6in;background:#0d1b3e;color:#fff;font-family:"Helvetica Neue",Arial,sans-serif;text-align:center;padding:.3in .32in .26in;display:flex;flex-direction:column;align-items:center;overflow:hidden;border:1px solid #0d1b3e}
+.top{display:flex;align-items:center;gap:.1in;margin-bottom:.2in}
+.logo{width:.4in;height:.4in}
+.brand{font-size:7.5pt;letter-spacing:.2em;text-transform:uppercase;color:#e8cfa0}
+h1{font-family:"Cormorant Garamond",Georgia,"Times New Roman",serif;font-weight:400;font-size:27pt;line-height:1.05}
+.es-h{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-size:17pt;color:#e8cfa0;margin-top:.03in}
+.lead{font-size:9.5pt;line-height:1.45;margin-top:.12in}
+.lead span,.card li span{color:rgba(255,255,255,.72)}
+.qr{background:#fff;border-radius:.12in;padding:.09in;margin:.18in 0 .16in;border:2px solid #c9a46e}
+.qr img{display:block;width:1.75in;height:1.75in}
+ol{list-style:none;counter-reset:s;text-align:left;font-size:8.5pt;line-height:1.3;width:100%}
+li{counter-increment:s;margin-bottom:.055in}
+li::before{content:counter(s);display:inline-block;margin-right:.08in;width:.19in;height:.19in;border-radius:50%;background:#c9a46e;color:#0d1b3e;font-weight:700;font-size:8pt;text-align:center;line-height:.19in}
+li b{font-weight:700}
+.url{margin-top:auto;font-size:9pt;letter-spacing:.06em;color:#e8cfa0}
+.thanks{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-size:13pt;margin-top:.04in}
+</style><div class="card">
+  <div class="top">
+    <img class="logo" src="../../public/logo.svg" alt="">
+    <p class="brand">Your Cosmetic Surgery &amp; SPA</p>
+  </div>
+  <h1>How was your visit?</h1>
+  <p class="es-h">¿Cómo fue su visita?</p>
+  <p class="lead">Share your experience on Google.<br><span>Comparta su experiencia en Google.</span></p>
+  <div class="qr"><img src="review-qr.svg" alt="QR code"></div>
+  <ol>
+    <li><b>Scan</b> with your phone camera <span>· Escanee con la cámara</span></li>
+    <li><b>Tap</b> the stars <span>· Toque las estrellas</span></li>
+    <li><b>Write</b> a few words <span>· Escriba unas palabras</span></li>
+  </ol>
+  <p class="url">ycosmeticsurgery.com/review</p>
+  <p class="thanks">Thank you · Gracias</p>
+</div></html>
